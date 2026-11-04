@@ -1344,8 +1344,8 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
   <div class="field"><label class="t" for="sf-p">Où ?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Nom et adresse du lieu"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Rendez-vous</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Retour vers</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="sf-msg"></div></div>
-  <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Fermer</button></div>
   <div id="sf-consent"></div>
+  <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Fermer</button></div>
   <p class="mt" style="margin-top:12px">Quand tu partages ou copies ce message, l'accueil affiche un bandeau « en date » avec des boutons pour rassurer ton amie ou l'alerter.</p>
   <p class="mt" style="margin-top:8px">Astuce iPhone : « Check In » (Messages, iOS 17 ou plus) prévient ta personne de confiance toute seule si tu n'arrives pas ou ne réponds pas. En cas de danger, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p>`);
  const up=()=>{$("#sf-msg").textContent=msg()};up();
@@ -1364,8 +1364,8 @@ function openAlert(kind){const m=S.dateMode||{};const st={pos:""};
  sheetWrap(HEAD[kind],`<h2 style="font-size:26px">${HEAD[kind]}</h2><p class="sub">Ce message est prêt : c'est toi qui l'envoies à ton amie. L'appli ne prévient personne toute seule.</p>
   ${kind==="danger"?`<div class="box" style="margin-top:14px;border:2px solid var(--next)"><b>Si tu es en danger immédiat</b><div class="row-btns"><a class="btn primary" href="tel:17" style="text-decoration:none">📞 Appeler le 17</a><a class="btn ghost" href="sms:114" style="text-decoration:none">✉️ SMS au 114 (si tu ne peux pas parler)</a></div></div>`:""}
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="al-msg"></div></div>
-  <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Fermer</button></div>
-  <div id="al-consent"></div>`);
+  <div id="al-consent"></div>
+  <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Fermer</button></div>`);
  const up=()=>{$("#al-msg").textContent=msg()};up();
  sendUI("al",msg,"#al-msg",st,up,kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("Mode « en date » terminé 🏠")}:null,{pos:kind!=="home",pre:kind==="danger"})}
 function goBlock(){const m=S.dateMode;if(m&&Date.now()-m.since>864e5){S.dateMode=null;save()}
@@ -2294,8 +2294,8 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
   <div class="field"><label class="t" for="sf-p">Where?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Name and address of the place"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Meeting</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Home by</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="sf-msg"></div></div>
-  <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Close</button></div>
   <div id="sf-consent"></div>
+  <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Close</button></div>
   <p class="mt" style="margin-top:12px">When you share or copy this text, the home screen shows an “on a date” banner with buttons to reassure your friend or alert them.</p>
   <p class="mt" style="margin-top:8px">iPhone tip: “Check In” (Messages, iOS 17 or later) alerts your trusted contact by itself if you don't arrive or don't answer. If you're in danger, call your local emergency number (911 in the US, 999 in the UK, 112 in Europe).</p>`);
  const up=()=>{$("#sf-msg").textContent=msg()};up();
@@ -2314,8 +2314,8 @@ function openAlert(kind){const m=S.dateMode||{};const st={pos:""};
  sheetWrap(HEAD[kind],`<h2 style="font-size:26px">${HEAD[kind]}</h2><p class="sub">This text is ready: you send it to your friend yourself. The app doesn't alert anyone on its own.</p>
   ${kind==="danger"?`<div class="box" style="margin-top:14px;border:2px solid var(--next)"><b>If you are in immediate danger</b><div class="row-btns"><a class="btn primary" href="tel:112" style="text-decoration:none">📞 Call emergency (112)</a></div></div>`:""}
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="al-msg"></div></div>
-  <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Close</button></div>
-  <div id="al-consent"></div>`);
+  <div id="al-consent"></div>
+  <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Close</button></div>`);
  const up=()=>{$("#al-msg").textContent=msg()};up();
  sendUI("al",msg,"#al-msg",st,up,kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("“On a date” mode ended 🏠")}:null,{pos:kind!=="home",pre:kind==="danger"})}
 function goBlock(){const m=S.dateMode;if(m&&Date.now()-m.since>864e5){S.dateMode=null;save()}
@@ -2494,7 +2494,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v39";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v40";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 </body>
