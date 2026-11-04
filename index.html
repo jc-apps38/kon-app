@@ -696,9 +696,11 @@ function weight(q){const p=S.prefs;let w=q.w;if(p.love.includes(q.id))w*=1.5;if(
 function typeMatch(ph){const T=S.prefs.type||{};let ok=0,tot=0;if(!ph)return{ok,tot};
  ["hair","eyes","height","style","beard"].forEach(k=>{if(T[k]&&T[k].length&&ph[k]){tot++;if(T[k].includes(ph[k]))ok++}});
  if((T.amin||T.amax)&&ph.age){tot++;const a=+ph.age;if((!T.amin||a>=T.amin)&&(!T.amax||a<=T.amax))ok++}return{ok,tot}}
-function score(ans,ph){let t=0,g=0;Q.forEach(q=>{const v=val(ans[q.id]);if(v===undefined)return;const w=weight(q);t+=w;g+=v*w});
+const aiseCap=ans=>val(ans.aise)<.2?4.5:6.5;
+function capOf(s,ans,ph){const a=val(ans.aise);if(a===undefined||a>=.5||val(ans.respect)<.5)return 0;const c=aiseCap(ans);return(score(ans,ph,true)>c&&s===c)?c:0}
+function score(ans,ph,raw){let t=0,g=0;Q.forEach(q=>{const v=val(ans[q.id]);if(v===undefined)return;const w=weight(q);t+=w;g+=v*w});
  if(!t)return 0;const tm=typeMatch(ph);const bonus=tm.tot?.5*tm.ok/tm.tot:0;let s=Math.min(10,Math.round((g/t*10+bonus)*2)/2);
- if(val(ans.respect)<.5)s=Math.min(s,2.5); if(val(ans.aise)<.5)s=Math.min(s,4.5);
+ if(raw)return s; if(val(ans.respect)<.5)s=Math.min(s,2.5); if(val(ans.aise)<.5)s=Math.min(s,aiseCap(ans));
  if(S.prefs.hate.some(id=>ans[id]!==undefined&&val(ans[id])<.3))s=Math.min(s,5);return s}
 const dealbreak=ans=>S.prefs.hate.filter(id=>ans[id]!==undefined&&val(ans[id])<.3).map(id=>Q.find(q=>q.id===id).r);
 function verdict(s,ans,dg){const v=verdict0(s,ans);v.t=G(v.t,dg);v.s=G(v.s,dg);return v}
@@ -839,7 +841,7 @@ function moreHTML(P,Lk,dg,k,open){const pa=k==="e"?"data-ph":"data-xph",la=k==="
 function bindMore(R,P,Lk){const nn=R.querySelector("#x-nat");if(nn)nn.onchange=()=>{P.nat=nn.value};const ag=R.querySelector("#x-age");if(ag)ag.oninput=()=>{P.age=ag.value.replace(/\D/g,"").slice(0,2)};
  R.querySelectorAll("[data-xph]").forEach(b=>b.onclick=()=>{const q=b.dataset.xph;P[q]=P[q]===b.dataset.pv?"":b.dataset.pv;R.querySelectorAll(`[data-xph="${q}"]`).forEach(x=>x.setAttribute("aria-pressed",x.dataset.pv===P[q]))});
  R.querySelectorAll("[data-xlk]").forEach(b=>b.onclick=()=>{const v=b.dataset.xlk,i=Lk.indexOf(v);if(i>-1)Lk.splice(i,1);else Lk.push(v);b.setAttribute("aria-pressed",i<0)});bindAddLike(R,"#x-lkadd","#x-lkbtn",R.querySelector("#x-lkbox"),Lk,"data-xlk")}
-function newEval(gid,pid,d,n,tm,src,x){const g=gid&&S.guys.find(x=>x.id===gid);ev={step:"info",name:g?g.name:(n||""),photo:g?g.photo||"":"",ill:g?g.ill:undefined,source:g?g.source:(src||""),date:d||today(),answers:{},likes:g?(g.likes||[]).slice():(x&&x.likes?x.likes.slice():[]),vibe:g?(g.vibe||""):"",pre:x&&x.pre?x.pre:"",i:0,note:"",nuance:false,dg:g?(g.dg||dflt()):dflt(),phys:g?JSON.parse(JSON.stringify(g.phys||{})):(x&&x.phys?JSON.parse(JSON.stringify(x.phys)):{}),detOpen:false,re:g?g.id:null,pid:pid||null,time:tm||""};ev.list=g?followList(g,ev):firstList();setView("eval")}
+function newEval(gid,pid,d,n,tm,src,x){const g=gid&&S.guys.find(x=>x.id===gid);ev={step:"info",name:g?g.name:(n||""),photo:g?g.photo||"":"",ill:g?g.ill:undefined,source:g?g.source:(src||""),date:d||today(),answers:{},likes:g?(g.likes||[]).slice():(x&&x.likes?x.likes.slice():[]),vibe:g?(g.vibe||""):"",pre:x&&x.pre?x.pre:"",i:0,note:"",nuance:false,dg:g?(g.dg||dflt()):dflt(),phys:g?JSON.parse(JSON.stringify(g.phys||{})):(x&&x.phys?JSON.parse(JSON.stringify(x.phys)):{}),detOpen:false,re:g?g.id:null,pid:pid||null,time:tm||"",place:(x&&x.place)||""};ev.list=g?followList(g,ev):firstList();setView("eval")}
 function evalView(){
  if(ev.step==="info")return `<section class="view">
   <div class="ev-head"><button class="back glass" data-act="quit" aria-label="Annuler">✕</button><div class="prog"><i style="width:4%"></i></div><span class="count">0/${ev.list.length}</span></div>
@@ -848,6 +850,8 @@ function evalView(){
    <div class="field"><label class="t" for="f-name">Son prénom</label><input class="input" id="f-name" maxlength="30" value="${esc(ev.name)}" autocomplete="off" autocapitalize="words"></div>
    <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
    <div class="gtog"><div class="field"><label class="t" for="f-date">Date du rendez-vous</label><input class="input" type="date" id="f-date" max="${today()}" value="${ev.date}"></div><div class="field"><label class="t" for="f-time">Heure</label><input class="input" type="time" id="f-time" value="${ev.time||""}"></div></div>
+   <div class="field"><label class="t" for="f-place">Où ? (facultatif)</label><input class="input" id="f-place" maxlength="60" placeholder="Bar Le Comptoir, place du marché" value="${esc(ev.place||"")}"></div>
+   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${preQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(avant le date, facultatif)</span></span>${ev.re&&(S.guys.find(x=>x.id===ev.re)||{}).vibe?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(S.guys.find(x=>x.id===ev.re).vibe)} »</span>`:""}<div class="chips">${PRE.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.pre===o}">${o}</button>`).join("")}</div></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
    <div class="field"><button class="btn primary" data-act="start">C'est parti</button></div></div></section>`;
  if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
@@ -873,7 +877,7 @@ function evalView(){
   <span class="eyebrow">Le verdict pour ${esc(ev.name)}</span>
   <div class="ring">${ev.photo?`<div class="face"><img src="${ev.photo}" alt=""></div>`:""}<svg viewBox="0 0 180 180"><circle class="trk" cx="90" cy="90" r="80"/><circle class="val" id="ringv" cx="90" cy="90" r="80" stroke="${col(s)}" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-target="${C*(1-s/10)}"/></svg>
    <div class="num"><span id="cnt" data-to="${s}" style="color:${col(s)}">0</span><small>sur 10</small></div></div>
-  <h2 class="verdict">${v.ic} ${esc(v.t)}</h2><p class="vsub">${esc(v.s)}</p>${typeBadge(ev.phys)}
+  <h2 class="verdict">${v.ic} ${esc(v.t)}</h2><p class="vsub">${esc(v.s)}</p>${capOf(s,ev.answers,ev.phys)?`<p class="mt" style="margin:6px 0 0">⚠️ Note limitée à ${fmt(capOf(s,ev.answers,ev.phys))} : tu ne t'es pas senti${ue()} à l'aise.</p>`:""}${typeBadge(ev.phys)}
   <div class="flags">
    <div class="fbox glass"><h3><span>Ses green flags</span><span style="color:var(--keep)">${gs.length}</span></h3><div class="pills">${gs.length?gs.map(x=>`<span class="pill g">${esc(x)}</span>`).join(""):'<span class="none">Aucun. Aïe.</span>'}</div></div>
    <div class="fbox glass"><h3><span>Ses red flags</span><span style="color:var(--next)">${rs.length}</span></h3><div class="pills">${rs.length?rs.map(x=>`<span class="pill r">${esc(x)}</span>`).join(""):'<span class="none">Aucun. Suspect, ou parfait ?</span>'}</div></div></div>
@@ -927,7 +931,7 @@ function tips(){const sec=(e,t,body,open)=>`<details class="g glass"${open?" ope
  ${sec("🚩","Les red flags classiques",[li("✕","Il ne parle que de lui."),li("✕","Son ex revient toutes les dix minutes."),li("✕","Il insiste quand tu dis non."),li("✕","Il critique tout le monde."),li("✕","Il disparaît puis réapparaît comme si de rien n'était."),li("✕","Il te met la pression pour aller chez lui."),li("✕","Il est jaloux dès le premier date."),li("✕","Il te fait douter de toi.")].join(""))}
  ${sec("📖","Le lexique du dating",[li("👻",`<b>Ghosting</b> : il disparaît sans un mot.`),li("🍞",`<b>Breadcrumbing</b> : des petits messages pour te garder sous le coude, sans jamais avancer.`),li("💣",`<b>Love bombing</b> : déclarations et cadeaux trop vite, trop fort. Souvent pour mieux contrôler ensuite.`),li("🪑",`<b>Benching</b> : tu es sur le banc de touche, en option.`),li("🧟",`<b>Zombieing</b> : le fantôme revient d'entre les morts.`),li("🛰️",`<b>Orbiting</b> : il ne t'écrit plus mais regarde toutes tes stories.`),li("🌀",`<b>Situationship</b> : plus que des amis, moins qu'un couple, et personne ne sait trop quoi.`)].join(""))}
  ${sec("🛡️","Ta sécurité au premier date",[li("1","Rendez-vous dans un lieu public, que tu connais si possible."),li("2","Une amie sait où tu es, avec qui, et à quelle heure tu rentres."),li("3","Tu gères ton trajet aller et retour toi-même."),li("4","Tu gardes un œil sur ton verre, et tu ne le laisses jamais seul."),li("5","Tu peux partir à tout moment, sans te justifier.")].join(""))}
- ${sec("🧠","Comment marche le score",`<p style="margin:0">Chaque réponse rapporte des points selon qu'elle est verte ou rouge, avec des réponses nuancées entre les deux. Le respect, ton aisance et ton feeling comptent double. Les qualités que tu as choisies dans ton profil comptent encore plus, et un dealbreaker plafonne le score à 5 sur 10. Si tu as décrit ton type physique, une correspondance ajoute au maximum un demi-point. Un manque de respect le bloque à 2,5, quoi qu'il arrive.</p>`)}
+ ${sec("🧠","Comment marche le score",`<p style="margin:0">Chaque réponse rapporte des points selon qu'elle est verte ou rouge, avec des réponses nuancées entre les deux. Le respect, ton aisance et ton feeling comptent double. Les qualités que tu as choisies dans ton profil comptent encore plus, un dealbreaker plafonne le score à 5 sur 10, et un manque d'aisance le plafonne à 6,5 (4,5 si tu avais envie de partir). Si tu as décrit ton type physique, une correspondance ajoute au maximum un demi-point. Un manque de respect le bloque à 2,5, quoi qu'il arrive.</p>`)}
  <div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Besoin d'aide ?</b><p style="margin:6px 0 0;font-size:14px">Si un rendez-vous t'a mis${ue()} en danger ou mal à l'aise, parles-en à quelqu'un de confiance. En France, le 3919 écoute et oriente, gratuitement et anonymement. En cas d'urgence, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p></div>
  </section>`}
 
@@ -960,8 +964,8 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
 function openSheet(id,hi){const g=S.guys.find(x=>x.id===id);if(!g)return;const HH=hist(g);const past=hi!==undefined&&hi<HH.length-1;const E=past?HH[hi]:HH[HH.length-1];const A=E.answers;const s=score(A,g.phys),v=verdict(s,A,g.dg);const gs=greens(A,g.dg),rs=reds(A,g.dg);
  $("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(g.name)}"><div class="in"><div class="grab"></div>${past?`<div class="box" style="background:var(--accent-soft);margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:14px"><b>📅 ${(HH.length>1?(hi+1)+(hi===0?"er":"e")+" date · ":"")}${new Date(E.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</b></span><button class="pillbtn" data-histcur="${g.id}">Fiche actuelle</button></div>`:""}
   <div class="sh-top"><label class="photo" for="s-photo" style="margin:0" title="Changer la photo">${avatar(g,86,true)}<input type="file" id="s-photo" accept="image/*"></label>
-  <div style="min-width:0"><h2>${esc(g.name)}</h2><span class="mt">${esc(g.source)} · ${dfmt(E.date,{day:"numeric",month:"long",year:"numeric"})}${E.time?" · "+E.time.replace(":","h"):""}</span>${physLine(g.phys)?`<span class="mt" style="color:var(--ink);opacity:.8">${esc(physLine(g.phys))}</span>`:""}${g.vibe?`<span class="vibe">${esc(g.vibe)}</span>`:""}${g.pre&&g.vibe&&vrank(g.pre)&&vrank(g.vibe)?`<span class="mt" style="margin-top:4px">🔮 ${esc(preText(g.pre,g.dg||dflt()))} → ${esc(g.vibe)}</span>`:""}
-  <div style="font-weight:800;margin-top:6px;color:${col(s)};font-family:var(--display);font-size:18px">${fmt(s)}/10 · ${v.ic} ${esc(v.t)}</div></div></div>
+  <div style="min-width:0"><h2>${esc(g.name)}</h2><span class="mt">${esc(g.source)} · ${dfmt(E.date,{day:"numeric",month:"long",year:"numeric"})}${E.time?" · "+E.time.replace(":","h"):""}</span>${E.place?`<span class="mt">📍 ${esc(E.place)}</span>`:""}${physLine(g.phys)?`<span class="mt" style="color:var(--ink);opacity:.8">${esc(physLine(g.phys))}</span>`:""}${E.vibe?`<span class="vibe">${esc(E.vibe)}</span>`:""}${E.pre&&E.vibe&&vrank(E.pre)&&vrank(E.vibe)?`<span class="mt" style="margin-top:4px">🔮 ${esc(preText(E.pre,g.dg||dflt()))} → ${esc(E.vibe)}</span><span class="mt">${esc(vmsg(vrank(E.vibe)-vrank(E.pre),g.dg||dflt()))}</span>`:""}
+  <div style="font-weight:800;margin-top:6px;color:${col(s)};font-family:var(--display);font-size:18px">${fmt(s)}/10 · ${v.ic} ${esc(v.t)}</div>${capOf(s,A,g.phys)?`<p class="mt" style="margin:4px 0 0">⚠️ Note limitée à ${fmt(capOf(s,A,g.phys))} : pas à l'aise.</p>`:""}</div></div>
   ${past?"":`<div class="status">${["keep","maybe","next"].map(st=>`<button data-s="${st}" data-move="${st}" aria-pressed="${g.status===st}">${st==="keep"?"💚 Je garde":st==="next"?"🤮 Next":"🤔 Réflexion"}</button>`).join("")}</div>`}
   ${past?"":histBox(g)+sheetActions(g)}
   <div class="flags">${radar(A)}<div class="fbox glass"><h3><span>Green flags</span><span style="color:var(--keep)">${gs.length}</span></h3><div class="pills">${gs.length?gs.map(x=>`<span class="pill g">${esc(x)}</span>`).join(""):'<span class="none">Aucun</span>'}</div></div>
@@ -1012,9 +1016,9 @@ function animResult(){const r=$("#ringv"),n=$("#cnt");if(!r||!n)return;const to=
  requestAnimationFrame(()=>requestAnimationFrame(()=>{r.style.strokeDashoffset=r.dataset.target}));if(reduce){n.textContent=fmt(to);return}
  const t0=performance.now(),D=1300;(function f(t){const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3);n.textContent=fmt(Math.round(to*e*2)/2);if(k<1)requestAnimationFrame(f)})(t0)}
 function decide(st){let g;const nt=ev.note?[{t:new Date().toISOString(),x:ev.note}]:[];
- if(ev.re&&(g=S.guys.find(x=>x.id===ev.re))){g.history=g.history||[];g.history.push({date:g.date,time:g.time,answers:g.answers,status:g.status});g.date=ev.date||today();g.time=ev.time||"";g.answers=ev.answers;g.status=st;g.phys=ev.phys;g.likes=ev.likes||[];if(ev.vibe)g.vibe=ev.vibe;g.pre=ev.pre||"";g.source=ev.source||g.source;
+ if(ev.re&&(g=S.guys.find(x=>x.id===ev.re))){g.history=g.history||[];g.history.push({date:g.date,time:g.time,answers:g.answers,status:g.status,place:g.place||"",pre:g.pre||"",vibe:g.vibe||""});g.date=ev.date||today();g.time=ev.time||"";g.place=ev.place||"";g.answers=ev.answers;g.status=st;g.phys=ev.phys;g.likes=ev.likes||[];if(ev.vibe)g.vibe=ev.vibe;g.pre=ev.pre||"";g.source=ev.source||g.source;
   if(ev.photo&&ev.photo!==g.photo){g.photo=ev.photo;delete g.ill}g.notes=nt.concat(g.notes||[]);if(st!=="keep")delete g.couple}
- else{g={id:"g"+Date.now(),name:ev.name,photo:ev.photo,source:ev.source||"Autre",date:ev.date||today(),answers:ev.answers,status:st,notes:nt,example:false,dg:ev.dg,phys:ev.phys,likes:ev.likes||[],vibe:ev.vibe||"",pre:ev.pre||"",time:ev.time||""};S.guys.push(g)}
+ else{g={id:"g"+Date.now(),name:ev.name,photo:ev.photo,source:ev.source||"Autre",date:ev.date||today(),answers:ev.answers,status:st,notes:nt,example:false,dg:ev.dg,phys:ev.phys,likes:ev.likes||[],vibe:ev.vibe||"",pre:ev.pre||"",time:ev.time||"",place:ev.place||""};S.guys.push(g)}
  {const ids=ev.list.map(q=>q.id);g.asked=Array.from(new Set((g.asked||[]).concat(ids)));S.recent=ids.concat(S.recent||[]).slice(0,40)}
  if(ev.pid){const p=(S.plans||[]).find(x=>x.id===ev.pid);if(p){p.done=true;p.gid=g.id}}
  S.seg=st;lastAdded=g.id;save();burst(st);
@@ -1150,7 +1154,7 @@ const hm=w=>w.slice(11,16).replace(":","h");
 const planGuy=p=>p.gid&&S.guys.find(g=>g.id===p.gid);
 const planName=p=>{const g=planGuy(p);return g?g.name:p.name||"?"};
 const planAv=(p,s)=>{const g=planGuy(p);return g?avatar(g,s,true):avatar({name:p.name},s)};
-function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true}]}
+function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true,place:g.place||"",pre:g.pre||"",vibe:g.vibe||""}]}
 function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h.length-1].answers,g.phys),c=score(g.answers,g.phys);
  return c>p?' <span style="color:var(--keep);font-size:14px">▲</span>':c<p?' <span style="color:var(--next);font-size:14px">▼</span>':""}
 function bindLayer(){$("#layer").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b))}
@@ -1209,18 +1213,21 @@ function agenda(){const now=new Date();const P=(S.plans||[]).slice().sort((a,b)=
   <div class="list">${up.length?up.map(item).join(""):`<div class="empty glass"><span class="big">📅</span><strong>Aucun date prévu</strong>Planifie ton prochain rendez-vous pour le retrouver ici.</div>`}</div>
   ${cx.length?`<div class="sect"><h3>Lapins & annulations</h3></div><div class="list">${cx.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}${p.example?'<span class="tag">exemple</span>':""}</span><span class="mt">${p.cancel==="rabbit"?"🐇 Lapin posé":"❌ Annulé"} · ${new Date(p.when).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"short"})}</span></span><button class="iconbtn" data-pdel="${p.id}" aria-label="Supprimer">✕</button></div>`).join("")}</div>${rb?`<p class="mt" style="margin:8px 0 0">🐇 ${rb} lapin${rb>1?"s":""} posé${rb>1?"s":""} jusqu'ici</p>`:""}`:""}<div class="box glass" style="margin-top:14px"><h3>🛡️ Date en sécurité</h3><p style="margin:0 0 10px;font-size:14px;color:var(--muted)">Prépare en 10 secondes un message pour prévenir une amie : avec qui, où, et à quelle heure tu rentres.</p><button class="btn primary" data-act="safe">Préparer mon message</button></div>
  </section>`}
-function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.likes||[]).slice();let sr=g.source,vb=g.vibe||"";
+function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.likes||[]).slice();let sr=g.source,vb=g.vibe||"",pr=g.pre||"";
  sheetWrap("Modifier la fiche",`<h2 style="font-size:26px">Modifier la fiche</h2>
   <div class="field"><label class="t" for="e-name">Prénom</label><input class="input" id="e-name" maxlength="30" value="${esc(g.name)}" autocapitalize="words"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton ressenti en un mot (facultatif)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
+  <div class="field"><label class="t" for="e-place">Où ? (facultatif)</label><input class="input" id="e-place" maxlength="60" value="${esc(g.place||"")}"></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:14px">${preQ(g.dg||dflt())} <span style="font-weight:400;color:var(--muted)">(avant le date)</span></span><div class="chips">${PRE.map(o=>`<button class="chip" data-xpr="${o}" aria-pressed="${pr===o}">${o}</button>`).join("")}</div></div>
   ${moreHTML(P,Lk,g.dg||dflt(),"x",true)}
   <div class="row-btns"><button class="btn primary" id="e-save">Enregistrer</button><button class="btn ghost" id="e-cancel">${"Annuler"}</button></div>`);
  const R=$("#layer");bindMore(R,P,Lk);
  R.querySelectorAll("[data-es]").forEach(b=>b.onclick=()=>{sr=sr===b.dataset.es?"":b.dataset.es;R.querySelectorAll("[data-es]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.es===sr))});
  R.querySelectorAll("[data-xvb]").forEach(b=>b.onclick=()=>{vb=vb===b.dataset.xvb?"":b.dataset.xvb;R.querySelectorAll("[data-xvb]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.xvb===vb))});
+ R.querySelectorAll("[data-xpr]").forEach(b=>b.onclick=()=>{pr=pr===b.dataset.xpr?"":b.dataset.xpr;R.querySelectorAll("[data-xpr]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.xpr===pr))});
  $("#e-cancel").onclick=()=>openSheet(g.id);
- $("#e-save").onclick=()=>{const n=$("#e-name").value.trim();if(!n){$("#e-name").focus();return}g.name=n;g.source=sr||g.source;g.vibe=vb;g.likes=Lk;g.phys=P;save();toast("Fiche mise à jour ✅");render();openSheet(g.id)}}
+ $("#e-save").onclick=()=>{const n=$("#e-name").value.trim();if(!n){$("#e-name").focus();return}g.name=n;g.source=sr||g.source;g.vibe=vb;g.pre=pr;g.place=($("#e-place").value||"").trim();g.likes=Lk;g.phys=P;save();toast("Fiche mise à jour ✅");render();openSheet(g.id)}}
 function openNewChoice(){sheetWrap("Nouveau date",`<h2 style="font-size:26px">Nouveau date</h2><p style="margin:0 0 14px;color:var(--muted)">Quel est ton cas ?</p>
   <div class="newchoice"><button class="nc" data-act="newplan"><span class="e">📅</span><b>Date à venir</b><small>Je le prépare : jour, heure, lieu</small></button><button class="nc" data-act="newpast"><span class="e">✍️</span><b>Date passé</b><small>Je le note : questions et verdict</small></button></div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Annuler</button></div>`)}
@@ -1371,7 +1378,7 @@ function bind(){const m=$("#main");
  if(view==="eval"){
   const nm=$("#f-name");if(nm)nm.oninput=()=>{ev.name=nm.value.trim();nm.style.borderColor=""};
   const dt=$("#f-date");if(dt)dt.onchange=()=>{if(dt.value>today()){dt.value=today();toast("Ce jour n'est pas encore passé. Prépare-le avec « Date à venir » 😉")}ev.date=dt.value||today()};
-  const tmI=$("#f-time");if(tmI)tmI.onchange=tmI.oninput=()=>ev.time=tmI.value;
+  const tmI=$("#f-time");if(tmI)tmI.onchange=tmI.oninput=()=>ev.time=tmI.value;const plI=$("#f-place");if(plI)plI.oninput=()=>ev.place=plI.value.trim();document.querySelectorAll("[data-ep]").forEach(b=>b.onclick=()=>{ev.pre=ev.pre===b.dataset.ep?"":b.dataset.ep;document.querySelectorAll("[data-ep]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.ep===ev.pre))});
   const nt=$("#f-note");if(nt)nt.oninput=()=>ev.note=nt.value.trim();
   const de=$("#det");if(de)de.ontoggle=()=>{ev.detOpen=de.open};
   const nt2=$("#f-nat");if(nt2)nt2.onchange=()=>{ev.phys.nat=nt2.value};const ag=$("#f-age");if(ag)ag.oninput=()=>{ev.phys.age=ag.value.replace(/\D/g,"").slice(0,2)};
@@ -1543,9 +1550,11 @@ function weight(q){const p=S.prefs;let w=q.w;if(p.love.includes(q.id))w*=1.5;if(
 function typeMatch(ph){const T=S.prefs.type||{};let ok=0,tot=0;if(!ph)return{ok,tot};
  ["hair","eyes","height","style","beard"].forEach(k=>{if(T[k]&&T[k].length&&ph[k]){tot++;if(T[k].includes(ph[k]))ok++}});
  if((T.amin||T.amax)&&ph.age){tot++;const a=+ph.age;if((!T.amin||a>=T.amin)&&(!T.amax||a<=T.amax))ok++}return{ok,tot}}
-function score(ans,ph){let t=0,g=0;Q.forEach(q=>{const v=val(ans[q.id]);if(v===undefined)return;const w=weight(q);t+=w;g+=v*w});
+const aiseCap=ans=>val(ans.aise)<.2?4.5:6.5;
+function capOf(s,ans,ph){const a=val(ans.aise);if(a===undefined||a>=.5||val(ans.respect)<.5)return 0;const c=aiseCap(ans);return(score(ans,ph,true)>c&&s===c)?c:0}
+function score(ans,ph,raw){let t=0,g=0;Q.forEach(q=>{const v=val(ans[q.id]);if(v===undefined)return;const w=weight(q);t+=w;g+=v*w});
  if(!t)return 0;const tm=typeMatch(ph);const bonus=tm.tot?.5*tm.ok/tm.tot:0;let s=Math.min(10,Math.round((g/t*10+bonus)*2)/2);
- if(val(ans.respect)<.5)s=Math.min(s,2.5); if(val(ans.aise)<.5)s=Math.min(s,4.5);
+ if(raw)return s; if(val(ans.respect)<.5)s=Math.min(s,2.5); if(val(ans.aise)<.5)s=Math.min(s,aiseCap(ans));
  if(S.prefs.hate.some(id=>ans[id]!==undefined&&val(ans[id])<.3))s=Math.min(s,5);return s}
 const dealbreak=ans=>S.prefs.hate.filter(id=>ans[id]!==undefined&&val(ans[id])<.3).map(id=>Q.find(q=>q.id===id).r);
 function verdict(s,ans,dg){const v=verdict0(s,ans);v.t=G(v.t,dg);v.s=G(v.s,dg);return v}
@@ -1686,7 +1695,7 @@ function moreHTML(P,Lk,dg,k,open){const pa=k==="e"?"data-ph":"data-xph",la=k==="
 function bindMore(R,P,Lk){const nn=R.querySelector("#x-nat");if(nn)nn.onchange=()=>{P.nat=nn.value};const ag=R.querySelector("#x-age");if(ag)ag.oninput=()=>{P.age=ag.value.replace(/\D/g,"").slice(0,2)};
  R.querySelectorAll("[data-xph]").forEach(b=>b.onclick=()=>{const q=b.dataset.xph;P[q]=P[q]===b.dataset.pv?"":b.dataset.pv;R.querySelectorAll(`[data-xph="${q}"]`).forEach(x=>x.setAttribute("aria-pressed",x.dataset.pv===P[q]))});
  R.querySelectorAll("[data-xlk]").forEach(b=>b.onclick=()=>{const v=b.dataset.xlk,i=Lk.indexOf(v);if(i>-1)Lk.splice(i,1);else Lk.push(v);b.setAttribute("aria-pressed",i<0)});bindAddLike(R,"#x-lkadd","#x-lkbtn",R.querySelector("#x-lkbox"),Lk,"data-xlk")}
-function newEval(gid,pid,d,n,tm,src,x){const g=gid&&S.guys.find(x=>x.id===gid);ev={step:"info",name:g?g.name:(n||""),photo:g?g.photo||"":"",ill:g?g.ill:undefined,source:g?g.source:(src||""),date:d||today(),answers:{},likes:g?(g.likes||[]).slice():(x&&x.likes?x.likes.slice():[]),vibe:g?(g.vibe||""):"",pre:x&&x.pre?x.pre:"",i:0,note:"",nuance:false,dg:g?(g.dg||dflt()):dflt(),phys:g?JSON.parse(JSON.stringify(g.phys||{})):(x&&x.phys?JSON.parse(JSON.stringify(x.phys)):{}),detOpen:false,re:g?g.id:null,pid:pid||null,time:tm||""};ev.list=g?followList(g,ev):firstList();setView("eval")}
+function newEval(gid,pid,d,n,tm,src,x){const g=gid&&S.guys.find(x=>x.id===gid);ev={step:"info",name:g?g.name:(n||""),photo:g?g.photo||"":"",ill:g?g.ill:undefined,source:g?g.source:(src||""),date:d||today(),answers:{},likes:g?(g.likes||[]).slice():(x&&x.likes?x.likes.slice():[]),vibe:g?(g.vibe||""):"",pre:x&&x.pre?x.pre:"",i:0,note:"",nuance:false,dg:g?(g.dg||dflt()):dflt(),phys:g?JSON.parse(JSON.stringify(g.phys||{})):(x&&x.phys?JSON.parse(JSON.stringify(x.phys)):{}),detOpen:false,re:g?g.id:null,pid:pid||null,time:tm||"",place:(x&&x.place)||""};ev.list=g?followList(g,ev):firstList();setView("eval")}
 function evalView(){
  if(ev.step==="info")return `<section class="view">
   <div class="ev-head"><button class="back glass" data-act="quit" aria-label="Cancel">✕</button><div class="prog"><i style="width:4%"></i></div><span class="count">0/${ev.list.length}</span></div>
@@ -1695,6 +1704,8 @@ function evalView(){
    <div class="field"><label class="t" for="f-name">First name</label><input class="input" id="f-name" maxlength="30" value="${esc(ev.name)}" autocomplete="off" autocapitalize="words"></div>
    <div class="field"><span class="t" style="font-weight:700;font-size:14px">Where did you meet?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
    <div class="gtog"><div class="field"><label class="t" for="f-date">Date of the date</label><input class="input" type="date" id="f-date" max="${today()}" value="${ev.date}"></div><div class="field"><label class="t" for="f-time">Time</label><input class="input" type="time" id="f-time" value="${ev.time||""}"></div></div>
+   <div class="field"><label class="t" for="f-place">Where? (optional)</label><input class="input" id="f-place" maxlength="60" placeholder="The Corner Bar, market square" value="${esc(ev.place||"")}"></div>
+   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${preQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(before the date, optional)</span></span>${ev.re&&(S.guys.find(x=>x.id===ev.re)||{}).vibe?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(S.guys.find(x=>x.id===ev.re).vibe)}”</span>`:""}<div class="chips">${PRE.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.pre===o}">${o}</button>`).join("")}</div></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
    <div class="field"><button class="btn primary" data-act="start">Let's go</button></div></div></section>`;
  if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
@@ -1720,7 +1731,7 @@ function evalView(){
   <span class="eyebrow">The verdict for ${esc(ev.name)}</span>
   <div class="ring">${ev.photo?`<div class="face"><img src="${ev.photo}" alt=""></div>`:""}<svg viewBox="0 0 180 180"><circle class="trk" cx="90" cy="90" r="80"/><circle class="val" id="ringv" cx="90" cy="90" r="80" stroke="${col(s)}" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-target="${C*(1-s/10)}"/></svg>
    <div class="num"><span id="cnt" data-to="${s}" style="color:${col(s)}">0</span><small>out of 10</small></div></div>
-  <h2 class="verdict">${v.ic} ${esc(v.t)}</h2><p class="vsub">${esc(v.s)}</p>${typeBadge(ev.phys)}
+  <h2 class="verdict">${v.ic} ${esc(v.t)}</h2><p class="vsub">${esc(v.s)}</p>${capOf(s,ev.answers,ev.phys)?`<p class="mt" style="margin:6px 0 0">⚠️ Score capped at ${fmt(capOf(s,ev.answers,ev.phys))}: you didn't feel comfortable.</p>`:""}${typeBadge(ev.phys)}
   <div class="flags">
    <div class="fbox glass"><h3><span>Green flags</span><span style="color:var(--keep)">${gs.length}</span></h3><div class="pills">${gs.length?gs.map(x=>`<span class="pill g">${esc(x)}</span>`).join(""):'<span class="none">None. Ouch.</span>'}</div></div>
    <div class="fbox glass"><h3><span>Red flags</span><span style="color:var(--next)">${rs.length}</span></h3><div class="pills">${rs.length?rs.map(x=>`<span class="pill r">${esc(x)}</span>`).join(""):'<span class="none">None. Suspicious, or perfect?</span>'}</div></div></div>
@@ -1774,7 +1785,7 @@ function tips(){const sec=(e,t,body,open)=>`<details class="g glass"${open?" ope
  ${sec("🚩","The classic red flags",[li("✕","He only talks about himself."),li("✕","His ex comes up every ten minutes."),li("✕","He pushes when you say no."),li("✕","He criticizes everyone."),li("✕","He disappears, then shows up like nothing happened."),li("✕","He pressures you to go back to his place."),li("✕","He's jealous from the very first date."),li("✕","He makes you doubt yourself.")].join(""))}
  ${sec("📖","Dating slang",[li("👻",`<b>Ghosting</b>: he vanishes without a word.`),li("🍞",`<b>Breadcrumbing</b>: little texts to keep you on the hook, without ever moving forward.`),li("💣",`<b>Love bombing</b>: declarations and gifts too fast, too strong. Often to control you better later.`),li("🪑",`<b>Benching</b>: you're on the bench, kept as an option.`),li("🧟",`<b>Zombieing</b>: the ghost comes back from the dead.`),li("🛰️",`<b>Orbiting</b>: he stopped texting but watches all your stories.`),li("🌀",`<b>Situationship</b>: more than friends, less than a couple, and nobody really knows what.`)].join(""))}
  ${sec("🛡️","Staying safe on a first date",[li("1","Meet in a public place, ideally one you know."),li("2","A friend knows where you are, who with, and when you'll be home."),li("3","You handle your own ride there and back."),li("4","You keep an eye on your drink, and never leave it alone."),li("5","You can leave at any moment, no explanation needed.")].join(""))}
- ${sec("🧠","How the score works",`<p style="margin:0">Each answer earns points depending on whether it's green or red, with nuanced answers in between. Respect, how comfortable you felt and your gut feeling count double. The qualities you picked in your profile count even more, and a dealbreaker caps the score at 5 out of 10. If you described your physical type, a match adds half a point at most. Disrespect locks it at 2.5, no matter what.</p>`)}
+ ${sec("🧠","How the score works",`<p style="margin:0">Each answer earns points depending on whether it's green or red, with nuanced answers in between. Respect, how comfortable you felt and your gut feeling count double. The qualities you picked in your profile count even more, a dealbreaker caps the score at 5 out of 10, and not feeling comfortable caps it at 6.5 (4.5 if you wanted to leave). If you described your physical type, a match adds half a point at most. Disrespect locks it at 2.5, no matter what.</p>`)}
  <div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Need help?</b><p style="margin:6px 0 0;font-size:14px">If a date put you in danger or made you feel unsafe, talk to someone you trust. In an emergency, call your local emergency number: 911 in the US, 999 in the UK, 112 across Europe. In the US, the National Domestic Violence Hotline is 1-800-799-7233. In the UK, the National Domestic Abuse Helpline is 0808 2000 247.</p></div>
  </section>`}
 
@@ -1807,8 +1818,8 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
 function openSheet(id,hi){const g=S.guys.find(x=>x.id===id);if(!g)return;const HH=hist(g);const past=hi!==undefined&&hi<HH.length-1;const E=past?HH[hi]:HH[HH.length-1];const A=E.answers;const s=score(A,g.phys),v=verdict(s,A,g.dg);const gs=greens(A,g.dg),rs=reds(A,g.dg);
  $("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(g.name)}"><div class="in"><div class="grab"></div>${past?`<div class="box" style="background:var(--accent-soft);margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:14px"><b>📅 ${(HH.length>1?ord(hi+1)+" date · ":"")}${new Date(E.date+"T12:00").toLocaleDateString(LOC,{weekday:"long",month:"long",day:"numeric"})}</b></span><button class="pillbtn" data-histcur="${g.id}">Current profile</button></div>`:""}
   <div class="sh-top"><label class="photo" for="s-photo" style="margin:0" title="Change photo">${avatar(g,86,true)}<input type="file" id="s-photo" accept="image/*"></label>
-  <div style="min-width:0"><h2>${esc(g.name)}</h2><span class="mt">${esc(g.source)} · ${dfmt(E.date,{month:"long",day:"numeric",year:"numeric"})}${E.time?" · "+tf(E.time):""}</span>${physLine(g.phys)?`<span class="mt" style="color:var(--ink);opacity:.8">${esc(physLine(g.phys))}</span>`:""}${g.vibe?`<span class="vibe">${esc(g.vibe)}</span>`:""}${g.pre&&g.vibe&&vrank(g.pre)&&vrank(g.vibe)?`<span class="mt" style="margin-top:4px">🔮 ${esc(preText(g.pre,g.dg||dflt()))} → ${esc(g.vibe)}</span>`:""}
-  <div style="font-weight:800;margin-top:6px;color:${col(s)};font-family:var(--display);font-size:18px">${fmt(s)}/10 · ${v.ic} ${esc(v.t)}</div></div></div>
+  <div style="min-width:0"><h2>${esc(g.name)}</h2><span class="mt">${esc(g.source)} · ${dfmt(E.date,{month:"long",day:"numeric",year:"numeric"})}${E.time?" · "+tf(E.time):""}</span>${E.place?`<span class="mt">📍 ${esc(E.place)}</span>`:""}${physLine(g.phys)?`<span class="mt" style="color:var(--ink);opacity:.8">${esc(physLine(g.phys))}</span>`:""}${E.vibe?`<span class="vibe">${esc(E.vibe)}</span>`:""}${E.pre&&E.vibe&&vrank(E.pre)&&vrank(E.vibe)?`<span class="mt" style="margin-top:4px">🔮 ${esc(preText(E.pre,g.dg||dflt()))} → ${esc(E.vibe)}</span><span class="mt">${esc(vmsg(vrank(E.vibe)-vrank(E.pre),g.dg||dflt()))}</span>`:""}
+  <div style="font-weight:800;margin-top:6px;color:${col(s)};font-family:var(--display);font-size:18px">${fmt(s)}/10 · ${v.ic} ${esc(v.t)}</div>${capOf(s,A,g.phys)?`<p class="mt" style="margin:4px 0 0">⚠️ Score capped at ${fmt(capOf(s,A,g.phys))}: not comfortable.</p>`:""}</div></div>
   ${past?"":`<div class="status">${["keep","maybe","next"].map(st=>`<button data-s="${st}" data-move="${st}" aria-pressed="${g.status===st}">${st==="keep"?"💚 Keep":st==="next"?"🤮 Next":"🤔 Thinking"}</button>`).join("")}</div>`}
   ${past?"":histBox(g)+sheetActions(g)}
   <div class="flags">${radar(A)}<div class="fbox glass"><h3><span>Green flags</span><span style="color:var(--keep)">${gs.length}</span></h3><div class="pills">${gs.length?gs.map(x=>`<span class="pill g">${esc(x)}</span>`).join(""):'<span class="none">None</span>'}</div></div>
@@ -1859,9 +1870,9 @@ function animResult(){const r=$("#ringv"),n=$("#cnt");if(!r||!n)return;const to=
  requestAnimationFrame(()=>requestAnimationFrame(()=>{r.style.strokeDashoffset=r.dataset.target}));if(reduce){n.textContent=fmt(to);return}
  const t0=performance.now(),D=1300;(function f(t){const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3);n.textContent=fmt(Math.round(to*e*2)/2);if(k<1)requestAnimationFrame(f)})(t0)}
 function decide(st){let g;const nt=ev.note?[{t:new Date().toISOString(),x:ev.note}]:[];
- if(ev.re&&(g=S.guys.find(x=>x.id===ev.re))){g.history=g.history||[];g.history.push({date:g.date,time:g.time,answers:g.answers,status:g.status});g.date=ev.date||today();g.time=ev.time||"";g.answers=ev.answers;g.status=st;g.phys=ev.phys;g.likes=ev.likes||[];if(ev.vibe)g.vibe=ev.vibe;g.pre=ev.pre||"";g.source=ev.source||g.source;
+ if(ev.re&&(g=S.guys.find(x=>x.id===ev.re))){g.history=g.history||[];g.history.push({date:g.date,time:g.time,answers:g.answers,status:g.status,place:g.place||"",pre:g.pre||"",vibe:g.vibe||""});g.date=ev.date||today();g.time=ev.time||"";g.place=ev.place||"";g.answers=ev.answers;g.status=st;g.phys=ev.phys;g.likes=ev.likes||[];if(ev.vibe)g.vibe=ev.vibe;g.pre=ev.pre||"";g.source=ev.source||g.source;
   if(ev.photo&&ev.photo!==g.photo){g.photo=ev.photo;delete g.ill}g.notes=nt.concat(g.notes||[]);if(st!=="keep")delete g.couple}
- else{g={id:"g"+Date.now(),name:ev.name,photo:ev.photo,source:ev.source||"Other",date:ev.date||today(),answers:ev.answers,status:st,notes:nt,example:false,dg:ev.dg,phys:ev.phys,likes:ev.likes||[],vibe:ev.vibe||"",pre:ev.pre||"",time:ev.time||""};S.guys.push(g)}
+ else{g={id:"g"+Date.now(),name:ev.name,photo:ev.photo,source:ev.source||"Other",date:ev.date||today(),answers:ev.answers,status:st,notes:nt,example:false,dg:ev.dg,phys:ev.phys,likes:ev.likes||[],vibe:ev.vibe||"",pre:ev.pre||"",time:ev.time||"",place:ev.place||""};S.guys.push(g)}
  {const ids=ev.list.map(q=>q.id);g.asked=Array.from(new Set((g.asked||[]).concat(ids)));S.recent=ids.concat(S.recent||[]).slice(0,40)}
  if(ev.pid){const p=(S.plans||[]).find(x=>x.id===ev.pid);if(p){p.done=true;p.gid=g.id}}
  S.seg=st;lastAdded=g.id;save();burst(st);
@@ -1998,7 +2009,7 @@ const hmSplit=w=>{const t=hm(w);const m=t.match(/^(.*?)\s*([AaPp]\.?[Mm]\.?)$/);
 const planGuy=p=>p.gid&&S.guys.find(g=>g.id===p.gid);
 const planName=p=>{const g=planGuy(p);return g?g.name:p.name||"?"};
 const planAv=(p,s)=>{const g=planGuy(p);return g?avatar(g,s,true):avatar({name:p.name},s)};
-function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true}]}
+function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true,place:g.place||"",pre:g.pre||"",vibe:g.vibe||""}]}
 function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h.length-1].answers,g.phys),c=score(g.answers,g.phys);
  return c>p?' <span style="color:var(--keep);font-size:14px">▲</span>':c<p?' <span style="color:var(--next);font-size:14px">▼</span>':""}
 function bindLayer(){$("#layer").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b))}
@@ -2057,18 +2068,21 @@ function agenda(){const now=new Date();const P=(S.plans||[]).slice().sort((a,b)=
   <div class="list">${up.length?up.map(item).join(""):`<div class="empty glass"><span class="big">📅</span><strong>No dates planned</strong>Plan your next date to find it here.</div>`}</div>
   ${cx.length?`<div class="sect"><h3>Stood up & cancelled</h3></div><div class="list">${cx.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}${p.example?'<span class="tag">example</span>':""}</span><span class="mt">${p.cancel==="rabbit"?"🐇 Stood up":"❌ Cancelled"} · ${new Date(p.when).toLocaleDateString(LOC,{weekday:"long",day:"numeric",month:"short"})}</span></span><button class="iconbtn" data-pdel="${p.id}" aria-label="Delete">✕</button></div>`).join("")}</div>${rb?`<p class="mt" style="margin:8px 0 0">🐇 ${rb} stood-up date${rb>1?"s":""} so far</p>`:""}`:""}<div class="box glass" style="margin-top:14px"><h3>🛡️ Safe date</h3><p style="margin:0 0 10px;font-size:14px;color:var(--muted)">Get a ready-made text for a friend in 10 seconds: who you're with, where, and when you'll be home.</p><button class="btn primary" data-act="safe">Write my text</button></div>
  </section>`}
-function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.likes||[]).slice();let sr=g.source,vb=g.vibe||"";
+function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.likes||[]).slice();let sr=g.source,vb=g.vibe||"",pr=g.pre||"";
  sheetWrap("Edit profile",`<h2 style="font-size:26px">Edit profile</h2>
   <div class="field"><label class="t" for="e-name">First name</label><input class="input" id="e-name" maxlength="30" value="${esc(g.name)}" autocapitalize="words"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your vibe in one word (optional)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
+  <div class="field"><label class="t" for="e-place">Where? (optional)</label><input class="input" id="e-place" maxlength="60" value="${esc(g.place||"")}"></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:14px">${preQ(g.dg||dflt())} <span style="font-weight:400;color:var(--muted)">(before the date)</span></span><div class="chips">${PRE.map(o=>`<button class="chip" data-xpr="${o}" aria-pressed="${pr===o}">${o}</button>`).join("")}</div></div>
   ${moreHTML(P,Lk,g.dg||dflt(),"x",true)}
   <div class="row-btns"><button class="btn primary" id="e-save">Save</button><button class="btn ghost" id="e-cancel">${"Cancel"}</button></div>`);
  const R=$("#layer");bindMore(R,P,Lk);
  R.querySelectorAll("[data-es]").forEach(b=>b.onclick=()=>{sr=sr===b.dataset.es?"":b.dataset.es;R.querySelectorAll("[data-es]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.es===sr))});
  R.querySelectorAll("[data-xvb]").forEach(b=>b.onclick=()=>{vb=vb===b.dataset.xvb?"":b.dataset.xvb;R.querySelectorAll("[data-xvb]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.xvb===vb))});
+ R.querySelectorAll("[data-xpr]").forEach(b=>b.onclick=()=>{pr=pr===b.dataset.xpr?"":b.dataset.xpr;R.querySelectorAll("[data-xpr]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.xpr===pr))});
  $("#e-cancel").onclick=()=>openSheet(g.id);
- $("#e-save").onclick=()=>{const n=$("#e-name").value.trim();if(!n){$("#e-name").focus();return}g.name=n;g.source=sr||g.source;g.vibe=vb;g.likes=Lk;g.phys=P;save();toast("Profile updated ✅");render();openSheet(g.id)}}
+ $("#e-save").onclick=()=>{const n=$("#e-name").value.trim();if(!n){$("#e-name").focus();return}g.name=n;g.source=sr||g.source;g.vibe=vb;g.pre=pr;g.place=($("#e-place").value||"").trim();g.likes=Lk;g.phys=P;save();toast("Profile updated ✅");render();openSheet(g.id)}}
 function openNewChoice(){sheetWrap("New date",`<h2 style="font-size:26px">New date</h2><p style="margin:0 0 14px;color:var(--muted)">Which one is it?</p>
   <div class="newchoice"><button class="nc" data-act="newplan"><span class="e">📅</span><b>Upcoming date</b><small>I prepare it: day, time, place</small></button><button class="nc" data-act="newpast"><span class="e">✍️</span><b>Past date</b><small>I rate it: questions and verdict</small></button></div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Cancel</button></div>`)}
@@ -2219,7 +2233,7 @@ function bind(){const m=$("#main");
  if(view==="eval"){
   const nm=$("#f-name");if(nm)nm.oninput=()=>{ev.name=nm.value.trim();nm.style.borderColor=""};
   const dt=$("#f-date");if(dt)dt.onchange=()=>{if(dt.value>today()){dt.value=today();toast("That day hasn't happened yet. Use “Upcoming date” instead 😉")}ev.date=dt.value||today()};
-  const tmI=$("#f-time");if(tmI)tmI.onchange=tmI.oninput=()=>ev.time=tmI.value;
+  const tmI=$("#f-time");if(tmI)tmI.onchange=tmI.oninput=()=>ev.time=tmI.value;const plI=$("#f-place");if(plI)plI.oninput=()=>ev.place=plI.value.trim();document.querySelectorAll("[data-ep]").forEach(b=>b.onclick=()=>{ev.pre=ev.pre===b.dataset.ep?"":b.dataset.ep;document.querySelectorAll("[data-ep]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.ep===ev.pre))});
   const nt=$("#f-note");if(nt)nt.oninput=()=>ev.note=nt.value.trim();
   const de=$("#det");if(de)de.ontoggle=()=>{ev.detOpen=de.open};
   const nt2=$("#f-nat");if(nt2)nt2.onchange=()=>{ev.phys.nat=nt2.value};const ag=$("#f-age");if(ag)ag.oninput=()=>{ev.phys.age=ag.value.replace(/\D/g,"").slice(0,2)};
