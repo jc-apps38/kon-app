@@ -1319,7 +1319,7 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
 const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});const g=(o,f)=>navigator.geolocation.getCurrentPosition(p=>ok(p.coords),f,o);g({enableHighAccuracy:true,timeout:10000,maximumAge:60000},e=>{if(e&&e.code===1)return ko(e);g({enableHighAccuracy:false,timeout:20000,maximumAge:300000},ko)})});
-function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const hs=h=>{const b=$("#"+pf+"-share");if(b)b.hidden=h};const fin=()=>{onSent&&onSent()};
+function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const hs=h=>{const b=$("#"+pf+"-share");if(b)b.style.display=h?"none":""};const fin=()=>{onSent&&onSent()};
  const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Message copié 💬"));
  const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Message sélectionné, copie-le")};
  const run=()=>{try{return deliver()}catch(e){return Promise.reject(e)}};
@@ -2269,7 +2269,7 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
 const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});const g=(o,f)=>navigator.geolocation.getCurrentPosition(p=>ok(p.coords),f,o);g({enableHighAccuracy:true,timeout:10000,maximumAge:60000},e=>{if(e&&e.code===1)return ko(e);g({enableHighAccuracy:false,timeout:20000,maximumAge:300000},ko)})});
-function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const hs=h=>{const b=$("#"+pf+"-share");if(b)b.hidden=h};const fin=()=>{onSent&&onSent()};
+function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const hs=h=>{const b=$("#"+pf+"-share");if(b)b.style.display=h?"none":""};const fin=()=>{onSent&&onSent()};
  const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Text copied 💬"));
  const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Text selected, copy it")};
  const run=()=>{try{return deliver()}catch(e){return Promise.reject(e)}};
@@ -2494,7 +2494,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v38";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v39";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 </body>
