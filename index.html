@@ -1326,7 +1326,8 @@ function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");con
  const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
   box.innerHTML=`<div class="consent"><b>Message prêt</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;
   box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
- const withPos=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Position refusée. Autorise-la pour ce site : Safari, bouton aA, Réglages du site, Position":k===2?"Position indisponible. Vérifie Réglages > Confidentialité > Service de localisation":k===3?"Position trop longue à trouver. Réessaie dehors ou près d'une fenêtre":"Position non ajoutée")}).then(trySend)};
+ const ready=()=>{box.innerHTML=`<div class="consent"><b>Message prêt</b>${st.pos?`<p>📍 Position ajoutée</p>`:""}<div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})};box.scrollIntoView({block:"center",behavior:"smooth"})};
+ const withPos=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Position refusée. Autorise-la pour ce site : Safari, bouton aA, Réglages du site, Position":k===2?"Position indisponible. Vérifie Réglages > Confidentialité > Service de localisation":k===3?"Position trop longue à trouver. Réessaie dehors ou près d'une fenêtre":"Position non ajoutée")}).then(ready)};
  $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
   if(!opts.pos||NET().loc===false){trySend();return}
   const first=NET().loc!==true;
@@ -2275,7 +2276,8 @@ function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");con
  const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
   box.innerHTML=`<div class="consent"><b>Text ready</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;
   box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
- const withPos=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Location refused. Allow it for this site: Safari, aA button, Website Settings, Location":k===2?"Location unavailable. Check Settings > Privacy > Location Services":k===3?"Location took too long. Try outside or near a window":"Location not added")}).then(trySend)};
+ const ready=()=>{box.innerHTML=`<div class="consent"><b>Text ready</b>${st.pos?`<p>📍 Location added</p>`:""}<div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})};box.scrollIntoView({block:"center",behavior:"smooth"})};
+ const withPos=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Location refused. Allow it for this site: Safari, aA button, Website Settings, Location":k===2?"Location unavailable. Check Settings > Privacy > Location Services":k===3?"Location took too long. Try outside or near a window":"Location not added")}).then(ready)};
  $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
   if(!opts.pos||NET().loc===false){trySend();return}
   const first=NET().loc!==true;
@@ -2492,7 +2494,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v36";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v37";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 </body>
