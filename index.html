@@ -274,7 +274,7 @@ textarea.input{min-height:84px; resize:vertical}
 .status button[aria-pressed="true"][data-s="next"]{background:var(--next); color:var(--on-accent); border-color:var(--next)}
 .note{white-space:pre-wrap; font-size:14px}
 
-.toast{position:fixed; left:50%; bottom:calc(110px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:60; background:var(--ink); color:var(--bg); padding:11px 16px; border-radius:14px; font-weight:700; font-size:14px; animation:toast 2.2s ease both; white-space:nowrap}
+.toast{position:fixed; left:50%; bottom:calc(110px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:60; background:var(--ink); color:var(--bg); padding:11px 16px; border-radius:14px; font-weight:700; font-size:14px; animation:toast 2.2s ease both; white-space:normal; max-width:88vw; text-align:center; width:max-content}
 .fx{position:fixed; inset:0; pointer-events:none; z-index:70; overflow:hidden}
 .fx span{position:absolute; will-change:transform,opacity}
 .fx .rise{bottom:-40px; animation:rise var(--d) ease-out forwards}
@@ -977,7 +977,7 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
   <button class="switch" data-act="netloc" aria-pressed="${(S.net||{}).loc===true}"><span>Partage de ma position<span class="mt" style="font-weight:500">Une seule fois, quand tu le demandes</span></span><span class="k"></span></button></div>
  <div class="box glass"><h3>Données</h3><div class="row-btns">${ex?`<button class="btn ghost" data-act="clearex">Effacer les exemples</button>`:`<button class="btn ghost" data-act="addex">Remettre les exemples</button>`}<button class="btn ghost danger" data-act="wipe">Tout effacer</button><button class="btn ghost" data-act="reset">Recommencer comme au premier jour</button></div></div>
  <div class="box glass"><h3>Sur ton écran d'accueil</h3><p>${A2HS} Keep or Next s'ouvre alors comme une vraie appli.</p></div>
- <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · version premium 3</p></section>`}
+ <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · version premium 3 · ${BUILD}</p></section>`}
 
 /* ---------- FICHE */
 function openSheet(id,hi){const g=S.guys.find(x=>x.id===id);if(!g)return;const HH=hist(g);const past=hi!==undefined&&hi<HH.length-1;const E=past?HH[hi]:HH[HH.length-1];const A=E.answers;const PV=(past?hi:HH.length-1)>0?(HH[(past?hi:HH.length-1)-1].vibe||""):"";const s=score(A,g.phys),v=verdict(s,A,g.dg);const gs=greens(A,g.dg),rs=reds(A,g.dg);
@@ -1014,7 +1014,7 @@ function burst(kind){if(reduce)return;
 function flash(kind,text){const st=$(".stage");if(!st||reduce)return;const f=document.createElement("div");f.className="flash "+kind;f.textContent=text;st.appendChild(f);setTimeout(()=>f.remove(),1000);
  if(kind==="love")particles("rise",["💘","💖","💗"],12,{l0:25,lw:50,s0:18,sw:16,dx:50,rot:25,d0:1,dw:.8,bottom:"30%"});
  else particles("fall",["💔","🚫"],10,{l0:25,lw:50,s0:18,sw:14,dx:40,rot:90,d0:1,dw:.6})}
-function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2300)}
+function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;const ms=Math.max(2300,t.length*70);e.style.animationDuration=(ms/1000)+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),ms+100)}
 
 /* ---------- RÉPONSES / SWIPE */
 function answer(v){if(ev.busy)return;ev.busy=true;const c=$("#qcard");const q=ev.list[ev.i];if(v!==null)ev.answers[q.id]=v;else delete ev.answers[q.id];
@@ -1318,7 +1318,7 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
   b.querySelectorAll(".sugi").forEach(bt=>bt.onclick=()=>{sugSkip=true;i.value=L[+bt.dataset.n];i.dispatchEvent(new Event("input",{bubbles:true}));sugSkip=false;sugKill(i)})}).catch(()=>{})}
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
-const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});navigator.geolocation.getCurrentPosition(p=>ok(p.coords),ko,{enableHighAccuracy:true,timeout:30000,maximumAge:60000})});
+const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});const g=(o,f)=>navigator.geolocation.getCurrentPosition(p=>ok(p.coords),f,o);g({enableHighAccuracy:true,timeout:10000,maximumAge:60000},e=>{if(e&&e.code===1)return ko(e);g({enableHighAccuracy:false,timeout:20000,maximumAge:300000},ko)})});
 function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const fin=()=>{onSent&&onSent()};
  const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Message copié 💬"));
  const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Message sélectionné, copie-le")};
@@ -1326,7 +1326,7 @@ function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");con
  const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
   box.innerHTML=`<div class="consent"><b>Message prêt</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;
   box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
- const withPos=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},()=>{st.pos="";up();toast("Position non ajoutée")}).then(trySend)};
+ const withPos=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Position refusée. Autorise-la pour ce site : Safari, bouton aA, Réglages du site, Position":k===2?"Position indisponible. Vérifie Réglages > Confidentialité > Service de localisation":k===3?"Position trop longue à trouver. Réessaie dehors ou près d'une fenêtre":"Position non ajoutée")}).then(trySend)};
  $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
   if(!opts.pos||NET().loc===false){trySend();return}
   const first=NET().loc!==true;
@@ -1925,7 +1925,7 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
   <button class="switch" data-act="netloc" aria-pressed="${(S.net||{}).loc===true}"><span>Share my location<span class="mt" style="font-weight:500">Once, only when you ask</span></span><span class="k"></span></button></div>
  <div class="box glass"><h3>Data</h3><div class="row-btns">${ex?`<button class="btn ghost" data-act="clearex">Delete the examples</button>`:`<button class="btn ghost" data-act="addex">Bring back the examples</button>`}<button class="btn ghost danger" data-act="wipe">Delete everything</button><button class="btn ghost" data-act="reset">Start over like day one</button></div></div>
  <div class="box glass"><h3>On your home screen</h3><p>${A2HS} Keep or Next then opens like a real app.</p></div>
- <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · premium version 3</p></section>`}
+ <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · premium version 3 · ${BUILD}</p></section>`}
 
 /* ---------- PROFILE SHEET */
 function openSheet(id,hi){const g=S.guys.find(x=>x.id===id);if(!g)return;const HH=hist(g);const past=hi!==undefined&&hi<HH.length-1;const E=past?HH[hi]:HH[HH.length-1];const A=E.answers;const PV=(past?hi:HH.length-1)>0?(HH[(past?hi:HH.length-1)-1].vibe||""):"";const s=score(A,g.phys),v=verdict(s,A,g.dg);const gs=greens(A,g.dg),rs=reds(A,g.dg);
@@ -1962,7 +1962,7 @@ function burst(kind){if(reduce)return;
 function flash(kind,text){const st=$(".stage");if(!st||reduce)return;const f=document.createElement("div");f.className="flash "+kind;f.textContent=text;st.appendChild(f);setTimeout(()=>f.remove(),1000);
  if(kind==="love")particles("rise",["💘","💖","💗"],12,{l0:25,lw:50,s0:18,sw:16,dx:50,rot:25,d0:1,dw:.8,bottom:"30%"});
  else particles("fall",["💔","🚫"],10,{l0:25,lw:50,s0:18,sw:14,dx:40,rot:90,d0:1,dw:.6})}
-function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2300)}
+function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;const ms=Math.max(2300,t.length*70);e.style.animationDuration=(ms/1000)+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),ms+100)}
 
 /* ---------- ANSWERS / SWIPE */
 function answer(v){if(ev.busy)return;ev.busy=true;const c=$("#qcard");const q=ev.list[ev.i];if(v!==null)ev.answers[q.id]=v;else delete ev.answers[q.id];
@@ -2267,7 +2267,7 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
   b.querySelectorAll(".sugi").forEach(bt=>bt.onclick=()=>{sugSkip=true;i.value=L[+bt.dataset.n];i.dispatchEvent(new Event("input",{bubbles:true}));sugSkip=false;sugKill(i)})}).catch(()=>{})}
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
-const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});navigator.geolocation.getCurrentPosition(p=>ok(p.coords),ko,{enableHighAccuracy:true,timeout:30000,maximumAge:60000})});
+const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});const g=(o,f)=>navigator.geolocation.getCurrentPosition(p=>ok(p.coords),f,o);g({enableHighAccuracy:true,timeout:10000,maximumAge:60000},e=>{if(e&&e.code===1)return ko(e);g({enableHighAccuracy:false,timeout:20000,maximumAge:300000},ko)})});
 function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const fin=()=>{onSent&&onSent()};
  const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Text copied 💬"));
  const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Text selected, copy it")};
@@ -2275,7 +2275,7 @@ function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");con
  const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
   box.innerHTML=`<div class="consent"><b>Text ready</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;
   box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
- const withPos=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},()=>{st.pos="";up();toast("Location not added")}).then(trySend)};
+ const withPos=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Location refused. Allow it for this site: Safari, aA button, Website Settings, Location":k===2?"Location unavailable. Check Settings > Privacy > Location Services":k===3?"Location took too long. Try outside or near a window":"Location not added")}).then(trySend)};
  $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
   if(!opts.pos||NET().loc===false){trySend();return}
   const first=NET().loc!==true;
@@ -2492,6 +2492,8 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});</script>
+<script>const BUILD="v36";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
+if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 </body>
 </html>
