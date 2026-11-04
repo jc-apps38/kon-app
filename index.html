@@ -1159,17 +1159,18 @@ const planName=p=>{const g=planGuy(p);return g?g.name:p.name||"?"};
 const planAv=(p,s)=>{const g=planGuy(p);return g?avatar(g,s,true):avatar({name:p.name},s)};
 function nightHTML(N,dg){const f=t=>G(t,dg),chip=(k,v,l)=>`<button class="chip" data-nt="${k}:${v}" aria-pressed="${N[k]===v}">${l}</button>`;
  let h=`<span class="t" style="font-weight:700;font-size:14px">Et après le date ? <span style="font-weight:400;color:var(--muted)">(facultatif)</span></span><div class="chips">${chip("home","in","Je suis rentré"+ue())}${chip("home","out","Je ne suis pas rentré"+ue())}</div>`;
- if(N.home==="in"){h+=`<div class="field" style="margin:10px 0 0"><label class="t" for="nt-ret">Rentré${ue()} à quelle heure ?</label><input class="input" type="time" id="nt-ret" value="${N.ret||""}"></div><div class="chips" style="margin-top:10px">${chip("how","alone","Seul"+ue())}${chip("how","drop",f("Il m'a raccompagné")+ue())}</div>`;
-  if(N.how==="drop")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Juste raccompagné"+ue())}${chip("drop","stay",f("Il a dormi chez moi"))}</div>`}
+ if(N.home==="in"){h+=`<div class="field" style="margin:10px 0 0"><label class="t" for="nt-ret">Rentré${ue()} à quelle heure ?</label><input class="input" type="time" id="nt-ret" value="${N.ret||""}"></div><div class="chips" style="margin-top:10px">${chip("how","alone","Seul"+ue())}${chip("how","drop",f("Il m'a raccompagné")+ue())}${chip("how","gave","Je l'ai raccompagné"+(dg==="f"?"e":""))}</div>`;
+  if(N.how==="drop")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Juste raccompagné"+ue())}${chip("drop","stay",f("Il a dormi chez moi"))}</div>`;
+  if(N.how==="gave")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Juste raccompagné"+(dg==="f"?"e":""))}${chip("drop","stay",f("Il a dormi chez moi"))}</div>`}
  if(N.home==="out")h+=`<div class="chips" style="margin-top:10px">${chip("out","his",f("J'ai dormi chez lui"))}${chip("out","hotel","On a dormi à l'hôtel")}${chip("out","other","Autre")}</div>`;
  return h}
 function nightText(N,dg){if(!N||!N.home)return"";const f=t=>G(t,dg);
  if(N.home==="out")return "🌙 Pas rentré"+ue()+(N.out?" · "+({his:f("dormi chez lui"),hotel:"nuit à l'hôtel",other:"autre"}[N.out]||""):"");
  let t="🌙 Rentré"+ue()+(N.ret?" à "+N.ret.replace(":","h"):"");
- if(N.how==="alone")t+=" · seul"+ue();else if(N.how==="drop")t+=N.drop==="only"?" · "+f("il m'a juste raccompagné")+ue():" · "+f("il m'a raccompagné")+ue()+(N.drop==="stay"?" · "+f("il a dormi chez moi"):"");
+ if(N.how==="alone")t+=" · seul"+ue();else if(N.how==="gave")t+=N.drop==="only"?" · je l'ai juste raccompagné"+(dg==="f"?"e":""):" · je l'ai raccompagné"+(dg==="f"?"e":"")+(N.drop==="stay"?" · "+f("il a dormi chez moi"):"");else if(N.how==="drop")t+=N.drop==="only"?" · "+f("il m'a juste raccompagné")+ue():" · "+f("il m'a raccompagné")+ue()+(N.drop==="stay"?" · "+f("il a dormi chez moi"):"");
  return t}
 function mountNight(box,N,dg){box.innerHTML=nightHTML(N,dg);box.querySelectorAll("[data-nt]").forEach(b=>b.onclick=()=>{const[k,v]=b.dataset.nt.split(":");if(N[k]===v)delete N[k];else N[k]=v;
-  if(!N.home){delete N.how;delete N.drop;delete N.out;delete N.ret}else if(N.home==="out"){delete N.how;delete N.drop;delete N.ret}else delete N.out;if(N.how!=="drop")delete N.drop;mountNight(box,N,dg)});
+  if(!N.home){delete N.how;delete N.drop;delete N.out;delete N.ret}else if(N.home==="out"){delete N.how;delete N.drop;delete N.ret}else delete N.out;if(N.how!=="drop"&&N.how!=="gave")delete N.drop;mountNight(box,N,dg)});
  const r=box.querySelector("#nt-ret");if(r)r.oninput=r.onchange=()=>{N.ret=r.value}}
 function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true,place:g.place||"",pre:g.pre||"",vibe:g.vibe||"",night:g.night||{}}]}
 function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h.length-1].answers,g.phys),c=score(g.answers,g.phys);
@@ -2031,17 +2032,18 @@ const planName=p=>{const g=planGuy(p);return g?g.name:p.name||"?"};
 const planAv=(p,s)=>{const g=planGuy(p);return g?avatar(g,s,true):avatar({name:p.name},s)};
 function nightHTML(N,dg){const x=dg==="f"?"She":"He",y=dg==="f"?"her":"his",chip=(k,v,l)=>`<button class="chip" data-nt="${k}:${v}" aria-pressed="${N[k]===v}">${l}</button>`;
  let h=`<span class="t" style="font-weight:700;font-size:14px">And after the date? <span style="font-weight:400;color:var(--muted)">(optional)</span></span><div class="chips">${chip("home","in","I went home")}${chip("home","out","I didn't go home")}</div>`;
- if(N.home==="in"){h+=`<div class="field" style="margin:10px 0 0"><label class="t" for="nt-ret">What time did you get home?</label><input class="input" type="time" id="nt-ret" value="${N.ret||""}"></div><div class="chips" style="margin-top:10px">${chip("how","alone","Alone")}${chip("how","drop",x+" walked me home")}</div>`;
-  if(N.how==="drop")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Just dropped me off")}${chip("drop","stay",x+" stayed over at mine")}</div>`}
+ if(N.home==="in"){h+=`<div class="field" style="margin:10px 0 0"><label class="t" for="nt-ret">What time did you get home?</label><input class="input" type="time" id="nt-ret" value="${N.ret||""}"></div><div class="chips" style="margin-top:10px">${chip("how","alone","Alone")}${chip("how","drop",x+" walked me home")}${chip("how","gave","I walked "+(dg==="f"?"her":"him")+" home")}</div>`;
+  if(N.how==="drop")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Just dropped me off")}${chip("drop","stay",x+" stayed over at mine")}</div>`;
+  if(N.how==="gave")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Just dropped "+(dg==="f"?"her":"him")+" off")}${chip("drop","stay",x+" stayed over at mine")}</div>`}
  if(N.home==="out")h+=`<div class="chips" style="margin-top:10px">${chip("out","his","I stayed at "+y+" place")}${chip("out","hotel","We stayed at a hotel")}${chip("out","other","Other")}</div>`;
  return h}
 function nightText(N,dg){if(!N||!N.home)return"";const x=dg==="f"?"She":"He",y=dg==="f"?"her":"his";
  if(N.home==="out")return "🌙 Didn't go home"+(N.out?" · "+({his:"stayed at "+y+" place",hotel:"hotel night",other:"other"}[N.out]||""):"");
  let t="🌙 Home"+(N.ret?" at "+tf(N.ret):"");
- if(N.how==="alone")t+=" · alone";else if(N.how==="drop")t+=N.drop==="only"?" · "+x.toLowerCase()+" just dropped me off":" · "+x.toLowerCase()+" walked me home"+(N.drop==="stay"?" · "+x.toLowerCase()+" stayed over":"");
+ if(N.how==="alone")t+=" · alone";else if(N.how==="gave")t+=N.drop==="only"?" · I just dropped "+(dg==="f"?"her":"him")+" off":" · I walked "+(dg==="f"?"her":"him")+" home"+(N.drop==="stay"?" · "+x.toLowerCase()+" stayed over":"");else if(N.how==="drop")t+=N.drop==="only"?" · "+x.toLowerCase()+" just dropped me off":" · "+x.toLowerCase()+" walked me home"+(N.drop==="stay"?" · "+x.toLowerCase()+" stayed over":"");
  return t}
 function mountNight(box,N,dg){box.innerHTML=nightHTML(N,dg);box.querySelectorAll("[data-nt]").forEach(b=>b.onclick=()=>{const[k,v]=b.dataset.nt.split(":");if(N[k]===v)delete N[k];else N[k]=v;
-  if(!N.home){delete N.how;delete N.drop;delete N.out;delete N.ret}else if(N.home==="out"){delete N.how;delete N.drop;delete N.ret}else delete N.out;if(N.how!=="drop")delete N.drop;mountNight(box,N,dg)});
+  if(!N.home){delete N.how;delete N.drop;delete N.out;delete N.ret}else if(N.home==="out"){delete N.how;delete N.drop;delete N.ret}else delete N.out;if(N.how!=="drop"&&N.how!=="gave")delete N.drop;mountNight(box,N,dg)});
  const r=box.querySelector("#nt-ret");if(r)r.oninput=r.onchange=()=>{N.ret=r.value}}
 function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true,place:g.place||"",pre:g.pre||"",vibe:g.vibe||"",night:g.night||{}}]}
 function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h.length-1].answers,g.phys),c=score(g.answers,g.phys);
