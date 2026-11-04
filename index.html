@@ -1319,21 +1319,21 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
 const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});const g=(o,f)=>navigator.geolocation.getCurrentPosition(p=>ok(p.coords),f,o);g({enableHighAccuracy:true,timeout:10000,maximumAge:60000},e=>{if(e&&e.code===1)return ko(e);g({enableHighAccuracy:false,timeout:20000,maximumAge:300000},ko)})});
-function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const fin=()=>{onSent&&onSent()};
+function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const hs=h=>{const b=$("#"+pf+"-share");if(b)b.hidden=h};const fin=()=>{onSent&&onSent()};
  const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Message copié 💬"));
  const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Message sélectionné, copie-le")};
  const run=()=>{try{return deliver()}catch(e){return Promise.reject(e)}};
  const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
   box.innerHTML=`<div class="consent"><b>Message prêt</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;
-  box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
- const ready=()=>{box.innerHTML=`<div class="consent"><b>Message prêt</b>${st.pos?`<p>📍 Position ajoutée</p>`:""}<div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})};box.scrollIntoView({block:"center",behavior:"smooth"})};
+  hs(true);box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";hs(false);run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
+ const ready=()=>{box.innerHTML=`<div class="consent"><b>Message prêt</b>${st.pos?`<p>📍 Position ajoutée</p>`:""}<div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;hs(true);box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";hs(false);run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})};box.scrollIntoView({block:"center",behavior:"smooth"})};
  const withPos=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Position refusée. Autorise-la pour ce site : Safari, bouton aA, Réglages du site, Position":k===2?"Position indisponible. Vérifie Réglages > Confidentialité > Service de localisation":k===3?"Position trop longue à trouver. Réessaie dehors ou près d'une fenêtre":"Position non ajoutée")}).then(ready)};
  $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
   if(!opts.pos||NET().loc===false){trySend();return}
   const first=NET().loc!==true;
   box.innerHTML=`<div class="consent">${first?`<b>📍 Partager ma position</b><p>Ta position est demandée <b>une seule fois</b>, quand tu choisis « avec ma position » (jamais en continu, jamais en arrière-plan). Elle est ajoutée au message sous forme de lien qui s'ouvre dans Plans (iPhone) ou Google Maps (Android). <b>Elle n'est pas enregistrée dans l'appli.</b> Une fois le message envoyé, elle est chez la personne qui le reçoit et dans ton appli de messagerie. Ton iPhone te demandera aussi son autorisation.</p>`:`<b>Ajouter ta position au message ?</b>`}<div class="row-btns"><button type="button" class="btn ${opts.pre?"primary":"ghost"}" data-wy>📍 Partager avec ma position</button><button type="button" class="btn ghost" data-wn>Partager sans ma position</button></div></div>`;
-  box.querySelector("[data-wy]").onclick=()=>{NET().loc=true;save();box.innerHTML="";withPos()};
-  box.querySelector("[data-wn]").onclick=()=>{box.innerHTML="";trySend()};box.scrollIntoView({block:"nearest"})};
+  hs(true);box.querySelector("[data-wy]").onclick=()=>{NET().loc=true;save();box.innerHTML="";withPos()};
+  box.querySelector("[data-wn]").onclick=()=>{box.innerHTML="";hs(false);trySend()};box.scrollIntoView({block:"nearest"})};
  $("#"+pf+"-copy").onclick=()=>{st.pos="";up();const tx=msg();try{navigator.clipboard.writeText(tx).then(()=>{toast("Message copié 💬");fin()},sel)}catch(e){sel()}}}
 const sendBtns=(p,wp)=>`<button class="btn primary" id="${p}-share">${wp?"Partager (position facultative)":"Partager le message"}</button><button class="btn ghost" id="${p}-copy">Copier le message</button>`;
 function startMode(st,gid){S.dateMode={name:st.name||"",place:st.place||"",back:st.back||"",gid:gid||null,since:Date.now()};save();toast("Mode « en date » activé 🛡️")}
@@ -2269,21 +2269,21 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
 const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});const g=(o,f)=>navigator.geolocation.getCurrentPosition(p=>ok(p.coords),f,o);g({enableHighAccuracy:true,timeout:10000,maximumAge:60000},e=>{if(e&&e.code===1)return ko(e);g({enableHighAccuracy:false,timeout:20000,maximumAge:300000},ko)})});
-function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const fin=()=>{onSent&&onSent()};
+function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const hs=h=>{const b=$("#"+pf+"-share");if(b)b.hidden=h};const fin=()=>{onSent&&onSent()};
  const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Text copied 💬"));
  const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Text selected, copy it")};
  const run=()=>{try{return deliver()}catch(e){return Promise.reject(e)}};
  const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
   box.innerHTML=`<div class="consent"><b>Text ready</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;
-  box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
- const ready=()=>{box.innerHTML=`<div class="consent"><b>Text ready</b>${st.pos?`<p>📍 Location added</p>`:""}<div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})};box.scrollIntoView({block:"center",behavior:"smooth"})};
+  hs(true);box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";hs(false);run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
+ const ready=()=>{box.innerHTML=`<div class="consent"><b>Text ready</b>${st.pos?`<p>📍 Location added</p>`:""}<div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;hs(true);box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";hs(false);run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})};box.scrollIntoView({block:"center",behavior:"smooth"})};
  const withPos=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},er=>{st.pos="";up();const k=er&&er.code;toast(k===1?"Location refused. Allow it for this site: Safari, aA button, Website Settings, Location":k===2?"Location unavailable. Check Settings > Privacy > Location Services":k===3?"Location took too long. Try outside or near a window":"Location not added")}).then(ready)};
  $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
   if(!opts.pos||NET().loc===false){trySend();return}
   const first=NET().loc!==true;
   box.innerHTML=`<div class="consent">${first?`<b>📍 Share my location</b><p>Your location is requested <b>once</b>, when you choose “with my location” (never continuously, never in the background). It is added to the text as a link that opens in Maps (iPhone) or Google Maps (Android). <b>It is not saved in the app.</b> Once the text is sent, it is with the person who receives it and in your messaging app. Your iPhone will also ask for its own permission.</p>`:`<b>Add your location to the text?</b>`}<div class="row-btns"><button type="button" class="btn ${opts.pre?"primary":"ghost"}" data-wy>📍 Share with my location</button><button type="button" class="btn ghost" data-wn>Share without my location</button></div></div>`;
-  box.querySelector("[data-wy]").onclick=()=>{NET().loc=true;save();box.innerHTML="";withPos()};
-  box.querySelector("[data-wn]").onclick=()=>{box.innerHTML="";trySend()};box.scrollIntoView({block:"nearest"})};
+  hs(true);box.querySelector("[data-wy]").onclick=()=>{NET().loc=true;save();box.innerHTML="";withPos()};
+  box.querySelector("[data-wn]").onclick=()=>{box.innerHTML="";hs(false);trySend()};box.scrollIntoView({block:"nearest"})};
  $("#"+pf+"-copy").onclick=()=>{st.pos="";up();const tx=msg();try{navigator.clipboard.writeText(tx).then(()=>{toast("Text copied 💬");fin()},sel)}catch(e){sel()}}}
 const sendBtns=(p,wp)=>`<button class="btn primary" id="${p}-share">${wp?"Share (location optional)":"Share the text"}</button><button class="btn ghost" id="${p}-copy">Copy the text</button>`;
 function startMode(st,gid){S.dateMode={name:st.name||"",place:st.place||"",back:st.back||"",gid:gid||null,since:Date.now()};save();toast("“On a date” mode on 🛡️")}
@@ -2494,7 +2494,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v37";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v38";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 </body>
