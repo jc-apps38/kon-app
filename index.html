@@ -1319,15 +1319,22 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
 const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});navigator.geolocation.getCurrentPosition(p=>ok(p.coords),ko,{enableHighAccuracy:true,timeout:30000,maximumAge:60000})});
-function posBind(st,up,btn,box,bt){const b=$(btn);const doLoc=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up();b.textContent="📍 Retirer ma position";toast("Position ajoutée au message 📍")},er=>toast(er&&er.code===1?"Position refusée. Autorise-la dans Réglages":"Position introuvable. Réessaie dehors"))};
- b.onclick=()=>{if(st.pos){st.pos="";up();b.textContent=bt;return}
-  if(NET().loc===true){doLoc();return}
-  const c=$(box);c.innerHTML=`<div class="consent"><b>📍 Partager ma position</b><p>Ta position est demandée <b>une seule fois</b>, quand tu touches le bouton (jamais en continu, jamais en arrière-plan). Elle est ajoutée au message sous forme de lien qui s'ouvre dans Plans (iPhone) ou Google Maps (Android). <b>Elle n'est pas enregistrée dans l'appli.</b> Une fois le message envoyé, elle est chez la personne qui le reçoit et dans ton appli de messagerie. Ton iPhone te demandera aussi son autorisation.</p><div class="row-btns"><button type="button" class="btn primary" data-ly>Autoriser, une seule fois</button><button type="button" class="btn ghost" data-ln>Annuler</button></div></div>`;
-  c.querySelector("[data-ly]").onclick=()=>{NET().loc=true;save();c.innerHTML="";doLoc()};c.querySelector("[data-ln]").onclick=()=>{c.innerHTML=""};c.scrollIntoView({block:"nearest"})}}
-function sendBind(msg,out,onSent,shId,cpId){const sh=$(shId);if(sh)sh.onclick=()=>{try{navigator.share({text:msg()}).then(()=>onSent&&onSent(),()=>{})}catch(e){}};
- $(cpId).onclick=()=>{const tx=msg();const fb=()=>{const r=document.createRange();r.selectNodeContents($(out));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Message sélectionné, copie-le")};
-  try{navigator.clipboard.writeText(tx).then(()=>{toast("Message copié 💬");onSent&&onSent()},fb)}catch(e){fb()}}}
-const sendBtns=(p,a,b)=>navigator.share?`<button class="btn primary" id="${p}-share">Partager le message</button><button class="btn ghost" id="${p}-copy">Copier le message</button>`:`<button class="btn primary" id="${p}-copy">Copier le message</button>`;
+function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const fin=()=>{onSent&&onSent()};
+ const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Message copié 💬"));
+ const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Message sélectionné, copie-le")};
+ const run=()=>{try{return deliver()}catch(e){return Promise.reject(e)}};
+ const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
+  box.innerHTML=`<div class="consent"><b>Message prêt</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Partager maintenant</button></div></div>`;
+  box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
+ const withPos=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},()=>{st.pos="";up();toast("Position non ajoutée")}).then(trySend)};
+ $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
+  if(!opts.pos||NET().loc===false){trySend();return}
+  const first=NET().loc!==true;
+  box.innerHTML=`<div class="consent">${first?`<b>📍 Partager ma position</b><p>Ta position est demandée <b>une seule fois</b>, quand tu choisis « avec ma position » (jamais en continu, jamais en arrière-plan). Elle est ajoutée au message sous forme de lien qui s'ouvre dans Plans (iPhone) ou Google Maps (Android). <b>Elle n'est pas enregistrée dans l'appli.</b> Une fois le message envoyé, elle est chez la personne qui le reçoit et dans ton appli de messagerie. Ton iPhone te demandera aussi son autorisation.</p>`:`<b>Ajouter ta position au message ?</b>`}<div class="row-btns"><button type="button" class="btn ${opts.pre?"primary":"ghost"}" data-wy>📍 Partager avec ma position</button><button type="button" class="btn ghost" data-wn>Partager sans ma position</button></div></div>`;
+  box.querySelector("[data-wy]").onclick=()=>{NET().loc=true;save();box.innerHTML="";withPos()};
+  box.querySelector("[data-wn]").onclick=()=>{box.innerHTML="";trySend()};box.scrollIntoView({block:"nearest"})};
+ $("#"+pf+"-copy").onclick=()=>{st.pos="";up();const tx=msg();try{navigator.clipboard.writeText(tx).then(()=>{toast("Message copié 💬");fin()},sel)}catch(e){sel()}}}
+const sendBtns=(p,wp)=>`<button class="btn primary" id="${p}-share">${wp?"Partager (position facultative)":"Partager le message"}</button><button class="btn ghost" id="${p}-copy">Copier le message</button>`;
 function startMode(st,gid){S.dateMode={name:st.name||"",place:st.place||"",back:st.back||"",gid:gid||null,since:Date.now()};save();toast("Mode « en date » activé 🛡️")}
 function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||(o.go?nowLocal():`${today()}T20:00`),back:o.back!==undefined?o.back:(o.go?"":"23:00"),pos:""};const g=o.gid&&S.guys.find(x=>x.id===o.gid);
  const msg=()=>[`🛡️ Je pars en date${st.name?" avec "+st.name:""}${g&&(g.photo||g.ill!==undefined)?" (je t'envoie sa photo juste après)":""}.`,st.place?`📍 Lieu : ${st.place}`:"",st.place?`🗺️ Plan : ${mapLink(st.place)}`:"",st.pos?`📌 Ma position : ${mapLink("",st.pos)}`:"",st.when?`🕗 Rendez-vous : ${rel(st.when)} à ${hm(st.when)}`:"",st.back?`🏠 Je pense rentrer vers ${st.back.replace(":","h")}.`:"",st.back?"Si tu n'as pas de nouvelles de moi d'ici là, appelle-moi 🙏":"Si tu n'as pas de nouvelles de moi, appelle-moi 🙏"].filter(Boolean).join("\n");
@@ -1336,14 +1343,13 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
   <div class="field"><label class="t" for="sf-p">Où ?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Nom et adresse du lieu"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Rendez-vous</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Retour vers</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="sf-msg"></div></div>
-  <div class="row-btns">${sendBtns("sf")}<button class="btn ghost" id="sf-loc">📍 Ajouter ma position (une fois)</button><button class="btn ghost" data-act="close">Fermer</button></div>
+  <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Fermer</button></div>
   <div id="sf-consent"></div>
   <p class="mt" style="margin-top:12px">Quand tu partages ou copies ce message, l'accueil affiche un bandeau « en date » avec des boutons pour rassurer ton amie ou l'alerter.</p>
   <p class="mt" style="margin-top:8px">Astuce iPhone : « Check In » (Messages, iOS 17 ou plus) prévient ta personne de confiance toute seule si tu n'arrives pas ou ne réponds pas. En cas de danger, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p>`);
  const up=()=>{$("#sf-msg").textContent=msg()};up();
  [["sf-n","name"],["sf-p","place"],["sf-w","when"],["sf-b","back"]].forEach(([id,k])=>{const e=$("#"+id);e.oninput=e.onchange=()=>{st[k]=e.value;up()}});
- posBind(st,up,"#sf-loc","#sf-consent","📍 Ajouter ma position (une fois)");
- sendBind(msg,"#sf-msg",()=>{if(o.go||(st.when||"").slice(0,10)===today())startMode(st,o.gid);render()},"#sf-share","#sf-copy")}
+ sendUI("sf",msg,"#sf-msg",st,up,()=>{if(o.go||(st.when||"").slice(0,10)===today())startMode(st,o.gid);render()},{pos:true})}
 function openGo(){const td=today();const P=(S.plans||[]).filter(p=>!p.done&&p.when.slice(0,10)===td).sort((a,b)=>a.when.localeCompare(b.when));
  if(!P.length){openSafety({go:true});return}
  sheetWrap("Je pars en date",`<h2 style="font-size:26px">🛡️ Tu pars en date ?</h2><p class="sub">Choisis ton date d'aujourd'hui, ou touche « Pas dans l'agenda ».</p>
@@ -1357,11 +1363,10 @@ function openAlert(kind){const m=S.dateMode||{};const st={pos:""};
  sheetWrap(HEAD[kind],`<h2 style="font-size:26px">${HEAD[kind]}</h2><p class="sub">Ce message est prêt : c'est toi qui l'envoies à ton amie. L'appli ne prévient personne toute seule.</p>
   ${kind==="danger"?`<div class="box" style="margin-top:14px;border:2px solid var(--next)"><b>Si tu es en danger immédiat</b><div class="row-btns"><a class="btn primary" href="tel:17" style="text-decoration:none">📞 Appeler le 17</a><a class="btn ghost" href="sms:114" style="text-decoration:none">✉️ SMS au 114 (si tu ne peux pas parler)</a></div></div>`:""}
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="al-msg"></div></div>
-  <div class="row-btns">${sendBtns("al")}${kind!=="home"?`<button class="btn ghost" id="al-loc">📍 Ajouter ma position (une fois)</button>`:""}<button class="btn ghost" data-act="close">Fermer</button></div>
+  <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Fermer</button></div>
   <div id="al-consent"></div>`);
  const up=()=>{$("#al-msg").textContent=msg()};up();
- if(kind!=="home")posBind(st,up,"#al-loc","#al-consent","📍 Ajouter ma position (une fois)");
- sendBind(msg,"#al-msg",kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("Mode « en date » terminé 🏠")}:null,"#al-share","#al-copy")}
+ sendUI("al",msg,"#al-msg",st,up,kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("Mode « en date » terminé 🏠")}:null,{pos:kind!=="home",pre:kind==="danger"})}
 function goBlock(){const m=S.dateMode;if(m&&Date.now()-m.since>864e5){S.dateMode=null;save()}
  if(!S.dateMode)return `<button class="box glass hl" data-act="go" style="width:100%;text-align:left;margin-top:14px"><span style="font-size:30px">🛡️</span><span style="min-width:0"><b style="font-family:var(--display);font-size:17px;display:block">Je pars en date</b><span style="font-size:14px;color:var(--muted)">Préviens une amie en quelques touches</span></span></button>`;
  const d=S.dateMode;return `<div class="box" style="background:var(--accent-soft);margin-top:14px;border:2px solid var(--accent)"><b style="font-family:var(--display);font-size:18px">🛡️ Tu es en date</b><p style="margin:4px 0 0;font-size:14px">${[d.name?esc(d.name):"",d.place?"📍 "+esc(d.place):"",d.back?"🏠 retour vers "+esc(d.back).replace(":","h"):""].filter(Boolean).join(" · ")||"Ton amie est prévenue."}</p>
@@ -2263,15 +2268,22 @@ function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
 document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
 document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
 const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});navigator.geolocation.getCurrentPosition(p=>ok(p.coords),ko,{enableHighAccuracy:true,timeout:30000,maximumAge:60000})});
-function posBind(st,up,btn,box,bt){const b=$(btn);const doLoc=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up();b.textContent="📍 Remove my location";toast("Location added to the text 📍")},er=>toast(er&&er.code===1?"Location refused. Allow it in Settings":"Location not found. Try outside"))};
- b.onclick=()=>{if(st.pos){st.pos="";up();b.textContent=bt;return}
-  if(NET().loc===true){doLoc();return}
-  const c=$(box);c.innerHTML=`<div class="consent"><b>📍 Share my location</b><p>Your location is requested <b>once</b>, when you tap the button (never continuously, never in the background). It is added to the text as a link that opens in Maps (iPhone) or Google Maps (Android). <b>It is not saved in the app.</b> Once the text is sent, it is with the person who receives it and in your messaging app. Your iPhone will also ask for its own permission.</p><div class="row-btns"><button type="button" class="btn primary" data-ly>Allow, just once</button><button type="button" class="btn ghost" data-ln>Cancel</button></div></div>`;
-  c.querySelector("[data-ly]").onclick=()=>{NET().loc=true;save();c.innerHTML="";doLoc()};c.querySelector("[data-ln]").onclick=()=>{c.innerHTML=""};c.scrollIntoView({block:"nearest"})}}
-function sendBind(msg,out,onSent,shId,cpId){const sh=$(shId);if(sh)sh.onclick=()=>{try{navigator.share({text:msg()}).then(()=>onSent&&onSent(),()=>{})}catch(e){}};
- $(cpId).onclick=()=>{const tx=msg();const fb=()=>{const r=document.createRange();r.selectNodeContents($(out));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Text selected, copy it")};
-  try{navigator.clipboard.writeText(tx).then(()=>{toast("Text copied 💬");onSent&&onSent()},fb)}catch(e){fb()}}}
-const sendBtns=(p,a,b)=>navigator.share?`<button class="btn primary" id="${p}-share">Share the text</button><button class="btn ghost" id="${p}-copy">Copy the text</button>`:`<button class="btn primary" id="${p}-copy">Copy the text</button>`;
+function sendUI(pf,msg,out,st,up,onSent,opts){const box=$("#"+pf+"-consent");const fin=()=>{onSent&&onSent()};
+ const deliver=()=>navigator.share?navigator.share({text:msg()}):navigator.clipboard.writeText(msg()).then(()=>toast("Text copied 💬"));
+ const sel=()=>{const r=document.createRange();r.selectNodeContents($(out));const x=getSelection();x.removeAllRanges();x.addRange(r);toast("Text selected, copy it")};
+ const run=()=>{try{return deliver()}catch(e){return Promise.reject(e)}};
+ const trySend=()=>{run().then(fin,er=>{if(er&&er.name==="AbortError")return;
+  box.innerHTML=`<div class="consent"><b>Text ready</b><div class="row-btns"><button type="button" class="btn primary" data-gn>Share now</button></div></div>`;
+  box.querySelector("[data-gn]").onclick=()=>{box.innerHTML="";run().then(fin,er2=>{if(!(er2&&er2.name==="AbortError"))sel()})}})};
+ const withPos=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up()},()=>{st.pos="";up();toast("Location not added")}).then(trySend)};
+ $("#"+pf+"-share").onclick=()=>{st.pos="";up();box.innerHTML="";
+  if(!opts.pos||NET().loc===false){trySend();return}
+  const first=NET().loc!==true;
+  box.innerHTML=`<div class="consent">${first?`<b>📍 Share my location</b><p>Your location is requested <b>once</b>, when you choose “with my location” (never continuously, never in the background). It is added to the text as a link that opens in Maps (iPhone) or Google Maps (Android). <b>It is not saved in the app.</b> Once the text is sent, it is with the person who receives it and in your messaging app. Your iPhone will also ask for its own permission.</p>`:`<b>Add your location to the text?</b>`}<div class="row-btns"><button type="button" class="btn ${opts.pre?"primary":"ghost"}" data-wy>📍 Share with my location</button><button type="button" class="btn ghost" data-wn>Share without my location</button></div></div>`;
+  box.querySelector("[data-wy]").onclick=()=>{NET().loc=true;save();box.innerHTML="";withPos()};
+  box.querySelector("[data-wn]").onclick=()=>{box.innerHTML="";trySend()};box.scrollIntoView({block:"nearest"})};
+ $("#"+pf+"-copy").onclick=()=>{st.pos="";up();const tx=msg();try{navigator.clipboard.writeText(tx).then(()=>{toast("Text copied 💬");fin()},sel)}catch(e){sel()}}}
+const sendBtns=(p,wp)=>`<button class="btn primary" id="${p}-share">${wp?"Share (location optional)":"Share the text"}</button><button class="btn ghost" id="${p}-copy">Copy the text</button>`;
 function startMode(st,gid){S.dateMode={name:st.name||"",place:st.place||"",back:st.back||"",gid:gid||null,since:Date.now()};save();toast("“On a date” mode on 🛡️")}
 function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||(o.go?nowLocal():`${today()}T20:00`),back:o.back!==undefined?o.back:(o.go?"":"23:00"),pos:""};const g=o.gid&&S.guys.find(x=>x.id===o.gid);
  const msg=()=>[`🛡️ Heading out on a date${st.name?" with "+st.name:""}${g&&(g.photo||g.ill!==undefined)?" (sending you a photo right after)":""}.`,st.place?`📍 Where: ${st.place}`:"",st.place?`🗺️ Map: ${mapLink(st.place)}`:"",st.pos?`📌 My location: ${mapLink("",st.pos)}`:"",st.when?`🕗 Meeting: ${rel(st.when)} at ${hm(st.when)}`:"",st.back?`🏠 I should be home around ${tf(st.back)}.`:"",st.back?"If you haven't heard from me by then, call me 🙏":"If you haven't heard from me, call me 🙏"].filter(Boolean).join("\n");
@@ -2280,14 +2292,13 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
   <div class="field"><label class="t" for="sf-p">Where?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Name and address of the place"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Meeting</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Home by</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="sf-msg"></div></div>
-  <div class="row-btns">${sendBtns("sf")}<button class="btn ghost" id="sf-loc">📍 Add my location (once)</button><button class="btn ghost" data-act="close">Close</button></div>
+  <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Close</button></div>
   <div id="sf-consent"></div>
   <p class="mt" style="margin-top:12px">When you share or copy this text, the home screen shows an “on a date” banner with buttons to reassure your friend or alert them.</p>
   <p class="mt" style="margin-top:8px">iPhone tip: “Check In” (Messages, iOS 17 or later) alerts your trusted contact by itself if you don't arrive or don't answer. If you're in danger, call your local emergency number (911 in the US, 999 in the UK, 112 in Europe).</p>`);
  const up=()=>{$("#sf-msg").textContent=msg()};up();
  [["sf-n","name"],["sf-p","place"],["sf-w","when"],["sf-b","back"]].forEach(([id,k])=>{const e=$("#"+id);e.oninput=e.onchange=()=>{st[k]=e.value;up()}});
- posBind(st,up,"#sf-loc","#sf-consent","📍 Add my location (once)");
- sendBind(msg,"#sf-msg",()=>{if(o.go||(st.when||"").slice(0,10)===today())startMode(st,o.gid);render()},"#sf-share","#sf-copy")}
+ sendUI("sf",msg,"#sf-msg",st,up,()=>{if(o.go||(st.when||"").slice(0,10)===today())startMode(st,o.gid);render()},{pos:true})}
 function openGo(){const td=today();const P=(S.plans||[]).filter(p=>!p.done&&p.when.slice(0,10)===td).sort((a,b)=>a.when.localeCompare(b.when));
  if(!P.length){openSafety({go:true});return}
  sheetWrap("Heading out",`<h2 style="font-size:26px">🛡️ Heading out on a date?</h2><p class="sub">Pick today's date, or tap “Not in my calendar”.</p>
@@ -2301,11 +2312,10 @@ function openAlert(kind){const m=S.dateMode||{};const st={pos:""};
  sheetWrap(HEAD[kind],`<h2 style="font-size:26px">${HEAD[kind]}</h2><p class="sub">This text is ready: you send it to your friend yourself. The app doesn't alert anyone on its own.</p>
   ${kind==="danger"?`<div class="box" style="margin-top:14px;border:2px solid var(--next)"><b>If you are in immediate danger</b><div class="row-btns"><a class="btn primary" href="tel:112" style="text-decoration:none">📞 Call emergency (112)</a></div></div>`:""}
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="al-msg"></div></div>
-  <div class="row-btns">${sendBtns("al")}${kind!=="home"?`<button class="btn ghost" id="al-loc">📍 Add my location (once)</button>`:""}<button class="btn ghost" data-act="close">Close</button></div>
+  <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Close</button></div>
   <div id="al-consent"></div>`);
  const up=()=>{$("#al-msg").textContent=msg()};up();
- if(kind!=="home")posBind(st,up,"#al-loc","#al-consent","📍 Add my location (once)");
- sendBind(msg,"#al-msg",kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("“On a date” mode ended 🏠")}:null,"#al-share","#al-copy")}
+ sendUI("al",msg,"#al-msg",st,up,kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("“On a date” mode ended 🏠")}:null,{pos:kind!=="home",pre:kind==="danger"})}
 function goBlock(){const m=S.dateMode;if(m&&Date.now()-m.since>864e5){S.dateMode=null;save()}
  if(!S.dateMode)return `<button class="box glass hl" data-act="go" style="width:100%;text-align:left;margin-top:14px"><span style="font-size:30px">🛡️</span><span style="min-width:0"><b style="font-family:var(--display);font-size:17px;display:block">Heading out on a date</b><span style="font-size:14px;color:var(--muted)">Alert a friend in a few taps</span></span></button>`;
  const d=S.dateMode;return `<div class="box" style="background:var(--accent-soft);margin-top:14px;border:2px solid var(--accent)"><b style="font-family:var(--display);font-size:18px">🛡️ You're on a date</b><p style="margin:4px 0 0;font-size:14px">${[d.name?esc(d.name):"",d.place?"📍 "+esc(d.place):"",d.back?"🏠 home by "+tf(d.back):""].filter(Boolean).join(" · ")||"Your friend has been told."}</p>
