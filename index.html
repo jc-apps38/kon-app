@@ -451,6 +451,13 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .dblock.t b{font-size:18px; text-transform:none; margin-top:2px}
 .iconbtn{width:40px; height:40px; border-radius:50%; background:var(--surface2); font-size:15px; font-weight:700}
 .share-img{width:100%; max-width:280px; aspect-ratio:9/16; border-radius:20px; display:block; margin:14px auto; box-shadow:var(--shadow); background:var(--surface2); transition:opacity .2s}
+.sugbox{margin-top:2px}
+.sugl{display:grid;gap:6px}
+.sugi{text-align:left;padding:11px 13px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font-weight:600;font-size:14px;line-height:1.35}
+.sugi:active{background:var(--accent-soft)}
+.sugat{font-size:11.5px;color:var(--muted);padding:2px 4px}
+.consent{background:var(--accent-soft);border-radius:16px;padding:14px;margin-top:6px;font-size:14px;line-height:1.5}
+.consent p{margin:6px 0 0}
 .msg{white-space:pre-wrap; background:var(--surface2); border-radius:16px; padding:14px; font-size:14.5px; line-height:1.5; -webkit-user-select:text; user-select:text}
 .h-big sup{font-size:.5em}
 
@@ -853,7 +860,7 @@ function evalView(){
    <div class="field"><label class="t" for="f-name">Son prénom</label><input class="input" id="f-name" maxlength="30" value="${esc(ev.name)}" autocomplete="off" autocapitalize="words"></div>
    <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
    <div class="gtog"><div class="field"><label class="t" for="f-date">Date du rendez-vous</label><input class="input" type="date" id="f-date" max="${today()}" value="${ev.date}"></div><div class="field"><label class="t" for="f-time">Heure</label><input class="input" type="time" id="f-time" value="${ev.time||""}"></div></div>
-   <div class="field"><label class="t" for="f-place">Où ? (facultatif)</label><input class="input" id="f-place" maxlength="60" placeholder="Bar Le Comptoir, place du marché" value="${esc(ev.place||"")}"></div>
+   <div class="field"><label class="t" for="f-place">Où ? (facultatif)</label><input class="input" id="f-place" maxlength="120" placeholder="Bar Le Comptoir, place du marché" value="${esc(ev.place||"")}"></div>
    <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(en un mot, facultatif)</span></span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(ev.prev)} »</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div></div>
    <div class="field" id="nightbox"></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
@@ -959,7 +966,14 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
  <div class="box glass"><h3>✍️ Tes questions perso</h3><p>Ajoute jusqu'à 5 questions à toi. Elles arrivent juste avant la dernière question.</p>
   ${(S.customQ||[]).map(c=>`<div class="li" style="margin-top:10px;align-items:center"><span class="k">•</span><p style="flex:1">${esc(c.q)}</p><button data-cqdel="${c.id}" aria-label="Supprimer la question" style="color:var(--muted);font-size:16px;padding:4px 8px">✕</button></div>`).join("")}
   ${(S.customQ||[]).length<5?`<input class="input" id="cq-q" maxlength="80" placeholder="Ex : Il aime les animaux ?" style="margin-top:12px"><input class="input" id="cq-s" maxlength="30" placeholder="En quelques mots : Aime les animaux" style="margin-top:8px"><button class="btn ghost" data-act="cqadd" style="margin-top:8px">Ajouter la question</button>`:""}</div>
- <div class="box glass"><h3>🔒 Confidentialité</h3><p>Tes dates et leurs photos sont enregistrés uniquement sur ton téléphone. Rien n'est envoyé sur Internet, personne d'autre ne peut les voir.</p></div>
+ <div class="box glass"><h3>🔒 Confidentialité</h3><p>Tes dates, tes notes, tes photos et tes verdicts restent <b>uniquement sur ton téléphone</b>. Il n'y a pas de compte et pas de serveur Keep or Next.</p><p style="margin-top:10px"><b>Ce qui peut sortir, seulement quand tu le décides :</b></p>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Le lieu du date</b> : si tu actives les suggestions, le texte tapé dans « Où ? » est envoyé à Photon (OpenStreetMap). Rien d'autre.</p></div>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Ta position</b> : jamais en continu. Une seule fois, quand tu touches « Ajouter ma position » dans Date en sécurité. Elle n'est pas gardée dans l'appli.</p></div>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Tes messages et partages</b> (message de sécurité, verdict) partent par l'appli que tu choisis (Messages, WhatsApp…). C'est toi qui envoies.</p></div>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Google Agenda</b> : si tu touches « Ajouter à Google Agenda », le prénom, l'heure et le lieu sont envoyés à Google.</p></div>
+  <div style="height:14px"></div>
+  <button class="switch" data-act="netsug" aria-pressed="${(S.net||{}).sug===true}"><span>Suggestions de lieux<span class="mt" style="font-weight:500">Envoie ce que tu tapes dans « Où ? » à Photon</span></span><span class="k"></span></button><div style="height:14px"></div>
+  <button class="switch" data-act="netloc" aria-pressed="${(S.net||{}).loc===true}"><span>Partage de ma position<span class="mt" style="font-weight:500">Une seule fois, quand tu le demandes</span></span><span class="k"></span></button></div>
  <div class="box glass"><h3>Données</h3><div class="row-btns">${ex?`<button class="btn ghost" data-act="clearex">Effacer les exemples</button>`:`<button class="btn ghost" data-act="addex">Remettre les exemples</button>`}<button class="btn ghost danger" data-act="wipe">Tout effacer</button><button class="btn ghost" data-act="reset">Recommencer comme au premier jour</button></div></div>
  <div class="box glass"><h3>Sur ton écran d'accueil</h3><p>${A2HS} Keep or Next s'ouvre alors comme une vraie appli.</p></div>
  <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · version premium 3</p></section>`}
@@ -1237,7 +1251,7 @@ function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.lik
   <div class="field"><label class="t" for="e-name">Prénom</label><input class="input" id="e-name" maxlength="30" value="${esc(g.name)}" autocapitalize="words"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(g.dg||dflt())} (en un mot, facultatif)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
-  <div class="field"><label class="t" for="e-place">Où ? (facultatif)</label><input class="input" id="e-place" maxlength="60" value="${esc(g.place||"")}"></div>
+  <div class="field"><label class="t" for="e-place">Où ? (facultatif)</label><input class="input" id="e-place" maxlength="120" value="${esc(g.place||"")}"></div>
   <div class="field" id="e-nightbox"></div>
   ${moreHTML(P,Lk,g.dg||dflt(),"x",true)}
   <div class="row-btns"><button class="btn primary" id="e-save">Enregistrer</button><button class="btn ghost" id="e-cancel">${"Annuler"}</button></div>`);
@@ -1258,7 +1272,7 @@ function openPlan(fresh){const pd={phys:{},likes:[]};const cands=S.guys.filter(g
   <div id="p-newbox"${fresh?"":" hidden"}><div class="field"><label class="t" for="p-name">Son prénom</label><input class="input" id="p-name" maxlength="30" autocomplete="off" autocapitalize="words"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-ps="${s}" aria-pressed="false">${s}</button>`).join("")}</div></div>${moreHTML(pd.phys,pd.likes,dflt(),"x")}</div>
   <div class="field"><label class="t" for="p-when">Quand ?</label><input class="input" type="datetime-local" id="p-when" min="${nowLocal()}" value="${defWhen()}"></div>
-  <div class="field"><label class="t" for="p-place">Où ?</label><input class="input" id="p-place" placeholder="Bar Le Comptoir, place du marché" maxlength="60"></div>
+  <div class="field"><label class="t" for="p-place">Où ?</label><input class="input" id="p-place" placeholder="Bar Le Comptoir, place du marché" maxlength="120"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${preQ(dflt())}</span><div class="chips">${PRE.map(o=>`<button class="chip" data-pre="${o}" aria-pressed="false">${o}</button>`).join("")}</div></div>
   <div class="field"><label class="t" for="p-back">Retour prévu vers (facultatif)</label><input class="input" type="time" id="p-back" value="23:00"></div>
   <div class="row-btns"><button class="btn primary" id="p-save">Ajouter à l'agenda</button><button class="btn ghost" data-act="close">Annuler</button></div>`);
@@ -1284,19 +1298,46 @@ function openDay(k){const items=[];S.guys.forEach(g=>hist(g).forEach((h,i)=>{if(
   <div class="row-btns"><button class="btn ghost" data-act="close">Fermer</button></div>`)}
 
 /* ---------- DATE EN SÉCURITÉ */
-function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||`${today()}T20:00`,back:o.back||"23:00"};const g=o.gid&&S.guys.find(x=>x.id===o.gid);
- const msg=()=>`🛡️ Je pars en date${st.name?" avec "+st.name:""}${g&&(g.photo||g.ill!==undefined)?" (je t'envoie sa photo juste après)":""}.\n📍 Lieu : ${st.place||"…"}\n🕗 Rendez-vous : ${rel(st.when)} à ${hm(st.when)}\n🏠 Je pense rentrer vers ${(st.back||"…").replace(":","h")}.\nSi tu n'as pas de nouvelles de moi d'ici là, appelle-moi 🙏`;
- sheetWrap("Date en sécurité",`<h2 style="font-size:26px">Date en sécurité 🛡️</h2><p class="sub">Un message tout prêt pour une personne de confiance : avec qui tu es, où, et quand tu rentres.</p>
+/* ---------- RÉSEAU : lieux + position (opt-in) */
+const NET=()=>S.net||(S.net={});
+const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const mapLink=(q,ll)=>ll?(IOS?`https://maps.apple.com/?ll=${ll}&q=${encodeURIComponent("Ma position")}`:`https://www.google.com/maps/search/?api=1&query=${ll}`):(IOS?`https://maps.apple.com/?q=${encodeURIComponent(q)}`:`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`);
+const PLACE_IDS=["f-place","p-place","e-place","sf-p"];let sugT=0,sugC=null,sugSkip=false;
+function sugBox(i){let b=i.parentNode.querySelector(".sugbox");if(!b){b=document.createElement("div");b.className="sugbox";i.insertAdjacentElement("afterend",b)}return b}
+function sugKill(i){const b=i.parentNode&&i.parentNode.querySelector(".sugbox");if(b)b.remove()}
+function sugAsk(i){const b=sugBox(i);b.innerHTML=`<div class="consent"><b>📍 Suggestions de lieux</b><p>Pour te proposer des adresses pendant que tu tapes, Keep or Next envoie ce que tu écris dans « Où ? » (ex. « zanzibar ») à <b>Photon</b>, un service gratuit de cartes basé sur OpenStreetMap. Il ne reçoit ni ton prénom ni tes notes, mais il voit ton adresse IP comme tout site web. <b>C'est la seule fois où ce que tu écris sort de ton téléphone</b> (et seulement si tu l'actives). Le lieu que tu choisis est ensuite gardé sur ton téléphone.</p><div class="row-btns"><button type="button" class="btn primary" data-sy>Activer les suggestions</button><button type="button" class="btn ghost" data-sn>Non merci, je tape à la main</button></div></div>`;
+ b.querySelector("[data-sy]").onclick=()=>{NET().sug=true;save();sugKill(i);toast("Suggestions de lieux activées ✅");if(i.value.trim().length>=3)sugFetch(i,i.value.trim())};
+ b.querySelector("[data-sn]").onclick=()=>{NET().sug=false;save();sugKill(i);toast("Suggestions désactivées")}}
+function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
+ fetch("https://photon.komoot.io/api/?lang=fr&limit=6&q="+encodeURIComponent(q),{signal:sugC.signal}).then(r=>r.ok?r.json():Promise.reject()).then(js=>{
+  if(i.value.trim()!==q||NET().sug!==true)return;const seen=new Set();
+  const L=(js.features||[]).map(f=>{const p=f.properties||{};const st=[p.housenumber,p.street].filter(Boolean).join(" ");const c=p.city||p.town||p.village||p.county||"";const parts=[];[p.name,st,c].forEach(x=>{if(x&&!parts.includes(x))parts.push(x)});return parts.join(", ").slice(0,120)}).filter(x=>x&&!seen.has(x)&&seen.add(x));
+  if(!L.length){sugKill(i);return}
+  const b=sugBox(i);b.innerHTML=`<div class="sugl">${L.map((x,n)=>`<button type="button" class="sugi" data-n="${n}">📍 ${esc(x)}</button>`).join("")}<div class="sugat">© OpenStreetMap · via Photon</div></div>`;
+  b.querySelectorAll(".sugi").forEach(bt=>bt.onclick=()=>{sugSkip=true;i.value=L[+bt.dataset.n];i.dispatchEvent(new Event("input",{bubbles:true}));sugSkip=false;sugKill(i)})}).catch(()=>{})}
+document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
+document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
+const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});navigator.geolocation.getCurrentPosition(p=>ok(p.coords),ko,{enableHighAccuracy:true,timeout:30000,maximumAge:60000})});
+function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||`${today()}T20:00`,back:o.back||"23:00",pos:""};const g=o.gid&&S.guys.find(x=>x.id===o.gid);
+ const msg=()=>`🛡️ Je pars en date${st.name?" avec "+st.name:""}${g&&(g.photo||g.ill!==undefined)?" (je t'envoie sa photo juste après)":""}.\n📍 Lieu : ${st.place||"…"}${st.place?"\n🗺️ Plan : "+mapLink(st.place):""}${st.pos?"\n📌 Ma position : "+mapLink("",st.pos):""}\n🕗 Rendez-vous : ${rel(st.when)} à ${hm(st.when)}\n🏠 Je pense rentrer vers ${(st.back||"…").replace(":","h")}.\nSi tu n'as pas de nouvelles de moi d'ici là, appelle-moi 🙏`;
+ sheetWrap("Date en sécurité",`<h2 style="font-size:26px">Date en sécurité 🛡️</h2><p class="sub">Un message tout prêt pour une personne de confiance : avec qui tu es, où, et quand tu rentres. Tu l'envoies toi-même.</p>
   <div class="field"><label class="t" for="sf-n">Avec qui ?</label><input class="input" id="sf-n" value="${esc(st.name)}" placeholder="Son prénom" autocapitalize="words"></div>
-  <div class="field"><label class="t" for="sf-p">Où ?</label><input class="input" id="sf-p" value="${esc(st.place)}" placeholder="Nom et adresse du lieu"></div>
+  <div class="field"><label class="t" for="sf-p">Où ?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Nom et adresse du lieu"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Rendez-vous</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Retour vers</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="sf-msg"></div></div>
-  <div class="row-btns"><button class="btn primary" id="sf-copy">Copier le message</button><button class="btn ghost" data-act="close">Fermer</button></div>
-  <p class="mt" style="margin-top:12px">Astuce : partage aussi ta position en direct (app Localiser ou WhatsApp). En cas de danger, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p>`);
+  <div class="row-btns" id="sf-btns">${navigator.share?`<button class="btn primary" id="sf-share">Partager le message</button><button class="btn ghost" id="sf-copy">Copier le message</button>`:`<button class="btn primary" id="sf-copy">Copier le message</button>`}<button class="btn ghost" id="sf-loc">📍 Ajouter ma position (une fois)</button><button class="btn ghost" data-act="close">Fermer</button></div>
+  <div id="sf-consent"></div>
+  <p class="mt" style="margin-top:12px">Astuce iPhone : « Check In » (Messages, iOS 17 ou plus) prévient ta personne de confiance toute seule si tu n'arrives pas ou ne réponds pas. En cas de danger, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p>`);
  const up=()=>{$("#sf-msg").textContent=msg()};up();
  [["sf-n","name"],["sf-p","place"],["sf-w","when"],["sf-b","back"]].forEach(([id,k])=>{const e=$("#"+id);e.oninput=e.onchange=()=>{st[k]=e.value;up()}});
+ const doLoc=()=>{toast("Je cherche ta position…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up();$("#sf-loc").textContent="📍 Retirer ma position";toast("Position ajoutée au message 📍")},er=>toast(er&&er.code===1?"Position refusée. Autorise-la dans Réglages":"Position introuvable. Réessaie dehors"))};
+ $("#sf-loc").onclick=()=>{if(st.pos){st.pos="";up();$("#sf-loc").textContent="📍 Ajouter ma position (une fois)";return}
+  if(NET().loc===true){doLoc();return}
+  const c=$("#sf-consent");c.innerHTML=`<div class="consent"><b>📍 Partager ma position</b><p>Ta position est demandée <b>une seule fois</b>, quand tu touches le bouton (jamais en continu, jamais en arrière-plan). Elle est ajoutée au message sous forme de lien qui s'ouvre dans Plans (iPhone) ou Google Maps (Android). <b>Elle n'est pas enregistrée dans l'appli.</b> Une fois le message envoyé, elle est chez la personne qui le reçoit et dans ton appli de messagerie. Ton iPhone te demandera aussi son autorisation.</p><div class="row-btns"><button type="button" class="btn primary" data-ly>Autoriser, une seule fois</button><button type="button" class="btn ghost" data-ln>Annuler</button></div></div>`;
+  c.querySelector("[data-ly]").onclick=()=>{NET().loc=true;save();c.innerHTML="";doLoc()};c.querySelector("[data-ln]").onclick=()=>{c.innerHTML=""};c.scrollIntoView({block:"nearest"})};
+ const sh=$("#sf-share");if(sh)sh.onclick=()=>{try{navigator.share({text:msg()}).catch(()=>{})}catch(e){}};
  $("#sf-copy").onclick=()=>{const t=msg();const fb=()=>{const r=document.createRange();r.selectNodeContents($("#sf-msg"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Message sélectionné, copie-le")};
-  try{navigator.clipboard.writeText(t).then(()=>toast("Message copié, colle-le dans ta conversation 💬"),fb)}catch(e){fb()}}}
+  try{navigator.clipboard.writeText(t).then(()=>toast("Message copié 💬"),fb)}catch(e){fb()}}}
 
 /* ---------- CARTE STORY */
 function loadImg(src){return new Promise(r=>{if(!src)return r(null);const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src})}
@@ -1435,6 +1476,8 @@ function act(a,b){
  else if(a==="a2hsx"){S.a2hs=1;save();render()}
  else if(a==="sharecur")openShare({name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill,answers:ev.answers,phys:ev.phys,dg:ev.dg});
  else if(a==="lock"){if(S.pin){delete S.pin;save();toast("Code désactivé");render()}else showLock("set1")}
+ else if(a==="netsug"){NET().sug=NET().sug===true?false:true;save();render()}
+ else if(a==="netloc"){NET().loc=NET().loc===true?false:true;save();render()}
  else if(a==="discreet"){S.discreet=!S.discreet;save();document.documentElement.classList.toggle("discreet",S.discreet);render()}
  else if(a==="bkcopy")copyBackup();
  else if(a==="bkshow"){const w=$("#bk-in-w");w.hidden=!w.hidden;if(!w.hidden)$("#bk-in").focus()}
@@ -1726,7 +1769,7 @@ function evalView(){
    <div class="field"><label class="t" for="f-name">First name</label><input class="input" id="f-name" maxlength="30" value="${esc(ev.name)}" autocomplete="off" autocapitalize="words"></div>
    <div class="field"><span class="t" style="font-weight:700;font-size:14px">Where did you meet?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
    <div class="gtog"><div class="field"><label class="t" for="f-date">Date of the date</label><input class="input" type="date" id="f-date" max="${today()}" value="${ev.date}"></div><div class="field"><label class="t" for="f-time">Time</label><input class="input" type="time" id="f-time" value="${ev.time||""}"></div></div>
-   <div class="field"><label class="t" for="f-place">Where? (optional)</label><input class="input" id="f-place" maxlength="60" placeholder="The Corner Bar, market square" value="${esc(ev.place||"")}"></div>
+   <div class="field"><label class="t" for="f-place">Where? (optional)</label><input class="input" id="f-place" maxlength="120" placeholder="The Corner Bar, market square" value="${esc(ev.place||"")}"></div>
    <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(one word, optional)</span></span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(ev.prev)}”</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div></div>
    <div class="field" id="nightbox"></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
@@ -1832,7 +1875,14 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
  <div class="box glass"><h3>✍️ Your own questions</h3><p>Add up to 5 questions of your own. They come right before the last question.</p>
   ${(S.customQ||[]).map(c=>`<div class="li" style="margin-top:10px;align-items:center"><span class="k">•</span><p style="flex:1">${esc(c.q)}</p><button data-cqdel="${c.id}" aria-label="Delete question" style="color:var(--muted);font-size:16px;padding:4px 8px">✕</button></div>`).join("")}
   ${(S.customQ||[]).length<5?`<input class="input" id="cq-q" maxlength="80" placeholder="E.g. Does he like animals?" style="margin-top:12px"><input class="input" id="cq-s" maxlength="30" placeholder="In a few words: Likes animals" style="margin-top:8px"><button class="btn ghost" data-act="cqadd" style="margin-top:8px">Add the question</button>`:""}</div>
- <div class="box glass"><h3>🔒 Privacy</h3><p>Your dates and their photos are stored only on your phone. Nothing is sent over the internet, nobody else can see them.</p></div>
+ <div class="box glass"><h3>🔒 Privacy</h3><p>Your dates, notes, photos and verdicts stay <b>only on your phone</b>. There is no account and no Keep or Next server.</p><p style="margin-top:10px"><b>What can leave, only when you decide:</b></p>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>The date place</b>: if you turn on suggestions, the text typed in “Where?” is sent to Photon (OpenStreetMap). Nothing else.</p></div>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Your location</b>: never continuous. Once, when you tap “Add my location” in Safe date. It is not kept in the app.</p></div>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Your texts and shares</b> (safety text, verdict) go through the app you choose (Messages, WhatsApp…). You are the one who sends.</p></div>
+  <div class="li" style="margin-top:8px"><span class="k">•</span><p style="flex:1"><b>Google Calendar</b>: if you tap “Add to Google Calendar”, the first name, time and place are sent to Google.</p></div>
+  <div style="height:14px"></div>
+  <button class="switch" data-act="netsug" aria-pressed="${(S.net||{}).sug===true}"><span>Place suggestions<span class="mt" style="font-weight:500">Sends what you type in “Where?” to Photon</span></span><span class="k"></span></button><div style="height:14px"></div>
+  <button class="switch" data-act="netloc" aria-pressed="${(S.net||{}).loc===true}"><span>Share my location<span class="mt" style="font-weight:500">Once, only when you ask</span></span><span class="k"></span></button></div>
  <div class="box glass"><h3>Data</h3><div class="row-btns">${ex?`<button class="btn ghost" data-act="clearex">Delete the examples</button>`:`<button class="btn ghost" data-act="addex">Bring back the examples</button>`}<button class="btn ghost danger" data-act="wipe">Delete everything</button><button class="btn ghost" data-act="reset">Start over like day one</button></div></div>
  <div class="box glass"><h3>On your home screen</h3><p>${A2HS} Keep or Next then opens like a real app.</p></div>
  <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · premium version 3</p></section>`}
@@ -2111,7 +2161,7 @@ function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.lik
   <div class="field"><label class="t" for="e-name">First name</label><input class="input" id="e-name" maxlength="30" value="${esc(g.name)}" autocapitalize="words"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(g.dg||dflt())} (one word, optional)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
-  <div class="field"><label class="t" for="e-place">Where? (optional)</label><input class="input" id="e-place" maxlength="60" value="${esc(g.place||"")}"></div>
+  <div class="field"><label class="t" for="e-place">Where? (optional)</label><input class="input" id="e-place" maxlength="120" value="${esc(g.place||"")}"></div>
   <div class="field" id="e-nightbox"></div>
   ${moreHTML(P,Lk,g.dg||dflt(),"x",true)}
   <div class="row-btns"><button class="btn primary" id="e-save">Save</button><button class="btn ghost" id="e-cancel">${"Cancel"}</button></div>`);
@@ -2132,7 +2182,7 @@ function openPlan(fresh){const pd={phys:{},likes:[]};const cands=S.guys.filter(g
   <div id="p-newbox"${fresh?"":" hidden"}><div class="field"><label class="t" for="p-name">First name</label><input class="input" id="p-name" maxlength="30" autocomplete="off" autocapitalize="words"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-ps="${s}" aria-pressed="false">${s}</button>`).join("")}</div></div>${moreHTML(pd.phys,pd.likes,dflt(),"x")}</div>
   <div class="field"><label class="t" for="p-when">When?</label><input class="input" type="datetime-local" id="p-when" min="${nowLocal()}" value="${defWhen()}"></div>
-  <div class="field"><label class="t" for="p-place">Where?</label><input class="input" id="p-place" placeholder="The Corner Bar, Main Street" maxlength="60"></div>
+  <div class="field"><label class="t" for="p-place">Where?</label><input class="input" id="p-place" placeholder="The Corner Bar, Main Street" maxlength="120"></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${preQ(dflt())}</span><div class="chips">${PRE.map(o=>`<button class="chip" data-pre="${o}" aria-pressed="false">${o}</button>`).join("")}</div></div>
   <div class="field"><label class="t" for="p-back">Home by around (optional)</label><input class="input" type="time" id="p-back" value="23:00"></div>
   <div class="row-btns"><button class="btn primary" id="p-save">Add to calendar</button><button class="btn ghost" data-act="close">Cancel</button></div>`);
@@ -2158,19 +2208,46 @@ function openDay(k){const items=[];S.guys.forEach(g=>hist(g).forEach((h,i)=>{if(
   <div class="row-btns"><button class="btn ghost" data-act="close">Close</button></div>`)}
 
 /* ---------- SAFE DATE */
-function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||`${today()}T20:00`,back:o.back||"23:00"};const g=o.gid&&S.guys.find(x=>x.id===o.gid);
- const msg=()=>`🛡️ Heading out on a date${st.name?" with "+st.name:""}${g&&(g.photo||g.ill!==undefined)?" (sending you a photo right after)":""}.\n📍 Where: ${st.place||"…"}\n🕗 Meeting: ${rel(st.when)} at ${hm(st.when)}\n🏠 I should be home around ${st.back?tf(st.back):"…"}.\nIf you haven't heard from me by then, call me 🙏`;
- sheetWrap("Safe date",`<h2 style="font-size:26px">Safe date 🛡️</h2><p class="sub">A ready-made text for someone you trust: who you're with, where, and when you'll be home.</p>
+/* ---------- RÉSEAU : lieux + position (opt-in) */
+const NET=()=>S.net||(S.net={});
+const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const mapLink=(q,ll)=>ll?(IOS?`https://maps.apple.com/?ll=${ll}&q=${encodeURIComponent("My location")}`:`https://www.google.com/maps/search/?api=1&query=${ll}`):(IOS?`https://maps.apple.com/?q=${encodeURIComponent(q)}`:`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`);
+const PLACE_IDS=["f-place","p-place","e-place","sf-p"];let sugT=0,sugC=null,sugSkip=false;
+function sugBox(i){let b=i.parentNode.querySelector(".sugbox");if(!b){b=document.createElement("div");b.className="sugbox";i.insertAdjacentElement("afterend",b)}return b}
+function sugKill(i){const b=i.parentNode&&i.parentNode.querySelector(".sugbox");if(b)b.remove()}
+function sugAsk(i){const b=sugBox(i);b.innerHTML=`<div class="consent"><b>📍 Place suggestions</b><p>To suggest addresses while you type, Keep or Next sends what you write in “Where?” (e.g. “zanzibar”) to <b>Photon</b>, a free map service based on OpenStreetMap. It receives neither your first name nor your notes, but it sees your IP address like any website. <b>This is the only time what you type leaves your phone</b> (and only if you turn it on). The place you pick is then kept on your phone.</p><div class="row-btns"><button type="button" class="btn primary" data-sy>Turn on suggestions</button><button type="button" class="btn ghost" data-sn>No thanks, I'll type it</button></div></div>`;
+ b.querySelector("[data-sy]").onclick=()=>{NET().sug=true;save();sugKill(i);toast("Place suggestions on ✅");if(i.value.trim().length>=3)sugFetch(i,i.value.trim())};
+ b.querySelector("[data-sn]").onclick=()=>{NET().sug=false;save();sugKill(i);toast("Suggestions off")}}
+function sugFetch(i,q){if(sugC)sugC.abort();sugC=new AbortController();
+ fetch("https://photon.komoot.io/api/?lang=en&limit=6&q="+encodeURIComponent(q),{signal:sugC.signal}).then(r=>r.ok?r.json():Promise.reject()).then(js=>{
+  if(i.value.trim()!==q||NET().sug!==true)return;const seen=new Set();
+  const L=(js.features||[]).map(f=>{const p=f.properties||{};const st=[p.housenumber,p.street].filter(Boolean).join(" ");const c=p.city||p.town||p.village||p.county||"";const parts=[];[p.name,st,c].forEach(x=>{if(x&&!parts.includes(x))parts.push(x)});return parts.join(", ").slice(0,120)}).filter(x=>x&&!seen.has(x)&&seen.add(x));
+  if(!L.length){sugKill(i);return}
+  const b=sugBox(i);b.innerHTML=`<div class="sugl">${L.map((x,n)=>`<button type="button" class="sugi" data-n="${n}">📍 ${esc(x)}</button>`).join("")}<div class="sugat">© OpenStreetMap · via Photon</div></div>`;
+  b.querySelectorAll(".sugi").forEach(bt=>bt.onclick=()=>{sugSkip=true;i.value=L[+bt.dataset.n];i.dispatchEvent(new Event("input",{bubbles:true}));sugSkip=false;sugKill(i)})}).catch(()=>{})}
+document.addEventListener("focusin",e=>{const i=e.target;if(i&&PLACE_IDS.includes(i.id)&&NET().sug===undefined&&!i.parentNode.querySelector(".sugbox"))sugAsk(i)});
+document.addEventListener("input",e=>{const i=e.target;if(sugSkip||!i||!PLACE_IDS.includes(i.id)||NET().sug!==true)return;clearTimeout(sugT);const q=i.value.trim();if(q.length<3){if(sugC)sugC.abort();sugKill(i);return}sugT=setTimeout(()=>sugFetch(i,q),350)});
+const getPos=()=>new Promise((ok,ko)=>{if(!navigator.geolocation)return ko({code:0});navigator.geolocation.getCurrentPosition(p=>ok(p.coords),ko,{enableHighAccuracy:true,timeout:30000,maximumAge:60000})});
+function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||`${today()}T20:00`,back:o.back||"23:00",pos:""};const g=o.gid&&S.guys.find(x=>x.id===o.gid);
+ const msg=()=>`🛡️ Heading out on a date${st.name?" with "+st.name:""}${g&&(g.photo||g.ill!==undefined)?" (sending you a photo right after)":""}.\n📍 Where: ${st.place||"…"}${st.place?"\n🗺️ Map: "+mapLink(st.place):""}${st.pos?"\n📌 My location: "+mapLink("",st.pos):""}\n🕗 Meeting: ${rel(st.when)} at ${hm(st.when)}\n🏠 I should be home around ${st.back?tf(st.back):"…"}.\nIf you haven't heard from me by then, call me 🙏`;
+ sheetWrap("Safe date",`<h2 style="font-size:26px">Safe date 🛡️</h2><p class="sub">A ready-made text for someone you trust: who you're with, where, and when you'll be home. You send it yourself.</p>
   <div class="field"><label class="t" for="sf-n">With who?</label><input class="input" id="sf-n" value="${esc(st.name)}" placeholder="First name" autocapitalize="words"></div>
-  <div class="field"><label class="t" for="sf-p">Where?</label><input class="input" id="sf-p" value="${esc(st.place)}" placeholder="Name and address of the place"></div>
+  <div class="field"><label class="t" for="sf-p">Where?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Name and address of the place"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Meeting</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Home by</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="sf-msg"></div></div>
-  <div class="row-btns"><button class="btn primary" id="sf-copy">Copy the text</button><button class="btn ghost" data-act="close">Close</button></div>
-  <p class="mt" style="margin-top:12px">Tip: share your live location too (Find My, Google Maps or WhatsApp). If you're in danger, call your local emergency number (911 in the US, 999 in the UK, 112 in Europe).</p>`);
+  <div class="row-btns" id="sf-btns">${navigator.share?`<button class="btn primary" id="sf-share">Share the text</button><button class="btn ghost" id="sf-copy">Copy the text</button>`:`<button class="btn primary" id="sf-copy">Copy the text</button>`}<button class="btn ghost" id="sf-loc">📍 Add my location (once)</button><button class="btn ghost" data-act="close">Close</button></div>
+  <div id="sf-consent"></div>
+  <p class="mt" style="margin-top:12px">iPhone tip: “Check In” (Messages, iOS 17 or later) alerts your trusted contact by itself if you don't arrive or don't answer. If you're in danger, call your local emergency number (911 in the US, 999 in the UK, 112 in Europe).</p>`);
  const up=()=>{$("#sf-msg").textContent=msg()};up();
  [["sf-n","name"],["sf-p","place"],["sf-w","when"],["sf-b","back"]].forEach(([id,k])=>{const e=$("#"+id);e.oninput=e.onchange=()=>{st[k]=e.value;up()}});
+ const doLoc=()=>{toast("Finding your location…");getPos().then(c=>{st.pos=c.latitude.toFixed(5)+","+c.longitude.toFixed(5);up();$("#sf-loc").textContent="📍 Remove my location";toast("Location added to the text 📍")},er=>toast(er&&er.code===1?"Location refused. Allow it in Settings":"Location not found. Try outside"))};
+ $("#sf-loc").onclick=()=>{if(st.pos){st.pos="";up();$("#sf-loc").textContent="📍 Add my location (once)";return}
+  if(NET().loc===true){doLoc();return}
+  const c=$("#sf-consent");c.innerHTML=`<div class="consent"><b>📍 Share my location</b><p>Your location is requested <b>once</b>, when you tap the button (never continuously, never in the background). It is added to the text as a link that opens in Maps (iPhone) or Google Maps (Android). <b>It is not saved in the app.</b> Once the text is sent, it is with the person who receives it and in your messaging app. Your iPhone will also ask for its own permission.</p><div class="row-btns"><button type="button" class="btn primary" data-ly>Allow, just once</button><button type="button" class="btn ghost" data-ln>Cancel</button></div></div>`;
+  c.querySelector("[data-ly]").onclick=()=>{NET().loc=true;save();c.innerHTML="";doLoc()};c.querySelector("[data-ln]").onclick=()=>{c.innerHTML=""};c.scrollIntoView({block:"nearest"})};
+ const sh=$("#sf-share");if(sh)sh.onclick=()=>{try{navigator.share({text:msg()}).catch(()=>{})}catch(e){}};
  $("#sf-copy").onclick=()=>{const t=msg();const fb=()=>{const r=document.createRange();r.selectNodeContents($("#sf-msg"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Text selected, copy it")};
-  try{navigator.clipboard.writeText(t).then(()=>toast("Text copied, paste it into your chat 💬"),fb)}catch(e){fb()}}}
+  try{navigator.clipboard.writeText(t).then(()=>toast("Text copied 💬"),fb)}catch(e){fb()}}}
 
 /* ---------- STORY CARD */
 function loadImg(src){return new Promise(r=>{if(!src)return r(null);const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src})}
@@ -2309,6 +2386,8 @@ function act(a,b){
  else if(a==="a2hsx"){S.a2hs=1;save();render()}
  else if(a==="sharecur")openShare({name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill,answers:ev.answers,phys:ev.phys,dg:ev.dg});
  else if(a==="lock"){if(S.pin){delete S.pin;save();toast("Passcode off");render()}else showLock("set1")}
+ else if(a==="netsug"){NET().sug=NET().sug===true?false:true;save();render()}
+ else if(a==="netloc"){NET().loc=NET().loc===true?false:true;save();render()}
  else if(a==="discreet"){S.discreet=!S.discreet;save();document.documentElement.classList.toggle("discreet",S.discreet);render()}
  else if(a==="bkcopy")copyBackup();
  else if(a==="bkshow"){const w=$("#bk-in-w");w.hidden=!w.hidden;if(!w.hidden)$("#bk-in").focus()}
