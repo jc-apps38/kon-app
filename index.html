@@ -458,6 +458,11 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .sugat{font-size:11.5px;color:var(--muted);padding:2px 4px}
 .consent{background:var(--accent-soft);border-radius:16px;padding:14px;margin-top:6px;font-size:14px;line-height:1.5}
 .consent p{margin:6px 0 0}
+.tutoic{position:relative; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:800; padding:6px 11px; border-radius:999px; border:1.5px solid var(--accent); color:var(--accent); background:var(--glass); white-space:nowrap}
+.tdot{position:absolute; top:-3px; right:-3px; width:10px; height:10px; border-radius:50%; background:var(--accent); border:2px solid var(--bg)}
+.tick{display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--keep); color:var(--on-keep); font-weight:900; font-size:16px}
+.tmock{background:var(--surface2); border-radius:16px; padding:12px 14px; text-align:left; font-size:14px; line-height:1.5; width:100%; box-sizing:border-box; border:1px solid var(--line)}
+.tcar .ivis{min-height:190px; padding:16px; border-radius:24px}
 .msg{white-space:pre-wrap; background:var(--surface2); border-radius:16px; padding:14px; font-size:14.5px; line-height:1.5; -webkit-user-select:text; user-select:text}
 .h-big sup{font-size:.5em}
 
@@ -737,7 +742,7 @@ const dfmt=(d,o)=>new Date(d+"T12:00").toLocaleDateString("fr-FR",o||{day:"numer
 /* ---------- BIENVENUE */
 function startIntro(){onb=null;setView("intro")}
 function introDone(){S.intro=true;save();if(S.onboarded)setView("home");else startOnb()}
-const INTRO=[{v:`<div class="ibrand">Keep <em>or</em> Next</div><div class="irow"><span class="vp k">💚 Je garde</span><span class="vp m">🤔 Réflexion</span><span class="vp n">👋 Next</span></div>`,h:`Bienvenue dans Keep or Next`,p:`Le carnet de bord de tes dates. Après chaque rencard, l'app t'aide à trancher : tu gardes, ou tu passes au suivant ?`},{v:`<div class="iq">Tu as passé un bon moment ?</div><div class="irow"><span class="vp k">👍 Oui</span><span class="vp n">👎 Non</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">Question 8 sur 13</small>`,h:`Note ton date en 2 minutes`,p:`Réponds à des questions simples : respect, écoute, humour, feeling… L'app calcule une note sur 10 selon <b>tes</b> critères.`},{v:`<div class="iscore">8,4<small>/10</small></div><div class="irow"><span class="vp k">💚 Je garde</span></div><div class="irow"><span class="vp n">🚩 1 red flag repéré</span></div>`,h:`Le verdict, sans te mentir`,p:`Je garde, Réflexion ou Next. Les red flags et tes dealbreakers sont signalés tout de suite, pour ne pas fermer les yeux.`},{v:`<div class="icard">📅 <b>Ven. 30 oct · 20h00</b><br>Thomas · Il Gusto</div><div class="irow"><span class="vp k">📲 Lieu et heure envoyés à une amie</span></div>`,h:`Prépare tes dates en sécurité`,p:`Note tes prochains rendez-vous dans l'agenda et envoie en un geste le lieu et l'heure à un ou une proche.`},{v:`<div class="ilock">🔒</div><div class="irow"><span class="vp m">Pas de compte</span><span class="vp m">Rien ne quitte ton téléphone</span></div>`,h:`100 % privé`,p:`Tes dates, tes notes et tes photos restent sur ton téléphone. Deux fonctions facultatives font exception : tu les choisis à l'étape suivante. Thomas et Karim sont des exemples, supprime-les quand tu veux.`},{v:()=>`<div style="display:grid;gap:9px;width:100%;text-align:left;font-size:14px"><button class="switch" data-isw="sug" aria-pressed="${(S.net||{}).sug===true}"><span>📍 Suggestions d'adresses<span class="mt" style="font-weight:500">Propose des adresses quand tu tapes un lieu. Le texte tapé est envoyé à un service de cartes.</span></span><span class="k"></span></button><button class="switch" data-isw="loc" aria-pressed="${(S.net||{}).loc===true}"><span>🧭 Partage de ma position<span class="mt" style="font-weight:500">Pour Date en sécurité : envoyée une seule fois, quand tu le demandes.</span></span><span class="k"></span></button><button class="switch" data-isw="cb" aria-pressed="${!!S.cb}"><span>👁️ Mode daltonien<span class="mt" style="font-weight:500">Adapte les couleurs vert et rouge pour mieux les distinguer.</span></span><span class="k"></span></button><button class="switch" data-isw="pin" aria-pressed="${!!S.pin}"><span>🔒 Code de verrouillage<span class="mt" style="font-weight:500">Un code est demandé à l'ouverture de l'appli.</span></span><span class="k"></span></button><button class="switch" data-isw="dis" aria-pressed="${!!S.discreet}"><span>🫥 Mode discret<span class="mt" style="font-weight:500">Floute les photos.</span></span><span class="k"></span></button></div>`,h:`Ton appli, à ta façon`,p:`Facultatif : tout est désactivé, et tu peux changer d'avis à tout moment dans Profil.`}];
+const INTRO=[{v:`<div class="ibrand">Keep <em>or</em> Next</div><div class="irow"><span class="vp k">💚 Je garde</span><span class="vp m">🤔 Réflexion</span><span class="vp n">👋 Next</span></div>`,h:`Bienvenue dans Keep or Next`,p:`Le carnet de bord de tes dates. Après chaque rencard, l'app t'aide à trancher : tu gardes, ou tu passes au suivant ?`},{v:`<div class="iq">Tu as passé un bon moment ?</div><div class="irow"><span class="vp k">👍 Oui</span><span class="vp n">👎 Non</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">Question 8 sur 13</small>`,h:`Note ton date en 2 minutes`,p:`Réponds à des questions simples : respect, écoute, humour, feeling… L'app calcule une note sur 10 selon <b>tes</b> critères.`},{v:`<div class="iscore">8,4<small>/10</small></div><div class="irow"><span class="vp k">💚 Je garde</span></div><div class="irow"><span class="vp n">🚩 1 red flag repéré</span></div>`,h:`Le verdict, sans te mentir`,p:`Je garde (Keep), Réflexion ou je Next. Les red flags et tes dealbreakers sont signalés tout de suite, pour ne pas fermer les yeux.`},{v:`<div class="icard">📅 <b>Ven. 30 oct · 20h00</b><br>Thomas · Il Gusto</div><div class="irow"><span class="vp k">📲 Lieu et heure envoyés à une amie</span></div>`,h:`Prépare tes dates en sécurité`,p:`Note tes prochains rendez-vous dans l'agenda et envoie en un geste le lieu et l'heure à un ou une proche.`},{v:`<div class="ilock">🔒</div><div class="irow"><span class="vp m">Pas de compte</span><span class="vp m">Rien ne quitte ton téléphone</span></div>`,h:`100 % privé`,p:`Tes dates, tes notes et tes photos restent sur ton téléphone. Deux fonctions facultatives font exception : tu les choisis à l'étape suivante. Thomas et Karim sont des exemples, supprime-les quand tu veux.`},{v:()=>`<div style="display:grid;gap:9px;width:100%;text-align:left;font-size:14px"><button class="switch" data-isw="sug" aria-pressed="${(S.net||{}).sug===true}"><span>📍 Suggestions d'adresses<span class="mt" style="font-weight:500">Propose des adresses quand tu tapes un lieu. Le texte tapé est envoyé à un service de cartes.</span></span><span class="k"></span></button><button class="switch" data-isw="loc" aria-pressed="${(S.net||{}).loc===true}"><span>🧭 Partage de ma position<span class="mt" style="font-weight:500">Pour Date en sécurité : envoyée une seule fois, quand tu le demandes.</span></span><span class="k"></span></button><button class="switch" data-isw="cb" aria-pressed="${!!S.cb}"><span>👁️ Mode daltonien<span class="mt" style="font-weight:500">Adapte les couleurs vert et rouge pour mieux les distinguer.</span></span><span class="k"></span></button><button class="switch" data-isw="pin" aria-pressed="${!!S.pin}"><span>🔒 Code de verrouillage<span class="mt" style="font-weight:500">Un code est demandé à l'ouverture de l'appli.</span></span><span class="k"></span></button><button class="switch" data-isw="dis" aria-pressed="${!!S.discreet}"><span>🫥 Mode discret<span class="mt" style="font-weight:500">Floute les photos.</span></span><span class="k"></span></button></div>`,h:`Ton appli, à ta façon`,p:`Facultatif : tout est désactivé, et tu peux changer d'avis à tout moment dans Profil.`}];
 function introView(){return `<section class="intro"><button class="link iskip" data-intro="skip">Passer</button><div class="itrack" id="itrack">${INTRO.map(s=>`<div class="islide"><div class="ivis glass">${typeof s.v==="function"?s.v():s.v}</div><h2>${s.h}</h2><p>${s.p}</p></div>`).join("")}</div><div class="dots" id="idots">${INTRO.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")}</div><button class="btn primary" id="inext" data-intro="next">Suivant</button></section>`}
 function startOnb(){onb={i:0,me:S.me,love:[...S.prefs.love],hate:[...S.prefs.hate],bill:S.prefs.bill,ideal:S.prefs.ideal,gme:S.prefs.me,gdates:S.prefs.dates||"m",type:JSON.parse(JSON.stringify(S.prefs.type||{})),likes:[...(S.prefs.likes||[])]};setView("onb")}
 function onbView(){const N=9,i=onb.i;const of=onb.gdates==="f"?"f":onb.gdates==="both"?"x":"m";const dots=`<div class="dots">${Array.from({length:N},(_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>`;
@@ -786,7 +791,7 @@ function home(){const h=new Date().getHours();const hi=h<6?"Encore debout":h<18?
  const recent=[...S.guys].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
  const sum=[c.keep?`<b style="color:var(--keep)">${c.keep} gardé${c.keep>1?"s":""}</b>`:"",c.maybe?`<b style="color:var(--maybe)">${c.maybe} en réflexion</b>`:"",c.next?`<b style="color:var(--next)">${c.next} next${c.next>1?"s":""}</b>`:""].filter(Boolean).join(" · ");
  return `<section class="view">
-  <div class="hello"><span class="eyebrow">${dfmt(today(),{weekday:"long",day:"numeric",month:"long"})}</span>
+  <div class="hello"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span class="eyebrow">${dfmt(today(),{weekday:"long",day:"numeric",month:"long"})}</span>${tutoBtn()}</div>
   <h1 class="h-big">${hi}${S.me?" "+esc(S.me):""} 👋</h1><p class="sub">${ideal?`Prêt${ue()} pour ${ideal[2].charAt(0).toLowerCase()+ideal[2].slice(1).replace(/ :.*$/,"")} ?`:G("Alors, ce dernier date, on le garde ou on le next ?",dglob())}</p></div>
   ${homeCards()}
   ${goBlock()}
@@ -954,7 +959,7 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
  return `<section class="view set"><span class="eyebrow">Réglages</span><h2 class="h-big" style="font-size:28px">Ton carnet, tes règles</h2>
  <div class="box glass"><h3>Ton profil${S.me?" · "+esc(S.me):""}</h3>
   ${L.length||H.length?`<div class="pills">${L.map(x=>`<span class="pill g">${x[1]} ${G(x[2],dglob())}</span>`).join("")}${H.map(x=>`<span class="pill r">${x[1]} ${x[2]}</span>`).join("")}</div>`:'<p>Pas encore rempli.</p>'}
-  <div class="row-btns"><button class="btn ghost" data-act="onb">${S.onboarded?"Modifier mon profil":"Remplir mon profil"}</button><button class="btn ghost" data-act="intro">Revoir la présentation</button></div></div>
+  <div class="row-btns"><button class="btn ghost" data-act="onb">${S.onboarded?"Modifier mon profil":"Remplir mon profil"}</button><button class="btn ghost" data-act="intro">Revoir la présentation</button><button class="btn ghost" data-act="tutoreset">Réinitialiser les tutos</button></div></div>
  <div class="box glass"><h3>🤝 Mes centres d'intérêt</h3><p>Ils servent à repérer ce que tu as en commun avec tes dates.</p><div class="chips" id="s-lkbox">${allLikes().map(o=>`<button class="chip" data-sl="${esc(o)}" aria-pressed="${(S.prefs.likes||[]).includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="s-lkadd" maxlength="24" placeholder="Ajouter un autre…" autocomplete="off"><button class="btn ghost" id="s-lkbtn" type="button" aria-label="+">＋</button></div></div>
  <div class="box glass"><h3>🌐 Langue</h3><div class="gtog"><button class="chip" data-act="lang-fr" aria-pressed="true">🇫🇷 Français</button><button class="chip" data-act="lang-en" aria-pressed="false">🇬🇧 English</button></div></div>
  <div class="box glass"><h3>👁️ Accessibilité</h3><button class="switch" id="cbsw" aria-pressed="${!!S.cb}"><span>Couleurs adaptées au daltonisme<span class="mt" style="font-weight:500">Bleu pour « je garde », orange pour « next »</span></span><span class="k"></span></button></div>
@@ -1352,6 +1357,40 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
  const up=()=>{$("#sf-msg").textContent=msg()};up();
  [["sf-n","name"],["sf-p","place"],["sf-w","when"],["sf-b","back"]].forEach(([id,k])=>{const e=$("#"+id);e.oninput=e.onchange=()=>{st[k]=e.value;up()}});
  sendUI("sf",msg,"#sf-msg",st,up,()=>{if(o.go||(st.when||"").slice(0,10)===today())startMode(st,o.gid);render()},{pos:true})}
+const tutoDone=id=>!!(S.tuto&&S.tuto[id]);
+function TUTOS(){return [
+ {id:"plan",e:"📅",t:"Ajouter un date à venir",d:"Note un rendez-vous dans l'agenda.",act:"plan"},
+ {id:"eval",e:"📝",t:"Évaluer un date",d:"Le questionnaire et le verdict.",act:"eval"},
+ {id:"past",e:"✏️",t:"Date passé et modifier une fiche",d:"Ajoute un date déjà eu, puis change sa fiche.",act:"dates"},
+ {id:"safe",e:"🛡️",t:"Date en sécurité",d:"Préviens une amie en quelques touches.",act:"safe",slides:[
+  {v:`<div class="tmock" style="border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 0 14px var(--accent)"><small style="color:var(--accent);font-weight:800;letter-spacing:.08em">DATE EN SÉCURITÉ</small><br><b>🛡️ Je pars en date</b><br><span class="mt">Préviens une amie en quelques touches</span></div>`,h:"Un bouton, sur l'accueil",p:"Touche « Je pars en date » dès que tu pars, même si ce date n'est pas dans l'agenda."},
+  {v:`<div class="tmock"><b>Léa · 20h00</b><br><span class="mt">Il Gusto · 🔮 Elle a l'air sympa</span></div><div class="tmock">🚫 <b>Pas dans l'agenda</b></div>`,h:"Choisis ton date",p:"Si un date est prévu aujourd'hui, touche sa carte pour tout pré-remplir. Sinon, touche 🚫 « Pas dans l'agenda »."},
+  {v:`<div class="tmock">🛡️ Je pars en date avec Léa.<br>📍 Lieu : Il Gusto, Grenoble<br>🗺️ Plan : lien<br>🕗 Rendez-vous : aujourd'hui à 20h00<br>🏠 Je pense rentrer vers 23h30.</div>`,h:"Un message déjà écrit",p:"Prénom, lieu, heure et retour : tout est facultatif. Tu peux modifier le message avant de l'envoyer."},
+  {v:`<div class="irow"><span class="vp k">📍 Partager avec ma position</span></div><div class="irow"><span class="vp m">Partager sans ma position</span></div><div class="irow"><span class="vp n">Copier le message</span></div>`,h:"Ta position, si tu veux",p:"Tu choisis à chaque fois. Elle est envoyée une seule fois, jamais en continu. Puis « Partager maintenant » ouvre Messages ou WhatsApp."},
+  {v:`<div class="tmock" style="border:2px solid var(--accent);background:var(--accent-soft)"><b>🛡️ Tu es en date</b><div class="irow" style="margin-top:8px"><span class="vp k">✅ Tout va bien</span><span class="vp m">😬 Pas serein</span><span class="vp n">🚨 En danger</span><span class="vp k">🏠 Rentré</span></div></div>`,h:"Le bandeau « en date »",p:`Une fois le message partagé, l'accueil affiche ces boutons. Chacun prépare un message pour ton amie, avec ton lieu. « En danger » propose d'appeler le 17. L'appli ne prévient personne toute seule : c'est toi qui envoies.`}]},
+ {id:"agenda",e:"🗓️",t:"L'agenda et Google Agenda",d:"Tes rendez-vous, et l'ajout à Google Agenda.",act:"agenda"},
+ {id:"rabbit",e:"🐇",t:"Les lapins et dates annulés",d:"Où noter un lapin, un report ou une annulation."},
+ {id:"evol",e:"📈",t:"L'évolution entre plusieurs dates",d:"Plusieurs dates avec la même personne."},
+ {id:"settings",e:"⚙️",t:"Adresses, position, code, discret",d:"Les réglages qui changent l'appli.",act:"settings"},
+ {id:"backup",e:"💾",t:"La sauvegarde",d:"Garder tes dates si tu changes de téléphone.",act:"settings"}]}
+function tutoGo(a){closeSheet();if(a==="plan")openPlan(true);else if(a==="eval")newEval();else if(a==="safe")openGo();else setView(a)}
+function openTuto(){const T=TUTOS();
+ sheetWrap("Tutoriels",`<h2 style="font-size:26px">📖 Tutoriels</h2><p class="sub">Touche une fonction pour voir comment elle marche. Une coche s'affiche quand tu as tout vu.</p>
+  <div class="list">${T.map(x=>`<button class="guy glass" ${x.slides?`data-tuto="${x.id}"`:`disabled style="opacity:.55"`}><span style="font-size:30px;width:44px;text-align:center">${x.e}</span><span style="min-width:0"><span class="nm" style="white-space:normal">${x.t}</span><span class="mt">${x.d}</span></span><span class="sc" style="font-size:18px">${tutoDone(x.id)?`<span class="tick" role="img" aria-label="Tuto vu">✓</span>`:x.slides?`<span style="color:var(--accent)">›</span>`:`<small style="color:var(--muted);font-size:11px">Bientôt</small>`}</span></button>`).join("")}</div>
+  <div class="row-btns"><button class="btn ghost" data-act="close">Fermer</button></div>`)}
+function openTutoSlides(id){const x=TUTOS().find(t=>t.id===id);if(!x||!x.slides)return;const N=x.slides.length;
+ sheetWrap(x.t,`<div class="tcar"><div class="itrack" id="ttrack">${x.slides.map(sl=>`<div class="islide"><div class="ivis glass">${sl.v}</div><h2 style="font-size:24px">${sl.h}</h2><p>${sl.p}</p></div>`).join("")}</div>
+  <div class="dots" id="tdots" style="margin-top:12px">${x.slides.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")}</div>
+  <div class="row-btns"><button class="btn primary" id="tnext">Suivant</button><button class="btn primary" id="ttry" style="display:none">Essayer maintenant</button><button class="btn ghost" id="tback">Retour à la liste</button></div></div>`);
+ const tr=$("#ttrack"),ds=[...document.querySelectorAll("#tdots i")],nb=$("#tnext"),tb=$("#ttry");
+ const cur=()=>Math.round(tr.scrollLeft/Math.max(1,tr.clientWidth));
+ const upd=()=>{const k=cur();ds.forEach((d,j)=>d.classList.toggle("on",j===k));const last=k>=N-1;nb.textContent=last?"Terminer":"Suivant";if(x.act)tb.style.display=last?"":"none";
+  if(last&&!tutoDone(id)){S.tuto=S.tuto||{};S.tuto[id]=true;save();render();toast("Tuto terminé ✓")}};
+ tr.addEventListener("scroll",upd,{passive:true});
+ nb.onclick=()=>{const k=cur();if(k>=N-1)openTuto();else tr.scrollTo({left:(k+1)*tr.clientWidth,behavior:"smooth"})};
+ tb.onclick=()=>tutoGo(x.act);$("#tback").onclick=openTuto;
+ ds.forEach((d,j)=>d.onclick=()=>tr.scrollTo({left:j*tr.clientWidth,behavior:"smooth"}))}
+function tutoBtn(){const n=TUTOS().filter(x=>x.slides&&!tutoDone(x.id)).length;return `<button class="tutoic" data-act="tuto" aria-label="Tutoriels">📖 Tuto${n?`<i class="tdot" aria-hidden="true"></i>`:""}</button>`}
 function openGo(){const td=today();const P=(S.plans||[]).filter(p=>!p.done&&p.when.slice(0,10)===td).sort((a,b)=>a.when.localeCompare(b.when));
  if(!P.length){openSafety({go:true});return}
  sheetWrap("Je pars en date",`<h2 style="font-size:26px">🛡️ Tu pars en date ?</h2><p class="sub">Choisis ton date d'aujourd'hui, ou touche « Pas dans l'agenda ».</p>
@@ -1436,7 +1475,8 @@ function restore(b){const t=($("#bk-in").value||"").trim();let o;try{o=JSON.pars
   save();rebuildQ();document.documentElement.classList.toggle("cb",!!S.cb);document.documentElement.classList.toggle("discreet",!!S.discreet);toast("Sauvegarde restaurée ✅");setView("home")})}
 
 /* ---------- CLICS DÉLÉGUÉS */
-document.addEventListener("click",e=>{const t=e.target.closest("[data-gosel],[data-alrt],[data-peval],[data-pcancel],[data-psafe],[data-pdel],[data-go2],[data-share],[data-redate],[data-safe],[data-couple],[data-uncouple],[data-cqdel],[data-cal],[data-day],[data-dayopen],[data-pview],[data-histcur]");if(!t)return;const d=t.dataset;
+document.addEventListener("click",e=>{const t=e.target.closest("[data-tuto],[data-gosel],[data-alrt],[data-peval],[data-pcancel],[data-psafe],[data-pdel],[data-go2],[data-share],[data-redate],[data-safe],[data-couple],[data-uncouple],[data-cqdel],[data-cal],[data-day],[data-dayopen],[data-pview],[data-histcur]");if(!t)return;const d=t.dataset;
+ if(d.tuto){openTutoSlides(d.tuto);return}
  if(d.gosel!==undefined){if(d.gosel===""){openSafety({go:true})}else{const p=(S.plans||[]).find(x=>x.id===d.gosel);if(p)openSafety({go:true,name:planName(p),place:p.place,when:p.when,back:p.back||"",gid:p.gid})}return}
  if(d.alrt){openAlert(d.alrt);return}
  if(d.day){openDay(d.day);return}
@@ -1518,6 +1558,8 @@ function act(a,b){
  else if(a==="plan")openPlan();
  else if(a==="safe")openSafety({});
  else if(a==="go")openGo();
+ else if(a==="tuto")openTuto();
+ else if(a==="tutoreset"){S.tuto={};save();toast("Tutos réinitialisés");render()}
  else if(a==="modeend"){S.dateMode=null;save();render()}
  else if(a==="guide")setView("tips");
  else if(a==="a2hsx"){S.a2hs=1;save();render()}
@@ -1741,7 +1783,7 @@ function home(){const h=new Date().getHours();const hi=h<5?"Still up":h<12?"Good
  const recent=[...S.guys].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
  const sum=[c.keep?`<b style="color:var(--keep)">${c.keep} kept</b>`:"",c.maybe?`<b style="color:var(--maybe)">${c.maybe} thinking</b>`:"",c.next?`<b style="color:var(--next)">${c.next} next${c.next>1?"s":""}</b>`:""].filter(Boolean).join(" · ");
  return `<section class="view">
-  <div class="hello"><span class="eyebrow">${dfmt(today(),{weekday:"long",month:"long",day:"numeric"})}</span>
+  <div class="hello"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span class="eyebrow">${dfmt(today(),{weekday:"long",month:"long",day:"numeric"})}</span>${tutoBtn()}</div>
   <h1 class="h-big">${hi}${S.me?" "+esc(S.me):""} 👋</h1><p class="sub">${ideal?`Ready for ${ideal[2].charAt(0).toLowerCase()+ideal[2].slice(1).replace(/[,:].*$/,"")}?`:"So, that last date: keep or next?"}</p></div>
   ${homeCards()}
   ${goBlock()}
@@ -1909,7 +1951,7 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
  return `<section class="view set"><span class="eyebrow">Settings</span><h2 class="h-big" style="font-size:28px">Your app, your rules</h2>
  <div class="box glass"><h3>Your profile${S.me?" · "+esc(S.me):""}</h3>
   ${L.length||H.length?`<div class="pills">${L.map(x=>`<span class="pill g">${x[1]} ${G(x[2],dglob())}</span>`).join("")}${H.map(x=>`<span class="pill r">${x[1]} ${x[2]}</span>`).join("")}</div>`:'<p>Not filled in yet.</p>'}
-  <div class="row-btns"><button class="btn ghost" data-act="onb">${S.onboarded?"Edit my profile":"Fill in my profile"}</button><button class="btn ghost" data-act="intro">Replay the intro</button></div></div>
+  <div class="row-btns"><button class="btn ghost" data-act="onb">${S.onboarded?"Edit my profile":"Fill in my profile"}</button><button class="btn ghost" data-act="intro">Replay the intro</button><button class="btn ghost" data-act="tutoreset">Reset the tutorials</button></div></div>
  <div class="box glass"><h3>🤝 My interests</h3><p>Used to spot what you have in common with your dates.</p><div class="chips" id="s-lkbox">${allLikes().map(o=>`<button class="chip" data-sl="${esc(o)}" aria-pressed="${(S.prefs.likes||[]).includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="s-lkadd" maxlength="24" placeholder="Add your own…" autocomplete="off"><button class="btn ghost" id="s-lkbtn" type="button" aria-label="+">＋</button></div></div>
  <div class="box glass"><h3>🌐 Language</h3><div class="gtog"><button class="chip" data-act="lang-fr" aria-pressed="false">🇫🇷 Français</button><button class="chip" data-act="lang-en" aria-pressed="true">🇬🇧 English</button></div></div>
  <div class="box glass"><h3>👁️ Accessibility</h3><button class="switch" id="cbsw" aria-pressed="${!!S.cb}"><span>Colorblind-friendly colors<span class="mt" style="font-weight:500">Blue for \u201ckeep\u201d, orange for \u201cnext\u201d</span></span><span class="k"></span></button></div>
@@ -2308,6 +2350,40 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
  const up=()=>{$("#sf-msg").textContent=msg()};up();
  [["sf-n","name"],["sf-p","place"],["sf-w","when"],["sf-b","back"]].forEach(([id,k])=>{const e=$("#"+id);e.oninput=e.onchange=()=>{st[k]=e.value;up()}});
  sendUI("sf",msg,"#sf-msg",st,up,()=>{if(o.go||(st.when||"").slice(0,10)===today())startMode(st,o.gid);render()},{pos:true})}
+const tutoDone=id=>!!(S.tuto&&S.tuto[id]);
+function TUTOS(){return [
+ {id:"plan",e:"📅",t:"Add an upcoming date",d:"Add an appointment to the calendar.",act:"plan"},
+ {id:"eval",e:"📝",t:"Rate a date",d:"The questionnaire and the verdict.",act:"eval"},
+ {id:"past",e:"✏️",t:"Past date and editing a profile",d:"Add a date you've had, then edit their profile.",act:"dates"},
+ {id:"safe",e:"🛡️",t:"Safe date",d:"Alert a friend in a few taps.",act:"safe",slides:[
+  {v:`<div class="tmock" style="border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 0 14px var(--accent)"><small style="color:var(--accent);font-weight:800;letter-spacing:.08em">SAFE DATE</small><br><b>🛡️ Heading out on a date</b><br><span class="mt">Alert a friend in a few taps</span></div>`,h:"One button, on the home screen",p:"Tap “Heading out on a date” as soon as you leave, even if this date isn't in your calendar."},
+  {v:`<div class="tmock"><b>Léa · 8:00 PM</b><br><span class="mt">Il Gusto · 🔮 She looks nice</span></div><div class="tmock">🚫 <b>Not in my calendar</b></div>`,h:"Pick your date",p:"If a date is planned today, tap its card to fill everything in. If not, tap 🚫 “Not in my calendar”."},
+  {v:`<div class="tmock">🛡️ Heading out on a date with Léa.<br>📍 Where: Il Gusto, Grenoble<br>🗺️ Map: link<br>🕗 Meeting: today at 8:00 PM<br>🏠 I should be home around 11:30 PM.</div>`,h:"A text, already written",p:"First name, place, time and return: everything is optional. You can edit the text before sending it."},
+  {v:`<div class="irow"><span class="vp k">📍 Share with my location</span></div><div class="irow"><span class="vp m">Share without my location</span></div><div class="irow"><span class="vp n">Copy the text</span></div>`,h:"Your location, if you want",p:"You choose each time. It is sent once, never continuously. Then “Share now” opens Messages or WhatsApp."},
+  {v:`<div class="tmock" style="border:2px solid var(--accent);background:var(--accent-soft)"><b>🛡️ You're on a date</b><div class="irow" style="margin-top:8px"><span class="vp k">✅ All good</span><span class="vp m">😬 Uneasy</span><span class="vp n">🚨 In danger</span><span class="vp k">🏠 Home</span></div></div>`,h:"The “on a date” banner",p:`Once the text is shared, the home screen shows these buttons. Each one prepares a text for your friend, with your place. “In danger” offers to call emergency services. The app doesn't alert anyone on its own: you send it.`}]},
+ {id:"agenda",e:"🗓️",t:"The calendar and Google Calendar",d:"Your appointments, and adding to Google Calendar.",act:"agenda"},
+ {id:"rabbit",e:"🐇",t:"Stood up and cancelled dates",d:"Where to note a no-show, a delay or a cancellation."},
+ {id:"evol",e:"📈",t:"Progress across several dates",d:"Several dates with the same person."},
+ {id:"settings",e:"⚙️",t:"Places, location, passcode, discreet",d:"The settings that change the app.",act:"settings"},
+ {id:"backup",e:"💾",t:"Backup",d:"Keep your dates if you change phones.",act:"settings"}]}
+function tutoGo(a){closeSheet();if(a==="plan")openPlan(true);else if(a==="eval")newEval();else if(a==="safe")openGo();else setView(a)}
+function openTuto(){const T=TUTOS();
+ sheetWrap("Tutorials",`<h2 style="font-size:26px">📖 Tutorials</h2><p class="sub">Tap a feature to see how it works. A tick shows once you've seen it all.</p>
+  <div class="list">${T.map(x=>`<button class="guy glass" ${x.slides?`data-tuto="${x.id}"`:`disabled style="opacity:.55"`}><span style="font-size:30px;width:44px;text-align:center">${x.e}</span><span style="min-width:0"><span class="nm" style="white-space:normal">${x.t}</span><span class="mt">${x.d}</span></span><span class="sc" style="font-size:18px">${tutoDone(x.id)?`<span class="tick" role="img" aria-label="Tutorial seen">✓</span>`:x.slides?`<span style="color:var(--accent)">›</span>`:`<small style="color:var(--muted);font-size:11px">Soon</small>`}</span></button>`).join("")}</div>
+  <div class="row-btns"><button class="btn ghost" data-act="close">Close</button></div>`)}
+function openTutoSlides(id){const x=TUTOS().find(t=>t.id===id);if(!x||!x.slides)return;const N=x.slides.length;
+ sheetWrap(x.t,`<div class="tcar"><div class="itrack" id="ttrack">${x.slides.map(sl=>`<div class="islide"><div class="ivis glass">${sl.v}</div><h2 style="font-size:24px">${sl.h}</h2><p>${sl.p}</p></div>`).join("")}</div>
+  <div class="dots" id="tdots" style="margin-top:12px">${x.slides.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")}</div>
+  <div class="row-btns"><button class="btn primary" id="tnext">Next</button><button class="btn primary" id="ttry" style="display:none">Try it now</button><button class="btn ghost" id="tback">Back to the list</button></div></div>`);
+ const tr=$("#ttrack"),ds=[...document.querySelectorAll("#tdots i")],nb=$("#tnext"),tb=$("#ttry");
+ const cur=()=>Math.round(tr.scrollLeft/Math.max(1,tr.clientWidth));
+ const upd=()=>{const k=cur();ds.forEach((d,j)=>d.classList.toggle("on",j===k));const last=k>=N-1;nb.textContent=last?"Done":"Next";if(x.act)tb.style.display=last?"":"none";
+  if(last&&!tutoDone(id)){S.tuto=S.tuto||{};S.tuto[id]=true;save();render();toast("Tutorial done ✓")}};
+ tr.addEventListener("scroll",upd,{passive:true});
+ nb.onclick=()=>{const k=cur();if(k>=N-1)openTuto();else tr.scrollTo({left:(k+1)*tr.clientWidth,behavior:"smooth"})};
+ tb.onclick=()=>tutoGo(x.act);$("#tback").onclick=openTuto;
+ ds.forEach((d,j)=>d.onclick=()=>tr.scrollTo({left:j*tr.clientWidth,behavior:"smooth"}))}
+function tutoBtn(){const n=TUTOS().filter(x=>x.slides&&!tutoDone(x.id)).length;return `<button class="tutoic" data-act="tuto" aria-label="Tutorials">📖 Tutorial${n?`<i class="tdot" aria-hidden="true"></i>`:""}</button>`}
 function openGo(){const td=today();const P=(S.plans||[]).filter(p=>!p.done&&p.when.slice(0,10)===td).sort((a,b)=>a.when.localeCompare(b.when));
  if(!P.length){openSafety({go:true});return}
  sheetWrap("Heading out",`<h2 style="font-size:26px">🛡️ Heading out on a date?</h2><p class="sub">Pick today's date, or tap “Not in my calendar”.</p>
@@ -2392,7 +2468,8 @@ function restore(b){const t=($("#bk-in").value||"").trim();let o;try{o=JSON.pars
   save();rebuildQ();document.documentElement.classList.toggle("cb",!!S.cb);document.documentElement.classList.toggle("discreet",!!S.discreet);toast("Backup restored ✅");setView("home")})}
 
 /* ---------- DELEGATED CLICKS */
-document.addEventListener("click",e=>{const t=e.target.closest("[data-gosel],[data-alrt],[data-peval],[data-pcancel],[data-psafe],[data-pdel],[data-go2],[data-share],[data-redate],[data-safe],[data-couple],[data-uncouple],[data-cqdel],[data-cal],[data-day],[data-dayopen],[data-pview],[data-histcur]");if(!t)return;const d=t.dataset;
+document.addEventListener("click",e=>{const t=e.target.closest("[data-tuto],[data-gosel],[data-alrt],[data-peval],[data-pcancel],[data-psafe],[data-pdel],[data-go2],[data-share],[data-redate],[data-safe],[data-couple],[data-uncouple],[data-cqdel],[data-cal],[data-day],[data-dayopen],[data-pview],[data-histcur]");if(!t)return;const d=t.dataset;
+ if(d.tuto){openTutoSlides(d.tuto);return}
  if(d.gosel!==undefined){if(d.gosel===""){openSafety({go:true})}else{const p=(S.plans||[]).find(x=>x.id===d.gosel);if(p)openSafety({go:true,name:planName(p),place:p.place,when:p.when,back:p.back||"",gid:p.gid})}return}
  if(d.alrt){openAlert(d.alrt);return}
  if(d.day){openDay(d.day);return}
@@ -2474,6 +2551,8 @@ function act(a,b){
  else if(a==="plan")openPlan();
  else if(a==="safe")openSafety({});
  else if(a==="go")openGo();
+ else if(a==="tuto")openTuto();
+ else if(a==="tutoreset"){S.tuto={};save();toast("Tutorials reset");render()}
  else if(a==="modeend"){S.dateMode=null;save();render()}
  else if(a==="guide")setView("tips");
  else if(a==="a2hsx"){S.a2hs=1;save();render()}
@@ -2507,7 +2586,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v42";const VERSION="3.4.2";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v43";const VERSION="3.4.3";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 </body>
