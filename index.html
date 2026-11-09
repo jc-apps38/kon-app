@@ -594,6 +594,16 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .skip.more{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin:12px 0 0; padding:14px 16px; min-height:54px; border-radius:18px; background:var(--glass); border:2px solid var(--ink); color:var(--ink); font-size:16px; font-weight:700; box-shadow:0 3px 0 var(--ink); transition:transform .1s, box-shadow .1s}
 .skip.more:active{transform:translateY(3px); box-shadow:0 0 0 var(--ink)}
 .skip.more b{font-size:20px; line-height:1}
+
+/* 3.5.3 cartes façon jeu de cartes */
+.stage{height:390px; margin-bottom:20px}
+.qcard .qt{font-size:24px}
+.qcard .rebound + .qt{font-size:21px}
+.qcard{inset:0 18%}
+.qcard.side{pointer-events:none; filter:blur(3px); background:var(--glass); border:2px solid var(--accent); box-shadow:none; transform:scale(.9)}
+.qcard.side.prev{transform:translateX(-33%) scale(.9)}
+.qcard.side.next{transform:translateX(33%) scale(.9)}
+@keyframes cardin{from{transform:translateX(33%) scale(.9); opacity:.6; filter:blur(3px)}to{transform:none; opacity:1; filter:none}}
 </style>
 </head>
 <body>
@@ -890,12 +900,12 @@ function evalView(){
    <div class="field" id="nightbox"></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
    <div class="field"><button class="btn primary" data-act="start">C'est parti</button></div></div></section>`;
- if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1],nx2=ev.list[ev.i+2];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
+ if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1],pq=ev.list[ev.i-1];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
   const pb=S.prefs.love.includes(q.id)?`<span class="prefbadge love">💘 Ce que tu aimes</span>`:S.prefs.hate.includes(q.id)?`<span class="prefbadge hate">🚫 Ton dealbreaker</span>`:"";
   return `<section class="view qwrap">
   <div class="ev-head"><button class="back glass" data-act="prev" aria-label="Question précédente">←</button><div class="prog"><i style="width:${ev.i/ev.list.length*100+4}%"></i></div><span class="count">${ev.i+1}/${ev.list.length}</span></div>
   ${liveBar()}
-  <div class="stage">${ev.nuance?"":`<span class="swarr l" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M13 4 3 22 13 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swarr r" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M3 4 13 22 3 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}${nx2?`<div class="qcard under u2"></div>`:""}${nx?`<div class="qcard glass under"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg).replace("sentie","senti"+ue()))}</div><div></div></div>`:""}
+  <div class="stage">${ev.nuance?"":`<span class="swarr l" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M13 4 3 22 13 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swarr r" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M3 4 13 22 3 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}${pq?`<div class="qcard side prev"><span class="eyebrow">${esc(pq.cat)}</span><div class="qt">${esc(G(pq.q,ev.dg).replace("sentie","senti"+ue()))}</div><div></div></div>`:""}${nx?`<div class="qcard side next"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg).replace("sentie","senti"+ue()))}</div><div></div></div>`:""}
    <div class="qcard glass in" id="qcard"><span class="stamp yes">OUI 💚</span><span class="stamp no">NON 🚩</span>
     <div class="qhead">${avatar(me,40)}<span class="eyebrow">${esc(q.cat)}${q.w>1?" · compte double":""}</span></div>
     ${q.prev?`<span class="rebound">🔁 La dernière fois : « ${esc(G(q.prev,ev.dg))} »</span>`:""}<div class="qt">${esc(G(q.q,ev.dg).replace("sentie","senti"+ue()))}</div>
@@ -1217,6 +1227,7 @@ function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h
  return c>p?' <span style="color:var(--keep);font-size:15.5px">▲</span>':c<p?' <span style="color:var(--next);font-size:15.5px">▼</span>':""}
 function bindLayer(){$("#layer").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b))}
 function sheetWrap(label,inner){$("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(label)}"><div class="in"><div class="grab"></div>${inner}</div></div>`;bindLayer()}
+function openGuide(){const h=G(tips(),dglob()).replace(/^\s*<section class="view">/,"").replace(/<\/section>\s*$/,"");sheetWrap("Le petit guide",h+`<div class="row-btns"><button class="btn ghost" data-act="close">Fermer</button></div>`)}
 
 /* ---------- RADAR */
 const CATL={"Premiers instants":"1re impression","La conversation":"Conversation","La vibe":"Vibe","Le non négociable":"Respect","Le moment gênant":"Addition","Le fond":"Profondeur","L'après":"Suivi","Le verdict du cœur":"Feeling","Tes questions":"Tes critères","La suite":"La suite","Pour aller plus loin":"Approfondi"};
@@ -1620,7 +1631,7 @@ function act(a,b){
  else if(a==="tuto")openTuto();
  else if(a==="tutoreset"){S.tuto={};save();toast("Tutos réinitialisés");render()}
  else if(a==="modeend"){S.dateMode=null;save();render()}
- else if(a==="guide")setView("tips");
+ else if(a==="guide")openGuide();
  else if(a==="a2hsx"){S.a2hs=1;save();render()}
  else if(a==="sharecur")openShare({name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill,answers:ev.answers,phys:ev.phys,dg:ev.dg});
  else if(a==="lock"){if(S.pin){delete S.pin;save();toast("Code désactivé");render()}else showLock("set1")}
@@ -1923,12 +1934,12 @@ function evalView(){
    <div class="field" id="nightbox"></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
    <div class="field"><button class="btn primary" data-act="start">Let's go</button></div></div></section>`;
- if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1],nx2=ev.list[ev.i+2];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
+ if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1],pq=ev.list[ev.i-1];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
   const pb=S.prefs.love.includes(q.id)?`<span class="prefbadge love">💘 What you love</span>`:S.prefs.hate.includes(q.id)?`<span class="prefbadge hate">🚫 Your dealbreaker</span>`:"";
   return `<section class="view qwrap">
   <div class="ev-head"><button class="back glass" data-act="prev" aria-label="Previous question">←</button><div class="prog"><i style="width:${ev.i/ev.list.length*100+4}%"></i></div><span class="count">${ev.i+1}/${ev.list.length}</span></div>
   ${liveBar()}
-  <div class="stage">${ev.nuance?"":`<span class="swarr l" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M13 4 3 22 13 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swarr r" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M3 4 13 22 3 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}${nx2?`<div class="qcard under u2"></div>`:""}${nx?`<div class="qcard glass under"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg))}</div><div></div></div>`:""}
+  <div class="stage">${ev.nuance?"":`<span class="swarr l" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M13 4 3 22 13 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swarr r" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M3 4 13 22 3 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}${pq?`<div class="qcard side prev"><span class="eyebrow">${esc(pq.cat)}</span><div class="qt">${esc(G(pq.q,ev.dg))}</div><div></div></div>`:""}${nx?`<div class="qcard side next"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg))}</div><div></div></div>`:""}
    <div class="qcard glass in" id="qcard"><span class="stamp yes">YES 💚</span><span class="stamp no">NO 🚩</span>
     <div class="qhead">${avatar(me,40)}<span class="eyebrow">${esc(q.cat)}${q.w>1?" · counts double":""}</span></div>
     ${q.prev?`<span class="rebound">🔁 Last time: “${esc(G(q.prev,ev.dg))}”</span>`:""}<div class="qt">${esc(G(q.q,ev.dg))}</div>
@@ -2251,6 +2262,7 @@ function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h
  return c>p?' <span style="color:var(--keep);font-size:15.5px">▲</span>':c<p?' <span style="color:var(--next);font-size:15.5px">▼</span>':""}
 function bindLayer(){$("#layer").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b))}
 function sheetWrap(label,inner){$("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(label)}"><div class="in"><div class="grab"></div>${inner}</div></div>`;bindLayer()}
+function openGuide(){const h=G(tips(),dglob()).replace(/^\s*<section class="view">/,"").replace(/<\/section>\s*$/,"");sheetWrap("The little guide",h+`<div class="row-btns"><button class="btn ghost" data-act="close">Close</button></div>`)}
 
 /* ---------- RADAR */
 const CATL={"First impressions":"1st impression","The conversation":"Conversation","The vibe":"Vibe","Non-negotiable":"Respect","The awkward moment":"The check","The deep stuff":"Depth","The aftermath":"Follow-up","The heart's verdict":"Feeling","Your questions":"Your must-haves","What's next":"What's next","Going deeper":"Deeper"};
@@ -2654,7 +2666,7 @@ function act(a,b){
  else if(a==="tuto")openTuto();
  else if(a==="tutoreset"){S.tuto={};save();toast("Tutorials reset");render()}
  else if(a==="modeend"){S.dateMode=null;save();render()}
- else if(a==="guide")setView("tips");
+ else if(a==="guide")openGuide();
  else if(a==="a2hsx"){S.a2hs=1;save();render()}
  else if(a==="sharecur")openShare({name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill,answers:ev.answers,phys:ev.phys,dg:ev.dg});
  else if(a==="lock"){if(S.pin){delete S.pin;save();toast("Passcode off");render()}else showLock("set1")}
@@ -2686,7 +2698,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v51";const VERSION="3.5.2";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v52";const VERSION="3.5.3";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 <script>
