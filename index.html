@@ -621,6 +621,14 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 @keyframes swc{0%,8%{transform:none}20%,32%{transform:translateX(-30px) rotate(-8deg)}44%,54%{transform:none}66%,78%{transform:translateX(30px) rotate(8deg)}90%,100%{transform:none}}
 @keyframes swn{0%,12%{opacity:0}20%,32%{opacity:1}42%,100%{opacity:0}}
 @keyframes swy{0%,58%{opacity:0}66%,78%{opacity:1}88%,100%{opacity:0}}
+
+/* 3.5.5 boutons nuancés */
+.nuance .col{display:grid; gap:8px; align-content:start}
+.nu{display:flex; align-items:center; gap:6px; min-height:76px; border-radius:18px; padding:12px; font-size:15.5px}
+.nu.r{background:var(--next-soft); background:color-mix(in srgb,var(--next) 22%,var(--bg)); color:var(--ink); border:3px solid var(--next)}
+.nu.g{background:var(--keep-soft); background:color-mix(in srgb,var(--keep) 28%,var(--bg)); color:var(--ink); border:3px solid var(--keep)}
+.nu.r.s{background:var(--next); color:#fff}
+.nu.g.s{background:var(--keep); color:var(--on-keep)}
 </style>
 </head>
 <body>
@@ -927,8 +935,7 @@ function evalView(){
     <div class="qhead">${avatar(me,40)}<span class="eyebrow">${esc(q.cat)}${q.w>1?" · compte double":""}</span></div>
     ${q.prev?`<span class="rebound">🔁 La dernière fois : « ${esc(G(q.prev,ev.dg))} »</span>`:""}<div class="qt">${esc(G(q.q,ev.dg).replace("sentie","senti"+ue()))}</div>
     <div class="qfoot">${pb||'<span></span>'}</div></div></div>
-  ${ev.nuance?`<div class="nuance"><div class="grp">${q.more.slice(2).reverse().map(m=>`<button class="nu r" data-val="${m[1]}">🚩 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
-   <div class="grp">${q.more.slice(0,2).reverse().map(m=>`<button class="nu g" data-val="${m[1]}">💚 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
+  ${ev.nuance?`<div class="nuance"><div class="grp"><div class="col">${q.more.slice(2).reverse().map((m,j)=>`<button class="nu r${j?"":" s"}" data-val="${m[1]}">🚩 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div><div class="col">${q.more.slice(0,2).map((m,j)=>`<button class="nu g${j?"":" s"}" data-val="${m[1]}">💚 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div></div>
    <button class="skip" data-act="skip" style="margin-top:2px">Vraiment aucune idée, question suivante</button></div>`
   :`<div class="answers"><button class="ans no" data-a="0"><span>🚩</span>${esc(G(q.no,ev.dg))}</button><button class="ans yes" data-a="1"><span>💚</span>${esc(G(q.yes,ev.dg))}</button></div>
    <button class="skip more" data-act="nuance">⚖️ C'est plus nuancé que ça <b>›</b></button>`}
@@ -947,7 +954,7 @@ function evalView(){
   <div class="advice ${v.rec}"><span class="ic">${v.rec==="keep"?"💚":v.rec==="next"?"🤮":"🤔"}</span><span>${adv}<small>C'est toi qui décides, pas le carnet.</small></span></div>
   ${s>=7.5&&!ev.deep?`<div class="box glass deep"><b>Ça s'annonce très bien ✨</b><p>${esc(G("Tu veux approfondir ? 6 questions de plus pour mieux voir qui il est.",ev.dg))}</p><button class="btn ghost" data-act="deepen">Approfondir (6 questions)</button></div>`:""}
   <div class="field" style="text-align:left"><label class="t" for="f-note">Un mot pour plus tard (facultatif)</label><textarea class="input" id="f-note" maxlength="400" placeholder="${G("Il cuisine, il a un chien, il chante faux…",ev.dg)}">${esc(ev.note)}</textarea></div>
-  ${radar(ev.answers)}<button class="btn ghost" data-act="sharecur" style="margin-top:12px">📸 Partager mon verdict en story</button>
+  ${radar(ev.answers)}${evoNow()}<button class="btn ghost" data-act="sharecur" style="margin-top:12px">📸 Partager mon verdict en story</button>
   <div class="field" style="text-align:left;position:relative"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(ev.dg)} (en un mot, facultatif)</span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(ev.prev)} »</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-vb="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div><div id="vibecmp" class="vibecmp${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?(vrank(ev.vibe)>vrank(vbase(ev))?" up":vrank(ev.vibe)<vrank(vbase(ev))?" down":" same"):""}" aria-live="polite">${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?esc(vmsg(vrank(ev.vibe)-vrank(vbase(ev)),ev.dg,vre(ev))):""}</div></div>
   <div class="choice"><button class="btn next${v.rec==="next"?" rec":""}" data-decide="next">🤮 Je next</button><button class="btn keep${v.rec==="keep"?" rec":""}" data-decide="keep">💚 Je garde</button></div>
   <button class="link" data-decide="maybe">Je réfléchis encore</button></section>`}
@@ -1273,6 +1280,12 @@ function histBox(g){const H=hist(g);const btn=`<button class="btn ghost" data-re
   <svg viewBox="0 0 ${W} ${Hh}" style="width:100%;display:block"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6" fill="${col(sc[i])}"/><text x="${p[0].toFixed(1)}" y="${(p[1]-11).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${fmt(sc[i])}</text>`).join("")}</svg>
   <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:600">${H.map(h=>`<span>${dfmt(h.date)}</span>`).join("")}</div>${btn}</div>`}
+function evoBox(items){const sc=items.map(i=>i.s);const W=300,Hh=84,mx=Math.max(1,sc.length-1);const pts=sc.map((s,i)=>[22+i*(W-44)/mx,Hh-12-s/10*(Hh-34)]);
+ return `<div class="fbox glass" style="margin-top:12px"><h3><span>📈 Son évolution</span><span style="color:var(--muted)">${items.length} dates</span></h3>
+  <svg viewBox="0 0 ${W} ${Hh}" style="width:100%;display:block"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6" fill="${col(sc[i])}"/><text x="${p[0].toFixed(1)}" y="${(p[1]-11).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${fmt(sc[i])}</text>`).join("")}</svg>
+  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:600">${items.map(i=>`<span>${dfmt(i.d)}</span>`).join("")}</div></div>`}
+function evoNow(){if(!ev||!ev.re)return"";const g=S.guys.find(x=>x.id===ev.re);if(!g)return"";const items=hist(g).map(h=>({d:h.date,s:score(h.answers,g.phys)})).concat([{d:ev.date,s:score(ev.answers,ev.phys)}]);return items.length>1?evoBox(items):""}
 function sheetActions(g){return `<button class="btn ghost" data-edit="${g.id}" style="margin-top:10px">✏️ Modifier la fiche</button><div class="gtog" style="margin-top:10px"><button class="btn ghost" data-share="${g.id}">📸 Partager</button><button class="btn ghost" data-safe="${g.id}">🛡️ Date sûr</button></div>
  ${g.status==="keep"?(g.couple?`<div class="box" style="background:var(--accent-soft);margin-top:10px"><b style="font-family:var(--display);font-size:17px">💞 En couple depuis ${days(g.couple.since)} jour${days(g.couple.since)>1?"s":""}</b><button class="link" data-uncouple="${g.id}" style="margin:4px 0 0">Ce n'est plus d'actualité</button></div>`:`<button class="btn ghost" data-couple="${g.id}" style="margin-top:10px">💞 On est ensemble !</button>`):""}`}
 
@@ -1968,8 +1981,7 @@ function evalView(){
     <div class="qhead">${avatar(me,40)}<span class="eyebrow">${esc(q.cat)}${q.w>1?" · counts double":""}</span></div>
     ${q.prev?`<span class="rebound">🔁 Last time: “${esc(G(q.prev,ev.dg))}”</span>`:""}<div class="qt">${esc(G(q.q,ev.dg))}</div>
     <div class="qfoot">${pb||'<span></span>'}</div></div></div>
-  ${ev.nuance?`<div class="nuance"><div class="grp">${q.more.slice(2).reverse().map(m=>`<button class="nu r" data-val="${m[1]}">🚩 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
-   <div class="grp">${q.more.slice(0,2).reverse().map(m=>`<button class="nu g" data-val="${m[1]}">💚 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
+  ${ev.nuance?`<div class="nuance"><div class="grp"><div class="col">${q.more.slice(2).reverse().map((m,j)=>`<button class="nu r${j?"":" s"}" data-val="${m[1]}">🚩 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div><div class="col">${q.more.slice(0,2).map((m,j)=>`<button class="nu g${j?"":" s"}" data-val="${m[1]}">💚 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div></div>
    <button class="skip" data-act="skip" style="margin-top:2px">No idea, next question</button></div>`
   :`<div class="answers"><button class="ans no" data-a="0"><span>🚩</span>${esc(G(q.no,ev.dg))}</button><button class="ans yes" data-a="1"><span>💚</span>${esc(G(q.yes,ev.dg))}</button></div>
    <button class="skip more" data-act="nuance">⚖️ It's more complicated than that <b>›</b></button>`}
@@ -1988,7 +2000,7 @@ function evalView(){
   <div class="advice ${v.rec}"><span class="ic">${v.rec==="keep"?"💚":v.rec==="next"?"🤮":"🤔"}</span><span>${adv}<small>You decide, not the app.</small></span></div>
   ${s>=7.5&&!ev.deep?`<div class="box glass deep"><b>This is looking great ✨</b><p>${esc(G("Want to go deeper? 6 more questions to really see who he is.",ev.dg))}</p><button class="btn ghost" data-act="deepen">Go deeper (6 questions)</button></div>`:""}
   <div class="field" style="text-align:left"><label class="t" for="f-note">A note for later (optional)</label><textarea class="input" id="f-note" maxlength="400" placeholder="${G("He cooks, has a dog, sings off-key…",ev.dg)}">${esc(ev.note)}</textarea></div>
-  ${radar(ev.answers)}<button class="btn ghost" data-act="sharecur" style="margin-top:12px">📸 Share my verdict as a story</button>
+  ${radar(ev.answers)}${evoNow()}<button class="btn ghost" data-act="sharecur" style="margin-top:12px">📸 Share my verdict as a story</button>
   <div class="field" style="text-align:left;position:relative"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(ev.dg)} (one word, optional)</span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(ev.prev)}”</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-vb="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div><div id="vibecmp" class="vibecmp${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?(vrank(ev.vibe)>vrank(vbase(ev))?" up":vrank(ev.vibe)<vrank(vbase(ev))?" down":" same"):""}" aria-live="polite">${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?esc(vmsg(vrank(ev.vibe)-vrank(vbase(ev)),ev.dg,vre(ev))):""}</div></div>
   <div class="choice"><button class="btn next${v.rec==="next"?" rec":""}" data-decide="next">🤮 Next</button><button class="btn keep${v.rec==="keep"?" rec":""}" data-decide="keep">💚 Keep</button></div>
   <button class="link" data-decide="maybe">I'm still thinking</button></section>`}
@@ -2315,6 +2327,12 @@ function histBox(g){const H=hist(g);const btn=`<button class="btn ghost" data-re
   <svg viewBox="0 0 ${W} ${Hh}" style="width:100%;display:block"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6" fill="${col(sc[i])}"/><text x="${p[0].toFixed(1)}" y="${(p[1]-11).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${fmt(sc[i])}</text>`).join("")}</svg>
   <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:600">${H.map(h=>`<span>${dfmt(h.date)}</span>`).join("")}</div>${btn}</div>`}
+function evoBox(items){const sc=items.map(i=>i.s);const W=300,Hh=84,mx=Math.max(1,sc.length-1);const pts=sc.map((s,i)=>[22+i*(W-44)/mx,Hh-12-s/10*(Hh-34)]);
+ return `<div class="fbox glass" style="margin-top:12px"><h3><span>📈 How it's going</span><span style="color:var(--muted)">${items.length} dates</span></h3>
+  <svg viewBox="0 0 ${W} ${Hh}" style="width:100%;display:block"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6" fill="${col(sc[i])}"/><text x="${p[0].toFixed(1)}" y="${(p[1]-11).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${fmt(sc[i])}</text>`).join("")}</svg>
+  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:600">${items.map(i=>`<span>${dfmt(i.d)}</span>`).join("")}</div></div>`}
+function evoNow(){if(!ev||!ev.re)return"";const g=S.guys.find(x=>x.id===ev.re);if(!g)return"";const items=hist(g).map(h=>({d:h.date,s:score(h.answers,g.phys)})).concat([{d:ev.date,s:score(ev.answers,ev.phys)}]);return items.length>1?evoBox(items):""}
 function sheetActions(g){return `<button class="btn ghost" data-edit="${g.id}" style="margin-top:10px">✏️ Edit profile</button><div class="gtog" style="margin-top:10px"><button class="btn ghost" data-share="${g.id}">📸 Share</button><button class="btn ghost" data-safe="${g.id}">🛡️ Safe date</button></div>
  ${g.status==="keep"?(g.couple?`<div class="box" style="background:var(--accent-soft);margin-top:10px"><b style="font-family:var(--display);font-size:17px">💞 Together for ${days(g.couple.since)} day${days(g.couple.since)!==1?"s":""}</b><button class="link" data-uncouple="${g.id}" style="margin:4px 0 0">Not anymore</button></div>`:`<button class="btn ghost" data-couple="${g.id}" style="margin-top:10px">💞 We're together!</button>`):""}`}
 
@@ -2729,7 +2747,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v53";const VERSION="3.5.4";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v54";const VERSION="3.5.5";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 <script>
