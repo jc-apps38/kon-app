@@ -1548,9 +1548,12 @@ function openShare(g){const op={name:true,photo:false};
   <img class="share-img" id="sh-img" alt="Aperçu de l'image à partager">
   <button class="switch" id="sh-n" aria-pressed="true"><span>Afficher le prénom</span><span class="k"></span></button><div style="height:12px"></div>
   <button class="switch" id="sh-p" aria-pressed="false"><span>Afficher la photo<span class="mt" style="font-weight:500">Évite de publier la photo de quelqu'un sans son accord</span></span><span class="k"></span></button>
-  <div class="box glass" style="margin-top:14px"><b>Pour l'enregistrer</b><p style="margin:4px 0 0;font-size:15.5px;color:var(--muted)">Appuie longuement sur l'image, puis choisis « Enregistrer dans Photos » ou « Partager ».</p></div>
+  <button class="btn primary" id="sh-go" style="margin-top:16px">📤 Partager</button>
+  <p class="mt" style="text-align:center;margin:8px 0 0">Messages, WhatsApp, Instagram, TikTok, Enregistrer dans Photos…</p>
   <div class="row-btns"><button class="btn ghost" data-act="close">Fermer</button></div>`);
- const draw=async()=>{const im=$("#sh-img");if(!im)return;im.style.opacity=.4;const u=await shareImage(g,op);if($("#sh-img")){im.src=u;im.style.opacity=1}};
+ let shF=null;const hold=()=>toast("Appuie longuement sur l'image pour l'enregistrer");
+ const draw=async()=>{const im=$("#sh-img");if(!im)return;im.style.opacity=.4;shF=null;const u=await shareImage(g,op);if($("#sh-img")){im.src=u;im.style.opacity=1}try{const b=await(await fetch(u)).blob();shF=new File([b],"keep-or-next.png",{type:"image/png"})}catch(e){}};
+ $("#sh-go").onclick=async()=>{if(!shF){toast("Image en préparation…");return}try{if(navigator.canShare&&navigator.canShare({files:[shF]}))await navigator.share({files:[shF]});else hold()}catch(e){if(!e||e.name!=="AbortError")hold()}};
  $("#sh-n").onclick=()=>{op.name=!op.name;$("#sh-n").setAttribute("aria-pressed",op.name);draw()};
  $("#sh-p").onclick=()=>{op.photo=!op.photo;$("#sh-p").setAttribute("aria-pressed",op.photo);draw()};draw()}
 
@@ -2595,9 +2598,13 @@ function openShare(g){const op={name:true,photo:false};
   <img class="share-img" id="sh-img" alt="Preview of the image to share">
   <button class="switch" id="sh-n" aria-pressed="true"><span>Show the first name</span><span class="k"></span></button><div style="height:12px"></div>
   <button class="switch" id="sh-p" aria-pressed="false"><span>Show the photo<span class="mt" style="font-weight:500">Don't post someone's photo without their consent</span></span><span class="k"></span></button>
-  <div class="box glass" style="margin-top:14px"><b>To save it</b><p style="margin:4px 0 0;font-size:15.5px;color:var(--muted)">Press and hold the image, then choose \u201cSave to Photos\u201d (or \u201cDownload image\u201d) or \u201cShare\u201d.</p></div>
+  <button class="btn primary" id="sh-go" style="margin-top:16px">📤 Share</button>
+  <p class="mt" style="text-align:center;margin:8px 0 0">Messages, WhatsApp, Instagram, TikTok, Save to Photos…</p>
+  <div class="box glass" style="margin-top:14px;display:none"><b>To save it</b><p style="margin:4px 0 0;font-size:15.5px;color:var(--muted)">Press and hold the image, then choose \u201cSave to Photos\u201d (or \u201cDownload image\u201d) or \u201cShare\u201d.</p></div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Close</button></div>`);
- const draw=async()=>{const im=$("#sh-img");if(!im)return;im.style.opacity=.4;const u=await shareImage(g,op);if($("#sh-img")){im.src=u;im.style.opacity=1}};
+ let shF=null;const hold=()=>toast("Press and hold the image to save or share it");
+ const draw=async()=>{const im=$("#sh-img");if(!im)return;im.style.opacity=.4;shF=null;const u=await shareImage(g,op);if($("#sh-img")){im.src=u;im.style.opacity=1}try{const b=await(await fetch(u)).blob();shF=new File([b],"keep-or-next.png",{type:"image/png"})}catch(e){}};
+ $("#sh-go").onclick=async()=>{if(!shF){toast("Preparing the image…");return}try{if(navigator.canShare&&navigator.canShare({files:[shF]}))await navigator.share({files:[shF]});else hold()}catch(e){if(!e||e.name!=="AbortError")hold()}};
  $("#sh-n").onclick=()=>{op.name=!op.name;$("#sh-n").setAttribute("aria-pressed",op.name);draw()};
  $("#sh-p").onclick=()=>{op.photo=!op.photo;$("#sh-p").setAttribute("aria-pressed",op.photo);draw()};draw()}
 
@@ -2747,7 +2754,7 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v54";const VERSION="3.5.5";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v55";const VERSION="3.5.6";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
 <script>
