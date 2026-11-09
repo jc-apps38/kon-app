@@ -19,7 +19,7 @@
 /* Layout : appli mobile une colonne (max 480px) posée sur un fond « coucher de soleil » animé ; cartes vitrées ; barre d'onglets avec bouton rond central « Mes dates » */
 :root{
   --bg:#FFF4EE; --glass:rgba(255,255,255,.86); --glow:rgba(240,56,107,.45); --glass-line:rgba(255,255,255,.9); --surface2:#FFF1EA;
-  --ink:#2A1433; --muted:#7A5E80; --line:#F1DCD6;
+  --ink:#2A1433; --muted:#654A6B; --line:#F1DCD6;
   --coral:#FF5E5B; --violet:#7B4DFF; --sun:#FFB23F; --mint:#20C1A0;
   --grad:linear-gradient(135deg,#FF5E5B 0%,#FF3D8B 48%,#7B4DFF 100%);
   --on-accent:#FFFFFF; --accent:#F0386B; --accent-soft:#FFE1E8;
@@ -46,7 +46,7 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:15px; line-height:1.45;
+body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.45;
   padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px));
   -webkit-tap-highlight-color:transparent; overflow-x:hidden}
 button,input,textarea{font:inherit; color:inherit}
@@ -72,10 +72,10 @@ h1,h2,h3{font-family:var(--display); margin:0; text-wrap:balance; letter-spacing
 .brand{font-family:var(--display); font-weight:800; font-size:26px; line-height:1; padding:9px 15px 10px; border-radius:18px; background:var(--glass); border:3px solid var(--accent); box-shadow:0 0 0 4px var(--accent-soft), 0 0 12px 1px var(--accent), 0 0 34px 4px var(--glow), inset 0 0 18px -4px var(--glow); text-shadow:0 0 16px var(--glow); animation:neon 2.4s ease-out 1 both}
 @keyframes neon{0%{opacity:.3}8%{opacity:1}12%{opacity:.4}18%{opacity:1}24%{opacity:.7}30%,100%{opacity:1}}
 @media (max-width:380px){.brand{font-size:21px;padding:8px 12px 9px;white-space:nowrap}}
-@media (max-width:340px){.top{gap:6px}.brand{font-size:19px;padding:7px 10px 8px}.lock{font-size:10px;padding-inline:8px}}
+@media (max-width:340px){.top{gap:6px}.brand{font-size:19px;padding:7px 10px 8px}.lock{font-size:12px;padding-inline:8px}}
 .brand em{font-style:normal; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
-.lock{font-size:11px; font-weight:700; color:var(--muted); padding:6px 10px; border-radius:999px; white-space:nowrap}
-.eyebrow{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--muted)}
+.lock{font-size:12.5px; font-weight:700; color:var(--muted); padding:6px 10px; border-radius:999px; white-space:nowrap}
+.eyebrow{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--muted)}
 .view{animation:fadeup .35s ease both}
 .h-big{font-size:32px; line-height:1.04}
 .sub{color:var(--muted); margin:6px 0 0}
@@ -98,44 +98,44 @@ h1,h2,h3{font-family:var(--display); margin:0; text-wrap:balance; letter-spacing
 .tri.keep .dot{border-color:var(--keep); color:var(--keep); background:var(--keep-soft)}
 .tri.maybe .dot{border-color:var(--maybe); color:var(--maybe); background:var(--maybe-soft)}
 .tri.next .dot{border-color:var(--next); color:var(--next); background:var(--next-soft)}
-.tri span{font-size:12.5px; font-weight:700}
+.tri span{font-size:14px; font-weight:700}
 .cta{margin-top:14px; border-radius:26px; padding:20px; background:var(--grad); color:var(--on-accent); display:grid; gap:12px; box-shadow:var(--shadow); position:relative; overflow:hidden}
 .cta::after{content:"💘"; position:absolute; right:-6px; top:-10px; font-size:92px; opacity:.22; transform:rotate(14deg)}
 .cta h3{font-size:23px; line-height:1.1; max-width:15ch}
-.cta p{margin:0; opacity:.92; font-size:14px; max-width:28ch}
+.cta p{margin:0; opacity:.92; font-size:15.5px; max-width:28ch}
 .cta .btn{background:#FFFFFF; color:#2A1433; width:auto; justify-self:start; padding:12px 18px}
 .box{border-radius:22px; padding:16px; margin-top:12px}
 .box h3{font-size:16px; margin-bottom:10px}
 .last{display:flex; align-items:center; gap:12px; width:100%; text-align:left}
 .tip{display:flex; gap:12px; align-items:flex-start}
 .tip .em{font-size:28px; line-height:1}
-.tip p{margin:4px 0 0; font-size:14px}
+.tip p{margin:4px 0 0; font-size:15.5px}
 
 /* mes dates */
 .seg{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; border-radius:20px; padding:5px}
-.seg button{border-radius:15px; padding:10px 4px; font-weight:700; font-size:13px; color:var(--muted); display:flex; flex-direction:column; align-items:center; gap:2px; transition:background .2s,color .2s}
+.seg button{border-radius:15px; padding:10px 4px; font-weight:700; font-size:14.5px; color:var(--muted); display:flex; flex-direction:column; align-items:center; gap:2px; transition:background .2s,color .2s}
 .seg button b{font-family:var(--display); font-size:20px; line-height:1}
 .seg button[aria-pressed="true"][data-s="keep"]{background:var(--keep); color:var(--on-keep)}
 .seg button[aria-pressed="true"][data-s="maybe"]{background:var(--maybe); color:var(--on-accent)}
 .seg button[aria-pressed="true"][data-s="next"]{background:var(--next); color:var(--on-accent)}
 .addbar{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px}
 .addbar h2{font-size:28px}
-.pillbtn{border-radius:999px; padding:10px 15px; background:var(--grad); color:var(--on-accent); font-weight:700; font-size:14px; white-space:nowrap; box-shadow:var(--shadow)}
-.banner{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; padding:10px 14px; border-radius:16px; font-size:13px}
+.pillbtn{border-radius:999px; padding:10px 15px; background:var(--grad); color:var(--on-accent); font-weight:700; font-size:15.5px; white-space:nowrap; box-shadow:var(--shadow)}
+.banner{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; padding:10px 14px; border-radius:16px; font-size:14.5px}
 .banner button{font-weight:700; color:var(--accent); white-space:nowrap}
 .banner button,.mt{min-height:44px}
 .banner button{padding:0 6px}
 .cal .ch button{width:44px;height:44px}
-.nostore{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));z-index:90;background:#2A1433;color:#fff;padding:12px 14px;border-radius:14px;font-size:13px;font-weight:600;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.nostore{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));z-index:90;background:#2A1433;color:#fff;padding:12px 14px;border-radius:14px;font-size:14.5px;font-weight:600;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .list{display:grid; gap:10px; margin-top:12px}
 .guy{display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px; text-align:left; width:100%; border-radius:22px; padding:12px 14px; transition:transform .15s}
 .guy:active{transform:scale(.98)}
 .guy.pop{animation:pop .7s ease}
 .nm{font-weight:700; font-size:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block}
-.mt{font-size:12.5px; color:var(--muted); margin-top:2px; display:block}
-.tag{font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 6px; border-radius:6px; background:var(--accent-soft); color:var(--accent); margin-left:6px; vertical-align:2px}
+.mt{font-size:14px; color:var(--muted); margin-top:2px; display:block}
+.tag{font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 6px; border-radius:6px; background:var(--accent-soft); color:var(--accent); margin-left:6px; vertical-align:2px}
 .sc{font-family:var(--display); font-weight:800; font-size:23px; font-variant-numeric:tabular-nums; text-align:right; line-height:1}
-.sc small{display:block; font-family:var(--body); font-size:11px; font-weight:600; color:var(--muted)}
+.sc small{display:block; font-family:var(--body); font-size:12.5px; font-weight:600; color:var(--muted)}
 .empty{text-align:center; padding:30px 18px; color:var(--muted); border-radius:22px}
 .empty .big{font-size:40px; display:block; margin-bottom:6px}
 .empty strong{color:var(--ink); display:block; font-family:var(--display); font-size:18px; margin-bottom:4px}
@@ -155,18 +155,18 @@ h1,h2,h3{font-family:var(--display); margin:0; text-wrap:balance; letter-spacing
 .back{width:42px; height:42px; border-radius:50%; display:grid; place-items:center; font-size:18px; flex:none}
 .prog{flex:1; height:9px; border-radius:99px; background:var(--line); overflow:hidden}
 .prog i{display:block; height:100%; background:var(--grad); border-radius:99px; transition:width .35s ease}
-.count{font-size:12px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; flex:none}
+.count{font-size:13.5px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; flex:none}
 .intro{border-radius:28px; padding:20px}
 .photo{display:grid; justify-items:center; gap:8px; cursor:pointer; margin:4px auto 0; width:max-content}
 .photo input{position:absolute; opacity:0; width:1px; height:1px}
 .photo .av{--s:104px}
-.photo span.l{font-size:13px; font-weight:700; color:var(--accent)}
+.photo span.l{font-size:14.5px; font-weight:700; color:var(--accent)}
 .field{display:grid; gap:8px; margin-top:16px}
-.field label.t{font-weight:700; font-size:14px}
+.field label.t{font-weight:700; font-size:15.5px}
 .input{width:100%; padding:14px 16px; border-radius:16px; border:1px solid var(--line); background:var(--glass); font-size:16px}
 textarea.input{min-height:84px; resize:vertical}
 .chips{display:flex; flex-wrap:wrap; gap:8px}
-.chip{padding:9px 13px; border-radius:999px; border:1px solid var(--line); background:var(--glass); font-weight:600; font-size:14px; transition:background .15s,color .15s}
+.chip{padding:9px 13px; border-radius:999px; border:1px solid var(--line); background:var(--glass); font-weight:600; font-size:15.5px; transition:background .15s,color .15s}
 .chip[aria-pressed="true"]{background:var(--grad); color:var(--on-accent); border-color:transparent}
 
 .stage{position:relative; height:310px}
@@ -177,17 +177,17 @@ textarea.input{min-height:84px; resize:vertical}
 .qhead{display:flex; align-items:center; gap:10px}
 .qhead .av{--s:40px}
 .qt{font-family:var(--display); font-weight:700; font-size:27px; line-height:1.12}
-.hint{font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; gap:8px}
+.hint{font-size:14px; color:var(--muted); display:flex; justify-content:space-between; gap:8px}
 .stamp{position:absolute; top:20px; font-family:var(--display); font-weight:800; font-size:22px; padding:4px 12px; border-radius:10px; border:3px solid; opacity:0; pointer-events:none; background:var(--glass)}
 .stamp.yes{right:18px; color:var(--keep); border-color:var(--keep); transform:rotate(10deg)}
 .stamp.no{left:18px; color:var(--next); border-color:var(--next); transform:rotate(-10deg)}
 .answers{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px}
-.ans{border-radius:20px; padding:14px 12px; font-weight:700; font-size:14.5px; line-height:1.25; min-height:68px; transition:transform .12s}
+.ans{border-radius:20px; padding:14px 12px; font-weight:700; font-size:16px; line-height:1.25; min-height:68px; transition:transform .12s}
 .ans:active{transform:scale(.96)}
 .ans.no{background:var(--next); color:var(--on-accent); box-shadow:0 0 0 2px var(--next), 0 8px 22px -6px var(--next)}
 .ans.yes{background:var(--keep); color:var(--on-keep); box-shadow:0 0 0 2px var(--keep), 0 8px 22px -6px var(--keep)}
 .ans span{display:block; font-size:20px; margin-bottom:2px}
-.skip{display:block; margin:12px auto 0; font-size:13px; font-weight:600; color:var(--muted); padding:8px 12px}
+.skip{display:block; margin:12px auto 0; font-size:14.5px; font-weight:600; color:var(--muted); padding:8px 12px}
 
 .result{text-align:center}
 .ring{position:relative; width:200px; height:200px; margin:6px auto 0}
@@ -204,9 +204,9 @@ textarea.input{min-height:84px; resize:vertical}
 .fbox{border-radius:20px; padding:14px}
 .fbox h3{font-size:15px; margin-bottom:8px; display:flex; justify-content:space-between}
 .pills{display:flex; flex-wrap:wrap; gap:6px}
-.pill{font-size:13px; font-weight:600; padding:5px 10px; border-radius:999px}
+.pill{font-size:14.5px; font-weight:600; padding:5px 10px; border-radius:999px}
 .pill.g{background:var(--keep-soft); color:var(--keep)} .pill.r{background:var(--next-soft); color:var(--next)}
-.none{font-size:13px; color:var(--muted)}
+.none{font-size:14.5px; color:var(--muted)}
 .advice{margin-top:16px; padding:16px; border-radius:20px; font-weight:700; display:flex; gap:12px; align-items:center; text-align:left}
 .advice .ic{font-size:28px; flex:none}
 .advice.keep{background:var(--keep-soft); color:var(--keep)} .advice.next{background:var(--next-soft); color:var(--next)} .advice.maybe{background:var(--maybe-soft); color:var(--maybe)}
@@ -217,19 +217,19 @@ textarea.input{min-height:84px; resize:vertical}
 .kpis{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px}
 .kpi{border-radius:20px; padding:14px}
 .kpi b{display:block; font-family:var(--display); font-size:30px; line-height:1.05; font-variant-numeric:tabular-nums}
-.kpi span{font-size:12.5px; color:var(--muted); font-weight:600}
+.kpi span{font-size:14px; color:var(--muted); font-weight:600}
 .split{display:flex; height:14px; border-radius:99px; overflow:hidden; background:var(--line)}
 .split i{display:block; height:100%}
-.legend{display:flex; justify-content:space-between; gap:6px; font-size:12px; font-weight:700; margin-top:8px; flex-wrap:wrap}
+.legend{display:flex; justify-content:space-between; gap:6px; font-size:13.5px; font-weight:700; margin-top:8px; flex-wrap:wrap}
 .bars{display:grid; gap:10px}
-.bar{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 10px; font-size:13.5px; font-weight:600}
+.bar{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 10px; font-size:15px; font-weight:600}
 .bar .tr{grid-column:1/-1; height:8px; border-radius:99px; background:var(--surface2); overflow:hidden}
 .bar .tr i{display:block; height:100%; border-radius:99px}
 .bar .v{font-variant-numeric:tabular-nums; color:var(--muted)}
 .hl{display:flex; align-items:center; gap:12px}
 .hl b{font-family:var(--display); font-size:19px; display:block}
-.hl span{font-size:13px; color:var(--muted)}
-.set p{color:var(--muted); margin:6px 0 0; font-size:14px}
+.hl span{font-size:14.5px; color:var(--muted)}
+.set p{color:var(--muted); margin:6px 0 0; font-size:15.5px}
 .row-btns{display:grid; gap:10px; margin-top:12px}
 .danger{color:var(--next)}
 
@@ -237,11 +237,11 @@ textarea.input{min-height:84px; resize:vertical}
 .tabs{position:fixed; left:0; right:0; bottom:0; z-index:20; border-top:1px solid var(--glass-line);
   padding:6px max(16px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px))}
 .tabs .in{max-width:480px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr 96px 1fr 1fr; align-items:end}
-.tab{display:flex; flex-direction:column; align-items:center; gap:2px; font-size:11px; font-weight:700; color:var(--muted); padding:6px 2px}
+.tab{display:flex; flex-direction:column; align-items:center; gap:2px; font-size:12.5px; font-weight:700; color:var(--muted); padding:6px 2px}
 .tab .i{font-size:20px; line-height:1; filter:grayscale(1); opacity:.7; transition:transform .2s}
 .tab[aria-current="page"]{color:var(--accent)}
 .tab[aria-current="page"] .i{filter:none; opacity:1; transform:translateY(-2px)}
-.hub{justify-self:center; display:grid; justify-items:center; gap:3px; margin-top:-36px; font-size:11px; font-weight:800; color:var(--ink)}
+.hub{justify-self:center; display:grid; justify-items:center; gap:3px; margin-top:-36px; font-size:12.5px; font-weight:800; color:var(--ink)}
 .hub .o{width:72px; height:72px; border-radius:50%; background:var(--grad); color:var(--on-accent); display:grid; place-items:center; font-size:30px;
   box-shadow:var(--shadow), 0 0 0 5px var(--bg); transition:transform .15s; position:relative}
 .hub .o::before{content:""; position:absolute; inset:-5px; border-radius:50%; border:2px solid var(--accent); opacity:0; animation:halo 2.6s ease-out infinite}
@@ -256,7 +256,7 @@ textarea.input{min-height:84px; resize:vertical}
 .det .field{margin-top:12px}
 .gtog{display:grid; grid-template-columns:1fr 1fr; gap:8px}
 .typecard{display:grid; gap:8px}
-.typecard .row{display:flex; justify-content:space-between; gap:10px; font-size:14px}
+.typecard .row{display:flex; justify-content:space-between; gap:10px; font-size:15.5px}
 .typecard .row b{font-family:var(--display)}
 .hub:active .o{transform:scale(.92)}
 
@@ -270,13 +270,13 @@ textarea.input{min-height:84px; resize:vertical}
 .sh-top .av{--s:86px}
 .sh-top h2{font-size:28px; line-height:1.05}
 .status{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px}
-.status button{border-radius:16px; padding:11px 4px; font-weight:700; font-size:13px; background:var(--glass); border:1px solid var(--line)}
+.status button{border-radius:16px; padding:11px 4px; font-weight:700; font-size:14.5px; background:var(--glass); border:1px solid var(--line)}
 .status button[aria-pressed="true"][data-s="keep"]{background:var(--keep); color:var(--on-keep); border-color:var(--keep)}
 .status button[aria-pressed="true"][data-s="maybe"]{background:var(--maybe); color:var(--on-accent); border-color:var(--maybe)}
 .status button[aria-pressed="true"][data-s="next"]{background:var(--next); color:var(--on-accent); border-color:var(--next)}
-.note{white-space:pre-wrap; font-size:14px}
+.note{white-space:pre-wrap; font-size:15.5px}
 
-.toast{position:fixed; left:50%; bottom:calc(110px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:60; background:var(--ink); color:var(--bg); padding:11px 16px; border-radius:14px; font-weight:700; font-size:14px; animation:toast 2.2s ease both; white-space:normal; max-width:88vw; text-align:center; width:max-content}
+.toast{position:fixed; left:50%; bottom:calc(110px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:60; background:var(--ink); color:var(--bg); padding:11px 16px; border-radius:14px; font-weight:700; font-size:15.5px; animation:toast 2.2s ease both; white-space:normal; max-width:88vw; text-align:center; width:max-content}
 .fx{position:fixed; inset:0; pointer-events:none; z-index:70; overflow:hidden}
 .fx span{position:absolute; will-change:transform,opacity}
 .fx .rise{bottom:-40px; animation:rise var(--d) ease-out forwards}
@@ -305,7 +305,7 @@ input[type=date].input::-webkit-calendar-picker-indicator{opacity:.6}
 body.onb .tabs{display:none}
 .qwrap{display:flex; flex-direction:column; min-height:calc(100vh - 250px); min-height:calc(100dvh - 250px)}
 .qwrap .stage{margin-top:auto}
-.prefbadge{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; padding:5px 10px; border-radius:999px; align-self:flex-start}
+.prefbadge{display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:800; padding:5px 10px; border-radius:999px; align-self:flex-start}
 .prefbadge.love{background:var(--accent-soft); color:var(--accent)}
 .prefbadge.hate{background:var(--next-soft); color:var(--next)}
 .qfoot{display:flex; justify-content:space-between; align-items:flex-end; gap:8px}
@@ -314,7 +314,7 @@ body.onb .tabs{display:none}
 .flash.hate{background:var(--next); color:var(--on-accent)}
 .nuance{display:grid; gap:8px; margin-top:12px; animation:fadeup .25s ease both}
 .nuance .grp{display:grid; grid-template-columns:1fr 1fr; gap:8px}
-.nu{border-radius:16px; padding:12px; font-weight:700; font-size:13.5px; line-height:1.25; text-align:left; min-height:58px}
+.nu{border-radius:16px; padding:12px; font-weight:700; font-size:15px; line-height:1.25; text-align:left; min-height:58px}
 .nu.g{background:var(--keep-soft); color:var(--keep); border:1px solid var(--keep)}
 .nu.r{background:var(--next-soft); color:var(--next); border:1px solid var(--next)}
 .onbw{min-height:calc(100vh - 120px); min-height:calc(100dvh - 120px); display:flex; flex-direction:column; justify-content:center; gap:18px; padding-block:10px}
@@ -330,7 +330,7 @@ body.onb .tabs{display:none}
 .opt .e{font-size:22px}
 .opt[aria-pressed="true"]{background:var(--grad); color:var(--on-accent); border-color:transparent}
 .opt.hate[aria-pressed="true"]{background:var(--next); color:var(--on-accent)}
-.cnt{font-size:12px; font-weight:700; color:var(--muted); text-align:right}
+.cnt{font-size:13.5px; font-weight:700; color:var(--muted); text-align:right}
 .tipcard{position:relative; min-height:118px; cursor:pointer}
 .tipcard .tx{animation:tipin .5s ease both}
 .tipcard .dots{justify-content:flex-start; margin-top:10px}
@@ -342,29 +342,29 @@ body.onb .tabs{display:none}
 .donut svg{width:100%; height:100%; transform:rotate(-90deg)}
 .donut .c{position:absolute; inset:0; display:grid; place-content:center; text-align:center}
 .donut .c b{font-family:var(--display); font-size:32px; line-height:1}
-.donut .c span{font-size:11px; font-weight:700; color:var(--muted)}
+.donut .c span{font-size:12.5px; font-weight:700; color:var(--muted)}
 .legend2{display:grid; gap:8px}
-.lg{display:flex; align-items:center; gap:8px; font-weight:700; font-size:14px}
+.lg{display:flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px}
 .lg i{width:12px; height:12px; border-radius:50%}
 .lg b{font-family:var(--display); font-size:18px; margin-left:auto; font-variant-numeric:tabular-nums}
 .podium{display:grid; grid-template-columns:repeat(3,1fr); align-items:end; gap:8px; margin-top:6px}
 .pod{display:grid; justify-items:center; gap:6px; text-align:center}
 .pod .step{width:100%; border-radius:14px 14px 6px 6px; display:grid; place-items:center; font-family:var(--display); font-weight:800; color:var(--on-accent)}
-.pod .n{font-weight:700; font-size:13px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.pod .s{font-size:12px; color:var(--muted); font-weight:700}
+.pod .n{font-weight:700; font-size:14.5px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pod .s{font-size:13.5px; color:var(--muted); font-weight:700}
 .tiles{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
 .tile{border-radius:20px; padding:14px; display:grid; gap:2px}
 .tile .e{font-size:22px}
 .tile b{font-family:var(--display); font-size:26px; line-height:1.05; font-variant-numeric:tabular-nums}
-.tile span{font-size:12.5px; color:var(--muted); font-weight:600}
+.tile span{font-size:14px; color:var(--muted); font-weight:600}
 .cloud{display:flex; flex-wrap:wrap; gap:8px}
 .fl{display:inline-flex; align-items:center; gap:6px; padding:7px 8px 7px 12px; border-radius:999px; background:var(--next-soft); color:var(--next); font-weight:700}
-.fl b{background:var(--next); color:var(--on-accent); border-radius:999px; min-width:24px; height:24px; display:grid; place-items:center; font-size:12px; padding:0 6px}
+.fl b{background:var(--next); color:var(--on-accent); border-radius:999px; min-width:24px; height:24px; display:grid; place-items:center; font-size:13.5px; padding:0 6px}
 .srow{display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x mandatory}
 .sc2{flex:none; width:120px; scroll-snap-align:start; border-radius:18px; padding:12px; display:grid; gap:4px; background:var(--surface2)}
 .sc2 b{font-family:var(--display); font-size:24px; line-height:1}
-.sc2 span{font-size:12px; color:var(--muted); font-weight:600}
-.sc2 strong{font-size:14px}
+.sc2 span{font-size:13.5px; color:var(--muted); font-weight:600}
+.sc2 strong{font-size:15.5px}
 /* guide */
 details.g{border-radius:20px; margin-top:10px; overflow:hidden}
 details.g summary{list-style:none; display:flex; align-items:center; gap:12px; padding:15px 16px; cursor:pointer; font-family:var(--display); font-weight:700; font-size:17px}
@@ -372,7 +372,7 @@ details.g summary::-webkit-details-marker{display:none}
 details.g summary .e{font-size:24px}
 details.g summary::after{content:"+"; margin-left:auto; font-size:22px; color:var(--muted); transition:transform .2s}
 details.g[open] summary::after{transform:rotate(45deg)}
-details.g .body{padding:0 16px 16px; display:grid; gap:10px; font-size:14px}
+details.g .body{padding:0 16px 16px; display:grid; gap:10px; font-size:15.5px}
 .li{display:flex; gap:10px; align-items:flex-start}
 .li .k{flex:none; font-weight:800}
 .li p{margin:0}
@@ -384,15 +384,15 @@ details.g .body{padding:0 16px 16px; display:grid; gap:10px; font-size:14px}
 .sect{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:2px 10px; margin-top:22px}
 .sect h3{white-space:nowrap}
 .sect h3{font-size:19px}
-.sect .mini{font-size:12.5px; color:var(--muted)}
+.sect .mini{font-size:14px; color:var(--muted)}
 .hcar{display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; margin-top:10px; padding:4px 2px 10px; scrollbar-width:none}
 .hcar::-webkit-scrollbar{display:none}
 .dc{flex:none; width:128px; scroll-snap-align:start; border-radius:24px; padding:14px 10px 12px; display:grid; justify-items:center; gap:6px; text-align:center; position:relative; overflow:hidden}
 .dc::before{content:""; position:absolute; inset:0 0 auto; height:46px; opacity:.35}
 .dc.keep::before{background:var(--keep)} .dc.maybe::before{background:var(--maybe)} .dc.next::before{background:var(--next)}
 .dc .n{font-weight:800; font-size:15px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.dc .scp{font-family:var(--display); font-weight:800; font-size:13px; color:var(--on-accent); padding:3px 9px; border-radius:999px}
-.dc .st{font-size:11.5px; font-weight:700; color:var(--muted)}
+.dc .scp{font-family:var(--display); font-weight:800; font-size:14.5px; color:var(--on-accent); padding:3px 9px; border-radius:999px}
+.dc .st{font-size:13px; font-weight:700; color:var(--muted)}
 .dc.add{border:2px dashed var(--accent); background:var(--accent-soft); color:var(--accent); align-content:center}
 .dc.add .plus{width:76px; height:76px; border-radius:50%; background:var(--grad); color:var(--on-accent); display:grid; place-items:center; font-size:36px}
 .arts{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px}
@@ -402,9 +402,9 @@ details.g .body{padding:0 16px 16px; display:grid; gap:10px; font-size:14px}
 .art.wide .cov{height:120px}
 .cov.big{height:150px; border-radius:22px}
 .cov .ae{font-size:44px}
-.atag{position:absolute; left:8px; top:8px; font-size:10.5px; font-weight:800; letter-spacing:.04em; padding:4px 8px; border-radius:999px; background:#FFFFFF; color:#2A1433}
+.atag{position:absolute; left:8px; top:8px; font-size:12px; font-weight:800; letter-spacing:.04em; padding:4px 8px; border-radius:999px; background:#FFFFFF; color:#2A1433}
 .at{font-family:var(--display); font-weight:700; font-size:15px; line-height:1.15; padding:0 4px}
-.am{font-size:12px; color:var(--muted); font-weight:600; padding:0 4px}
+.am{font-size:13.5px; color:var(--muted); font-weight:600; padding:0 4px}
 .read{display:grid; gap:4px; margin-top:12px; font-size:15px; line-height:1.55}
 .read h3{font-size:17px; margin-top:12px}
 .read p{margin:0}
@@ -441,13 +441,13 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .cal .ch b{font-family:var(--display); font-size:17px; text-transform:capitalize}
 .cal .ch button{width:36px; height:36px; border-radius:50%; background:var(--surface2); font-size:20px; line-height:1}
 .cgrid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center}
-.cgrid .wd{font-size:11px; font-weight:700; color:var(--muted); padding-bottom:4px}
-.cgrid .d{aspect-ratio:1; border-radius:12px; display:grid; place-items:center; font-size:13.5px; font-weight:600; position:relative; font-variant-numeric:tabular-nums}
+.cgrid .wd{font-size:12.5px; font-weight:700; color:var(--muted); padding-bottom:4px}
+.cgrid .d{aspect-ratio:1; border-radius:12px; display:grid; place-items:center; font-size:15px; font-weight:600; position:relative; font-variant-numeric:tabular-nums}
 .cgrid .d.today{background:var(--grad); color:var(--on-accent)}
 .cgrid .d .m{position:absolute; bottom:3px; left:50%; transform:translateX(-50%); display:flex; gap:2px}
 .cgrid .d .m i{width:5px; height:5px; border-radius:50%}
 .plan{display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center; border-radius:20px; padding:12px}
-.dblock{width:54px; border-radius:14px; background:var(--grad); color:var(--on-accent); text-align:center; padding:6px 0; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:.04em}
+.dblock{width:54px; border-radius:14px; background:var(--grad); color:var(--on-accent); text-align:center; padding:6px 0; font-weight:700; font-size:12.5px; text-transform:uppercase; letter-spacing:.04em}
 .dblock b{display:block; font-family:var(--display); font-size:22px; line-height:1.05}
 .dblock.t{width:66px; padding:8px 0; margin:10px 0 10px 10px}
 .dblock.t b{font-size:18px; text-transform:none; margin-top:2px}
@@ -455,26 +455,26 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .share-img{width:100%; max-width:280px; aspect-ratio:9/16; border-radius:20px; display:block; margin:14px auto; box-shadow:var(--shadow); background:var(--surface2); transition:opacity .2s}
 .sugbox{margin-top:2px}
 .sugl{display:grid;gap:6px}
-.sugi{text-align:left;padding:11px 13px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font-weight:600;font-size:14px;line-height:1.35}
+.sugi{text-align:left;padding:11px 13px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font-weight:600;font-size:15.5px;line-height:1.35}
 .sugi:active{background:var(--accent-soft)}
-.sugat{font-size:11.5px;color:var(--muted);padding:2px 4px}
-.consent{background:var(--accent-soft);border-radius:16px;padding:14px;margin-top:6px;font-size:14px;line-height:1.5}
+.sugat{font-size:13px;color:var(--muted);padding:2px 4px}
+.consent{background:var(--accent-soft);border-radius:16px;padding:14px;margin-top:6px;font-size:15.5px;line-height:1.5}
 .consent p{margin:6px 0 0}
-.tutoic{position:relative; display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:800; padding:9px 15px; border-radius:999px; border:1.5px solid var(--accent); color:var(--accent); background:var(--glass); white-space:nowrap}
+.tutoic{position:relative; display:inline-flex; align-items:center; gap:6px; font-size:15.5px; font-weight:800; padding:9px 15px; border-radius:999px; border:1.5px solid var(--accent); color:var(--accent); background:var(--glass); white-space:nowrap}
 .tdot{position:absolute; top:-3px; right:-3px; width:10px; height:10px; border-radius:50%; background:var(--accent); border:2px solid var(--bg)}
 .tick{display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--keep); color:var(--on-keep); font-weight:900; font-size:16px}
-.tmock{background:var(--surface2); border-radius:16px; padding:12px 14px; text-align:left; font-size:14px; line-height:1.5; width:100%; box-sizing:border-box; border:1px solid var(--line)}
+.tmock{background:var(--surface2); border-radius:16px; padding:12px 14px; text-align:left; font-size:15.5px; line-height:1.5; width:100%; box-sizing:border-box; border:1px solid var(--line)}
 .tcar .ivis{min-height:190px; padding:16px; border-radius:24px}
-.msg{white-space:pre-wrap; background:var(--surface2); border-radius:16px; padding:14px; font-size:14.5px; line-height:1.5; -webkit-user-select:text; user-select:text}
+.msg{white-space:pre-wrap; background:var(--surface2); border-radius:16px; padding:14px; font-size:16px; line-height:1.5; -webkit-user-select:text; user-select:text}
 .h-big sup{font-size:.5em}
 
 .qcard .rebound + .qt{font-size:23px}
-.rebound{display:inline-block; align-self:flex-start; font-size:12.5px; font-weight:700; padding:6px 10px; border-radius:12px; background:var(--surface2); color:var(--muted); margin-top:-4px}
+.rebound{display:inline-block; align-self:flex-start; font-size:14px; font-weight:700; padding:6px 10px; border-radius:12px; background:var(--surface2); color:var(--muted); margin-top:-4px}
 
 #qcard{background:var(--bg)}
 .qcard.under>*{opacity:0}
 
-.cgrid button.d{font:inherit; font-size:13.5px; font-weight:700; color:var(--ink); background:var(--surface2); cursor:pointer}
+.cgrid button.d{font:inherit; font-size:15px; font-weight:700; color:var(--ink); background:var(--surface2); cursor:pointer}
 .cgrid button.d.today{background:var(--grad); color:var(--on-accent)}
 .cgrid button.d:active{transform:scale(.92)}
 
@@ -527,7 +527,7 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .ivis{min-height:270px; border-radius:30px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:22px}
 .ivis:has(.switch){min-height:0; padding:12px 16px; gap:8px}
 .irow{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
-.vp{display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; font-weight:700; font-size:14px}
+.vp{display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; font-weight:700; font-size:15.5px}
 .vp.k{background:var(--keep-soft); color:var(--keep); border:1.5px solid var(--keep)}
 .vp.m{background:var(--maybe-soft); color:var(--maybe); border:1.5px solid var(--maybe)}
 .vp.n{background:var(--next-soft); color:var(--next); border:1.5px solid var(--next)}
@@ -536,7 +536,7 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .iq{font-family:var(--display); font-weight:700; font-size:21px}
 .ibar{height:8px; border-radius:9px; background:var(--line); width:100%; max-width:260px; overflow:hidden}
 .ibar i{display:block; height:100%; background:var(--accent); border-radius:9px}
-.imut{color:var(--muted); font-size:12px; font-weight:600}
+.imut{color:var(--muted); font-size:13.5px; font-weight:600}
 .iscore{font-family:var(--display); font-weight:800; font-size:68px; line-height:1; color:var(--keep)}
 .iscore small{font-size:22px; color:var(--muted)}
 .icard{background:var(--surface2); border-radius:18px; padding:12px 16px; text-align:left; font-size:15px; width:100%; max-width:300px; border:1px solid var(--line)}
@@ -549,21 +549,21 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 .nc:first-child{border-color:var(--accent); background:var(--accent-soft)}
 .nc .e{font-size:46px; line-height:1}
 .nc b{font-family:var(--display); font-size:19px; line-height:1.1}
-.nc small{color:var(--muted); font-size:13px; line-height:1.3}
+.nc small{color:var(--muted); font-size:14.5px; line-height:1.3}
 .nc:active{transform:scale(.97)}
 
 /* more about him + vibe */
 .det.more{margin-top:14px; border:2px dashed var(--accent); border-radius:20px; padding:2px 14px 14px; background:var(--accent-soft)}
 .det.more summary{font-size:15px; padding:14px 0 10px}
 .det.more[open] summary{border-bottom:1px solid var(--line); margin-bottom:4px}
-.vibe{display:inline-block; margin-top:6px; padding:4px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:700; font-size:13px}
+.vibe{display:inline-block; margin-top:6px; padding:4px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:700; font-size:14.5px}
 .pill:not(.g):not(.r){background:var(--surface2); color:var(--ink)}
 
 /* interests add + vibe compare */
 .addrow{display:flex; gap:8px; margin-top:10px}
 .addrow .input{flex:1; min-width:0}
 .addrow .btn{width:auto; padding:0 18px; flex:none}
-.vibecmp{font-weight:700; font-size:14px; margin-top:10px; min-height:20px}
+.vibecmp{font-weight:700; font-size:15.5px; margin-top:10px; min-height:20px}
 .vibecmp.up{color:var(--keep)} .vibecmp.down{color:var(--next)}
 .vfx{position:absolute; bottom:24px; font-size:24px; pointer-events:none; animation:vup 1.5s ease-out forwards; z-index:3}
 .vfx.d{bottom:auto; top:6px; animation-name:vdown}
@@ -571,13 +571,29 @@ html.discreet .av .ph img,html.discreet .av .ph svg,html.discreet .ring .face,ht
 @keyframes vdown{0%{transform:translateY(0) scale(.8); opacity:0}15%{opacity:1}100%{transform:translateY(120px) scale(1); opacity:0}}
 
 /* live bar + deepen */
-.fgbar{display:flex; align-items:center; gap:8px; margin:6px 0 10px; font-size:14px}
+.fgbar{display:flex; align-items:center; gap:8px; margin:6px 0 10px; font-size:15.5px}
 .fgbar .bar{flex:1; height:10px; border-radius:99px; overflow:hidden; display:flex; background:var(--line)}
 .fgbar .bar i{display:block; height:100%; transition:width .5s ease}
 .fgbar .bar .g{background:var(--keep)} .fgbar .bar .r{background:var(--next)}
 .fgbar.idle .bar i{opacity:.35}
 .box.deep{margin-top:12px; text-align:center}
-.box.deep p{margin:6px 0 10px; color:var(--muted); font-size:14px}
+.box.deep p{margin:6px 0 10px; color:var(--muted); font-size:15.5px}
+
+/* 3.5.2 */
+.sheet{overscroll-behavior:contain}
+.grab{width:54px; height:6px; background:var(--muted); opacity:.45}
+.stage{margin-bottom:46px}
+.qcard.under{transform:translateY(22px) scale(.94); opacity:1; background:var(--accent-soft); border:2px solid var(--accent); box-shadow:none}
+.qcard.under.u2{transform:translateY(42px) scale(.88); background:var(--line); border-color:var(--muted)}
+.swarr{position:absolute; top:50%; width:18px; height:50px; margin-top:-25px; z-index:3; pointer-events:none}
+.swarr svg{width:100%; height:100%; display:block}
+.swarr.l{left:-16px; color:var(--next); animation:nudgel 1.4s ease-in-out infinite}
+.swarr.r{right:-16px; color:var(--keep); animation:nudger 1.4s ease-in-out infinite}
+@keyframes nudgel{50%{transform:translateX(-3px)}}
+@keyframes nudger{50%{transform:translateX(3px)}}
+.skip.more{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin:12px 0 0; padding:14px 16px; min-height:54px; border-radius:18px; background:var(--glass); border:2px solid var(--ink); color:var(--ink); font-size:16px; font-weight:700; box-shadow:0 3px 0 var(--ink); transition:transform .1s, box-shadow .1s}
+.skip.more:active{transform:translateY(3px); box-shadow:0 0 0 var(--ink)}
+.skip.more b{font-size:20px; line-height:1}
 </style>
 </head>
 <body>
@@ -744,7 +760,7 @@ const dfmt=(d,o)=>new Date(d+"T12:00").toLocaleDateString("fr-FR",o||{day:"numer
 /* ---------- BIENVENUE */
 function startIntro(){onb=null;setView("intro")}
 function introDone(){S.intro=true;save();if(S.onboarded)setView("home");else startOnb()}
-const INTRO=[{v:`<div class="ibrand">Keep <em>or</em> Next</div><div class="irow"><span class="vp k">💚 Je garde</span><span class="vp m">🤔 Réflexion</span><span class="vp n">👋 Next</span></div>`,h:`Bienvenue dans Keep or Next`,p:`Le carnet de bord de tes dates. Après chaque rencard, l'app t'aide à trancher : tu gardes, ou tu passes au suivant ?`},{v:`<div class="iq">Tu as passé un bon moment ?</div><div class="irow"><span class="vp k">👍 Oui</span><span class="vp n">👎 Non</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">Question 8 sur 13</small>`,h:`Note ton date en 2 minutes`,p:`Réponds à des questions simples : respect, écoute, humour, feeling… L'app calcule une note sur 10 selon <b>tes</b> critères.`},{v:`<div class="iscore">8,4<small>/10</small></div><div class="irow"><span class="vp k">💚 Je garde</span></div><div class="irow"><span class="vp n">🚩 1 red flag repéré</span></div>`,h:`Le verdict, sans te mentir`,p:`Je garde (Keep), Réflexion ou je Next. Les red flags et tes dealbreakers sont signalés tout de suite, pour ne pas fermer les yeux.`},{v:`<div class="tutoic" style="font-size:15px;padding:10px 16px;pointer-events:none">📖 Tutoriel d'utilisation<i class="tdot"></i></div><div class="icard">📅 Ajouter un date à venir <span style="color:var(--accent);float:right">›</span></div><div class="icard">🛡️ Date en sécurité <span class="tick" style="float:right;width:24px;height:24px;font-size:14px">✓</span></div>`,h:`Un tutoriel t'attend`,p:`Sur l'écran d'accueil, touche « Tutoriel d'utilisation » pour voir comment marche chaque fonction. Une coche verte s'affiche quand tu as tout vu.`},{v:`<div class="ilock">🔒</div><div class="irow"><span class="vp m">Pas de compte</span><span class="vp m">Rien ne quitte ton téléphone</span></div>`,h:`100 % privé`,p:`Tes dates, tes notes et tes photos restent sur ton téléphone. Deux fonctions facultatives font exception : tu les choisis à l'étape suivante. Thomas et Karim sont des exemples, supprime-les quand tu veux.`},{v:()=>`<div style="display:grid;gap:9px;width:100%;text-align:left;font-size:14px"><button class="switch" data-isw="sug" aria-pressed="${(S.net||{}).sug===true}"><span>📍 Suggestions d'adresses<span class="mt" style="font-weight:500">Propose des adresses quand tu tapes un lieu. Le texte tapé est envoyé à un service de cartes.</span></span><span class="k"></span></button><button class="switch" data-isw="loc" aria-pressed="${(S.net||{}).loc===true}"><span>🧭 Partage de ma position<span class="mt" style="font-weight:500">Pour Date en sécurité : envoyée une seule fois, quand tu le demandes.</span></span><span class="k"></span></button><button class="switch" data-isw="cb" aria-pressed="${!!S.cb}"><span>👁️ Mode daltonien<span class="mt" style="font-weight:500">Adapte les couleurs vert et rouge pour mieux les distinguer.</span></span><span class="k"></span></button><button class="switch" data-isw="pin" aria-pressed="${!!S.pin}"><span>🔒 Code de verrouillage<span class="mt" style="font-weight:500">Un code est demandé à l'ouverture de l'appli.</span></span><span class="k"></span></button><button class="switch" data-isw="dis" aria-pressed="${!!S.discreet}"><span>🫥 Mode discret<span class="mt" style="font-weight:500">Floute les photos.</span></span><span class="k"></span></button></div>`,h:`Ton appli, à ta façon`,p:`Facultatif : tout est désactivé, et tu peux changer d'avis à tout moment dans Réglages.`}];
+const INTRO=[{v:`<div class="ibrand">Keep <em>or</em> Next</div><div class="irow"><span class="vp k">💚 Je garde</span><span class="vp m">🤔 Réflexion</span><span class="vp n">👋 Next</span></div>`,h:`Bienvenue dans Keep or Next`,p:`Le carnet de bord de tes dates. Après chaque rencard, l'app t'aide à trancher : tu gardes, ou tu passes au suivant ?`},{v:`<div class="iq">Tu as passé un bon moment ?</div><div class="irow"><span class="vp k">👍 Oui</span><span class="vp n">👎 Non</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">Question 8 sur 13</small>`,h:`Note ton date en 2 minutes`,p:`Réponds à des questions simples : respect, écoute, humour, feeling… L'app calcule une note sur 10 selon <b>tes</b> critères.`},{v:`<div class="iscore">8,4<small>/10</small></div><div class="irow"><span class="vp k">💚 Je garde</span></div><div class="irow"><span class="vp n">🚩 1 red flag repéré</span></div>`,h:`Le verdict, sans te mentir`,p:`Je garde (Keep), Réflexion ou je Next. Les red flags et tes dealbreakers sont signalés tout de suite, pour ne pas fermer les yeux.`},{v:`<div class="tutoic" style="font-size:15px;padding:10px 16px;pointer-events:none">📖 Tutoriel d'utilisation<i class="tdot"></i></div><div class="icard">📅 Ajouter un date à venir <span style="color:var(--accent);float:right">›</span></div><div class="icard">🛡️ Date en sécurité <span class="tick" style="float:right;width:24px;height:24px;font-size:15.5px">✓</span></div>`,h:`Un tutoriel t'attend`,p:`Sur l'écran d'accueil, touche « Tutoriel d'utilisation » pour voir comment marche chaque fonction. Une coche verte s'affiche quand tu as tout vu.`},{v:`<div class="ilock">🔒</div><div class="irow"><span class="vp m">Pas de compte</span><span class="vp m">Rien ne quitte ton téléphone</span></div>`,h:`100 % privé`,p:`Tes dates, tes notes et tes photos restent sur ton téléphone. Deux fonctions facultatives font exception : tu les choisis à l'étape suivante. Thomas et Karim sont des exemples, supprime-les quand tu veux.`},{v:()=>`<div style="display:grid;gap:9px;width:100%;text-align:left;font-size:15.5px"><button class="switch" data-isw="sug" aria-pressed="${(S.net||{}).sug===true}"><span>📍 Suggestions d'adresses<span class="mt" style="font-weight:500">Propose des adresses quand tu tapes un lieu. Le texte tapé est envoyé à un service de cartes.</span></span><span class="k"></span></button><button class="switch" data-isw="loc" aria-pressed="${(S.net||{}).loc===true}"><span>🧭 Partage de ma position<span class="mt" style="font-weight:500">Pour Date en sécurité : envoyée une seule fois, quand tu le demandes.</span></span><span class="k"></span></button><button class="switch" data-isw="cb" aria-pressed="${!!S.cb}"><span>👁️ Mode daltonien<span class="mt" style="font-weight:500">Adapte les couleurs vert et rouge pour mieux les distinguer.</span></span><span class="k"></span></button><button class="switch" data-isw="pin" aria-pressed="${!!S.pin}"><span>🔒 Code de verrouillage<span class="mt" style="font-weight:500">Un code est demandé à l'ouverture de l'appli.</span></span><span class="k"></span></button><button class="switch" data-isw="dis" aria-pressed="${!!S.discreet}"><span>🫥 Mode discret<span class="mt" style="font-weight:500">Floute les photos.</span></span><span class="k"></span></button></div>`,h:`Ton appli, à ta façon`,p:`Facultatif : tout est désactivé, et tu peux changer d'avis à tout moment dans Réglages.`}];
 function introView(){return `<section class="intro"><button class="link iskip" data-intro="skip">Passer</button><div class="itrack" id="itrack">${INTRO.map(s=>`<div class="islide"><div class="ivis glass">${typeof s.v==="function"?s.v():s.v}</div><h2>${s.h}</h2><p>${s.p}</p></div>`).join("")}</div><div class="dots" id="idots">${INTRO.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")}</div><button class="btn primary" id="inext" data-intro="next">Suivant</button></section>`}
 function startOnb(){onb={i:0,me:S.me,love:[...S.prefs.love],hate:[...S.prefs.hate],bill:S.prefs.bill,ideal:S.prefs.ideal,gme:S.prefs.me,gdates:S.prefs.dates||"m",type:JSON.parse(JSON.stringify(S.prefs.type||{})),likes:[...(S.prefs.likes||[])]};setView("onb")}
 function onbView(){const N=9,i=onb.i;const of=onb.gdates==="f"?"f":onb.gdates==="both"?"x":"m";const dots=`<div class="dots">${Array.from({length:N},(_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>`;
@@ -758,8 +774,8 @@ function onbView(){const N=9,i=onb.i;const of=onb.gdates==="f"?"f":onb.gdates===
  else if(i===5)c=`<span class="eyebrow">5 sur 7</span><h2>Deux petites dernières</h2><p><b>L'addition, pour toi ?</b></p>${pick(BILL,"bill",0,"")}<p style="margin-top:6px"><b>Ton premier date idéal ?</b></p>${pick(IDEAL,"ideal",0,"")}<button class="btn primary" data-onb="next">Suivant</button>`;
  else if(i===6)c=`<span class="eyebrow">6 sur 7 · facultatif</span><h2>Tes centres d'intérêt</h2><p>Choisis ce que tu aimes. Si ton date en partage, sa fiche affichera « Ça match » 🤝</p><div class="chips" id="o-lkbox">${allLikes().map(o=>`<button class="chip" data-ol="${esc(o)}" aria-pressed="${onb.likes.includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="o-lkadd" maxlength="24" placeholder="Ajouter un autre…" autocomplete="off"><button class="btn ghost" id="o-lkbtn" type="button" aria-label="+">＋</button></div><button class="btn primary" data-onb="next">Suivant</button><button class="link" data-onb="next">Passer</button>`;
  else if(i===7){const T=onb.type;c=`<span class="eyebrow">7 sur 7 · facultatif</span><h2>Et physiquement, ton type ?</h2><p>Coche ce qui te plaît, plusieurs choix possibles. Ça donne un petit bonus au score, jamais plus d'un demi-point : le comportement reste le plus important.</p>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Âge</span><div class="gtog"><input class="input" id="o-amin" type="number" inputmode="numeric" placeholder="De… (ex. 25)" value="${esc(T.amin||"")}"><input class="input" id="o-amax" type="number" inputmode="numeric" placeholder="À… (ex. 35)" value="${esc(T.amax||"")}"></div></div>
-  ${Object.keys(PH).filter(k=>k!=="beard"||onb.gdates!=="f").map(k=>`<div class="field"><span class="t" style="font-weight:700;font-size:14px">${PHL[k]}</span><div class="chips">${PH[k].map(o=>`<button class="chip" data-tp="${k}" data-pv="${o}" aria-pressed="${(T[k]||[]).includes(o)}">${o}</button>`).join("")}</div></div>`).join("")}
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Âge</span><div class="gtog"><input class="input" id="o-amin" type="number" inputmode="numeric" placeholder="De… (ex. 25)" value="${esc(T.amin||"")}"><input class="input" id="o-amax" type="number" inputmode="numeric" placeholder="À… (ex. 35)" value="${esc(T.amax||"")}"></div></div>
+  ${Object.keys(PH).filter(k=>k!=="beard"||onb.gdates!=="f").map(k=>`<div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${PHL[k]}</span><div class="chips">${PH[k].map(o=>`<button class="chip" data-tp="${k}" data-pv="${o}" aria-pressed="${(T[k]||[]).includes(o)}">${o}</button>`).join("")}</div></div>`).join("")}
   <button class="btn primary" data-onb="next">Terminer</button><button class="link" data-onb="next">Passer, peu importe</button>`}
  else{const L=onb.love.map(id=>LOVE.find(x=>x[0]===id)),H=onb.hate.map(id=>HATE.find(x=>x[0]===id));
   c=`<span class="eyebrow">C'est noté</span><h2>Parfait${onb.me?" "+esc(onb.me):""} 💘</h2><p>Voilà ton profil. Tu pourras le modifier quand tu veux dans Réglages.</p>
@@ -804,7 +820,7 @@ function home(){const h=new Date().getHours();const hi=h<6?"Encore debout":h<18?
   <div class="box glass tipcard" id="tipcard" role="button" aria-label="Conseil suivant">${tipHTML()}</div>
   <div class="sect"><h3>À lire</h3><span class="mini">Conseils dating & confiance</span></div>
   <div class="arts"><button class="art wide" data-act="guide"><span class="cov" style="background:linear-gradient(135deg,#FF1F1F 0%,#FF3D8B 50%,#00C853 100%)"><span class="ae">🚩💚</span><span class="atag">Gratuit</span></span><span class="at">Le petit guide des flags</span><span class="am">Green flags, red flags, lexique, sécurité</span></button>${ARTS.map((a,k)=>`<button class="art${k===0?" wide":""}" data-art="${a.id}"><span class="cov" style="background:${a.c}"><span class="ae">${a.e}</span><span class="atag">${a.free?"Gratuit":"💎 Guide"}</span></span><span class="at">${esc(a.t)}</span><span class="am">${a.free?`Lecture ${a.min} min`:"Guide PDF · bientôt"}</span></button>`).join("")}</div>
-  ${S.onboarded?"":`<div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Ton profil n'est pas rempli</b><p style="margin:6px 0 10px;font-size:14px">Dis au carnet ce qui te fait craquer, il notera tes dates selon tes critères.</p><button class="btn primary" data-act="onb">Remplir mon profil</button></div>`}
+  ${S.onboarded?"":`<div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Ton profil n'est pas rempli</b><p style="margin:6px 0 10px;font-size:15.5px">Dis au carnet ce qui te fait craquer, il notera tes dates selon tes critères.</p><button class="btn primary" data-act="onb">Remplir mon profil</button></div>`}
  </section>`}
 function openArt(id){const a=ARTS.find(x=>x.id===id);if(!a)return;
  $("#layer").innerHTML=`<div class="scrim" data-x="1"></div><div class="sheet" role="dialog" aria-label="${esc(a.t)}"><div class="in"><div class="grab"></div>
@@ -812,7 +828,7 @@ function openArt(id){const a=ARTS.find(x=>x.id===id);if(!a)return;
   <h2 style="font-size:26px;line-height:1.1;margin-top:14px">${esc(a.t)}</h2>
   ${a.free?`<span class="mt">Lecture ${a.min} min</span><div class="read">${a.body.map(b=>`<h3>${esc(b[0])}</h3><p>${esc(b[1])}</p>`).join("")}</div>`
    :`<p class="sub">Un guide pratique d'une vingtaine de pages, avec des exercices à faire chez toi. Il arrive très bientôt dans la boutique.</p>
-     <div class="box glass" style="margin-top:14px"><b>Au programme</b><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Comprendre ce qui se passe, des exercices concrets, des phrases toutes prêtes et un plan sur plusieurs jours.</p></div>`}
+     <div class="box glass" style="margin-top:14px"><b>Au programme</b><p style="margin:6px 0 0;font-size:15.5px;color:var(--muted)">Comprendre ce qui se passe, des exercices concrets, des phrases toutes prêtes et un plan sur plusieurs jours.</p></div>`}
   <div class="row-btns"><button class="btn ghost" data-x="1">Fermer</button></div></div></div>`;
  $("#layer").querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>closeSheet())}
 function tipHTML(){const t=TIPS[tipI%TIPS.length];const k=tipI%5;
@@ -855,8 +871,8 @@ function moreHTML(P,Lk,dg,k,open){const pa=k==="e"?"data-ph":"data-xph",la=k==="
  return `<details class="det more" id="${k==="e"?"det":"xdet"}"${open||(k==="e"&&ev.detOpen)?" open":""}><summary>✨ ${moreQ(dg)}</summary>
   <div class="field"><label class="t" for="${ai}">Âge</label><input class="input" id="${ai}" type="number" inputmode="numeric" min="18" max="99" placeholder="28" value="${esc(P.age||"")}"></div>
   <div class="field"><label class="t" for="${k==='e'?'f-nat':'x-nat'}">Nationalité</label><select class="input" id="${k==='e'?'f-nat':'x-nat'}">${natOpts(P.nat||"")}</select></div>
-  ${Object.keys(PH).filter(q=>q!=="beard"||dg==="m").map(q=>`<div class="field"><span class="t" style="font-weight:700;font-size:14px">${PHL[q]}</span><div class="chips">${PH[q].map(o=>`<button class="chip" ${pa}="${q}" data-pv="${o}" aria-pressed="${P[q]===o}">${o}</button>`).join("")}</div></div>`).join("")}
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Centres d'intérêt</span><div class="chips" id="${k}-lkbox">${allLikes().map(o=>`<button class="chip" ${la}="${esc(o)}" aria-pressed="${Lk.includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="${k}-lkadd" maxlength="24" placeholder="Ajouter un autre…" autocomplete="off"><button class="btn ghost" id="${k}-lkbtn" type="button" aria-label="+">＋</button></div></div></details>`}
+  ${Object.keys(PH).filter(q=>q!=="beard"||dg==="m").map(q=>`<div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${PHL[q]}</span><div class="chips">${PH[q].map(o=>`<button class="chip" ${pa}="${q}" data-pv="${o}" aria-pressed="${P[q]===o}">${o}</button>`).join("")}</div></div>`).join("")}
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Centres d'intérêt</span><div class="chips" id="${k}-lkbox">${allLikes().map(o=>`<button class="chip" ${la}="${esc(o)}" aria-pressed="${Lk.includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="${k}-lkadd" maxlength="24" placeholder="Ajouter un autre…" autocomplete="off"><button class="btn ghost" id="${k}-lkbtn" type="button" aria-label="+">＋</button></div></div></details>`}
 function bindMore(R,P,Lk){const nn=R.querySelector("#x-nat");if(nn)nn.onchange=()=>{P.nat=nn.value};const ag=R.querySelector("#x-age");if(ag)ag.oninput=()=>{P.age=ag.value.replace(/\D/g,"").slice(0,2)};
  R.querySelectorAll("[data-xph]").forEach(b=>b.onclick=()=>{const q=b.dataset.xph;P[q]=P[q]===b.dataset.pv?"":b.dataset.pv;R.querySelectorAll(`[data-xph="${q}"]`).forEach(x=>x.setAttribute("aria-pressed",x.dataset.pv===P[q]))});
  R.querySelectorAll("[data-xlk]").forEach(b=>b.onclick=()=>{const v=b.dataset.xlk,i=Lk.indexOf(v);if(i>-1)Lk.splice(i,1);else Lk.push(v);b.setAttribute("aria-pressed",i<0)});bindAddLike(R,"#x-lkadd","#x-lkbtn",R.querySelector("#x-lkbox"),Lk,"data-xlk")}
@@ -867,28 +883,28 @@ function evalView(){
   <div class="intro glass"><span class="eyebrow">Nouveau date</span><h2 class="h-big" style="font-size:29px">${ev.re?`${(S.guys.find(x=>x.id===ev.re).history||[]).length+2}<sup>e</sup> date avec ${esc(ev.name)}`:G("Qui est l'heureux élu ?",S.prefs.dates==="both"?"x":ev.dg)}</h2>${S.prefs.dates==="both"?`<div class="gtog" style="margin-top:12px">${[["m","👨 Un homme"],["f","👩 Une femme"]].map(o=>`<button class="chip" data-dg="${o[0]}" aria-pressed="${ev.dg===o[0]}">${o[1]}</button>`).join("")}</div>`:""}
    <div class="field"><label class="photo" for="f-photo">${avatar({name:ev.name||"?",photo:ev.photo,ill:ev.photo?undefined:ev.ill},104)}<span class="l">${ev.photo?"Changer la photo":"＋ Ajouter sa photo"}</span><input type="file" id="f-photo" accept="image/*"></label></div>
    <div class="field"><label class="t" for="f-name">Son prénom</label><input class="input" id="f-name" maxlength="30" value="${esc(ev.name)}" autocomplete="off" autocapitalize="words"></div>
-   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
+   <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
    <div class="gtog"><div class="field"><label class="t" for="f-date">Date du rendez-vous</label><input class="input" type="date" id="f-date" max="${today()}" value="${ev.date}"></div><div class="field"><label class="t" for="f-time">Heure</label><input class="input" type="time" id="f-time" value="${ev.time||""}"></div></div>
    <div class="field"><label class="t" for="f-place">Où ? (facultatif)</label><input class="input" id="f-place" maxlength="120" placeholder="Bar Le Comptoir, place du marché" value="${esc(ev.place||"")}"></div>
-   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(en un mot, facultatif)</span></span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(ev.prev)} »</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div></div>
+   <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(en un mot, facultatif)</span></span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(ev.prev)} »</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div></div>
    <div class="field" id="nightbox"></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
    <div class="field"><button class="btn primary" data-act="start">C'est parti</button></div></div></section>`;
- if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
+ if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1],nx2=ev.list[ev.i+2];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
   const pb=S.prefs.love.includes(q.id)?`<span class="prefbadge love">💘 Ce que tu aimes</span>`:S.prefs.hate.includes(q.id)?`<span class="prefbadge hate">🚫 Ton dealbreaker</span>`:"";
   return `<section class="view qwrap">
   <div class="ev-head"><button class="back glass" data-act="prev" aria-label="Question précédente">←</button><div class="prog"><i style="width:${ev.i/ev.list.length*100+4}%"></i></div><span class="count">${ev.i+1}/${ev.list.length}</span></div>
   ${liveBar()}
-  <div class="stage">${nx?`<div class="qcard glass under"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg).replace("sentie","senti"+ue()))}</div><div></div></div>`:""}
+  <div class="stage">${ev.nuance?"":`<span class="swarr l" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M13 4 3 22 13 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swarr r" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M3 4 13 22 3 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}${nx2?`<div class="qcard under u2"></div>`:""}${nx?`<div class="qcard glass under"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg).replace("sentie","senti"+ue()))}</div><div></div></div>`:""}
    <div class="qcard glass in" id="qcard"><span class="stamp yes">OUI 💚</span><span class="stamp no">NON 🚩</span>
     <div class="qhead">${avatar(me,40)}<span class="eyebrow">${esc(q.cat)}${q.w>1?" · compte double":""}</span></div>
     ${q.prev?`<span class="rebound">🔁 La dernière fois : « ${esc(G(q.prev,ev.dg))} »</span>`:""}<div class="qt">${esc(G(q.q,ev.dg).replace("sentie","senti"+ue()))}</div>
-    <div class="qfoot">${pb||'<span></span>'}<span class="hint" style="display:block;text-align:right">← non · oui →</span></div></div></div>
+    <div class="qfoot">${pb||'<span></span>'}</div></div></div>
   ${ev.nuance?`<div class="nuance"><div class="grp">${q.more.slice(2).reverse().map(m=>`<button class="nu r" data-val="${m[1]}">🚩 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
    <div class="grp">${q.more.slice(0,2).reverse().map(m=>`<button class="nu g" data-val="${m[1]}">💚 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
    <button class="skip" data-act="skip" style="margin-top:2px">Vraiment aucune idée, question suivante</button></div>`
   :`<div class="answers"><button class="ans no" data-a="0"><span>🚩</span>${esc(G(q.no,ev.dg))}</button><button class="ans yes" data-a="1"><span>💚</span>${esc(G(q.yes,ev.dg))}</button></div>
-   <button class="skip" data-act="nuance">C'est plus nuancé que ça…</button>`}
+   <button class="skip more" data-act="nuance">⚖️ C'est plus nuancé que ça <b>›</b></button>`}
  </section>`}
  const s=score(ev.answers,ev.phys),v=verdict(s,ev.answers,ev.dg);const gs=greens(ev.answers,ev.dg),rs=reds(ev.answers,ev.dg);const C=2*Math.PI*80;
  const adv=G({keep:"Le carnet te conseille de le garder",next:"Le carnet te conseille de le next",maybe:"Le carnet hésite. À toi de voir"}[v.rec],ev.dg);
@@ -905,7 +921,7 @@ function evalView(){
   ${s>=7.5&&!ev.deep?`<div class="box glass deep"><b>Ça s'annonce très bien ✨</b><p>${esc(G("Tu veux approfondir ? 6 questions de plus pour mieux voir qui il est.",ev.dg))}</p><button class="btn ghost" data-act="deepen">Approfondir (6 questions)</button></div>`:""}
   <div class="field" style="text-align:left"><label class="t" for="f-note">Un mot pour plus tard (facultatif)</label><textarea class="input" id="f-note" maxlength="400" placeholder="${G("Il cuisine, il a un chien, il chante faux…",ev.dg)}">${esc(ev.note)}</textarea></div>
   ${radar(ev.answers)}<button class="btn ghost" data-act="sharecur" style="margin-top:12px">📸 Partager mon verdict en story</button>
-  <div class="field" style="text-align:left;position:relative"><span class="t" style="font-weight:700;font-size:14px">${postQ(ev.dg)} (en un mot, facultatif)</span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(ev.prev)} »</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-vb="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div><div id="vibecmp" class="vibecmp${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?(vrank(ev.vibe)>vrank(vbase(ev))?" up":vrank(ev.vibe)<vrank(vbase(ev))?" down":" same"):""}" aria-live="polite">${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?esc(vmsg(vrank(ev.vibe)-vrank(vbase(ev)),ev.dg,vre(ev))):""}</div></div>
+  <div class="field" style="text-align:left;position:relative"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(ev.dg)} (en un mot, facultatif)</span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Au dernier date : « ${esc(ev.prev)} »</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-vb="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div><div id="vibecmp" class="vibecmp${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?(vrank(ev.vibe)>vrank(vbase(ev))?" up":vrank(ev.vibe)<vrank(vbase(ev))?" down":" same"):""}" aria-live="polite">${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?esc(vmsg(vrank(ev.vibe)-vrank(vbase(ev)),ev.dg,vre(ev))):""}</div></div>
   <div class="choice"><button class="btn next${v.rec==="next"?" rec":""}" data-decide="next">🤮 Je next</button><button class="btn keep${v.rec==="keep"?" rec":""}" data-decide="keep">💚 Je garde</button></div>
   <button class="link" data-decide="maybe">Je réfléchis encore</button></section>`}
 
@@ -935,13 +951,13 @@ function stats(){const GG=S.guys,n=GG.length;
  </section>`}
 
 function typeBadge(ph){const m=typeMatch(ph);if(!m.tot)return "";const p=Math.round(m.ok/m.tot*100);
- return `<p style="margin:10px 0 0"><span class="prefbadge love" style="font-size:13px">😍 Ton type à ${p} %</span></p>`}
+ return `<p style="margin:10px 0 0"><span class="prefbadge love" style="font-size:14.5px">😍 Ton type à ${p} %</span></p>`}
 function typeCard(){const pool=S.guys.filter(g=>g.status==="keep"&&g.phys);const base=pool.length?pool:S.guys.filter(g=>g.phys);
  const ages=base.map(g=>+g.phys.age).filter(Boolean);const mode=k=>{const c={};base.forEach(g=>{const v=g.phys[k];if(v)c[v]=(c[v]||0)+1});const e=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return e?e[0]:""};
  const rows=[["Âge moyen",ages.length?Math.round(ages.reduce((a,b)=>a+b,0)/ages.length)+" ans":""],["Cheveux",mode("hair")],["Yeux",mode("eyes")],["Taille",mode("height")],["Style",mode("style")]].filter(r=>r[1]);
  const T=S.prefs.type||{};const decl=[["Âge",T.amin||T.amax?`${T.amin||"?"} – ${T.amax||"?"} ans`:""],["Cheveux",(T.hair||[]).join(", ")],["Yeux",(T.eyes||[]).join(", ")],["Taille",(T.height||[]).join(", ")],["Style",(T.style||[]).join(", ")]];
  const real=Object.fromEntries(rows);
- if(decl.some(d=>d[1]))return `<div class="box glass typecard"><h3>😍 Ton type : rêve ou réalité ?</h3><div class="row" style="color:var(--muted);font-size:12px;font-weight:700"><span>CRITÈRE</span><span>TU DIS · TU GARDES</span></div>${decl.map(d=>`<div class="row"><span>${d[0]}</span><b style="text-align:right">${esc(d[1]||"—")} · <span style="color:var(--accent)">${esc(real[d[0]==="Âge"?"Âge moyen":d[0]]||"—")}</span></b></div>`).join("")}</div>`;
+ if(decl.some(d=>d[1]))return `<div class="box glass typecard"><h3>😍 Ton type : rêve ou réalité ?</h3><div class="row" style="color:var(--muted);font-size:13.5px;font-weight:700"><span>CRITÈRE</span><span>TU DIS · TU GARDES</span></div>${decl.map(d=>`<div class="row"><span>${d[0]}</span><b style="text-align:right">${esc(d[1]||"—")} · <span style="color:var(--accent)">${esc(real[d[0]==="Âge"?"Âge moyen":d[0]]||"—")}</span></b></div>`).join("")}</div>`;
  return `<div class="box glass typecard"><h3>😍 Ton type${pool.length?", d'après ceux que tu gardes":""}</h3>${rows.length?rows.map(r=>`<div class="row"><span>${r[0]}</span><b>${esc(r[1])}</b></div>`).join(""):'<span class="none">Ajoute des descriptions physiques à tes dates pour découvrir ton type.</span>'}</div>`}
 /* ---------- GUIDE */
 function tips(){const sec=(e,t,body,open)=>`<details class="g glass"${open?" open":""}><summary><span class="e">${e}</span>${t}</summary><div class="body">${body}</div></details>`;
@@ -952,7 +968,7 @@ function tips(){const sec=(e,t,body,open)=>`<details class="g glass"${open?" ope
  ${sec("📖","Le lexique du dating",[li("👻",`<b>Ghosting</b> : il disparaît sans un mot.`),li("🍞",`<b>Breadcrumbing</b> : des petits messages pour te garder sous le coude, sans jamais avancer.`),li("💣",`<b>Love bombing</b> : déclarations et cadeaux trop vite, trop fort. Souvent pour mieux contrôler ensuite.`),li("🪑",`<b>Benching</b> : tu es sur le banc de touche, en option.`),li("🧟",`<b>Zombieing</b> : le fantôme revient d'entre les morts.`),li("🛰️",`<b>Orbiting</b> : il ne t'écrit plus mais regarde toutes tes stories.`),li("🌀",`<b>Situationship</b> : plus que des amis, moins qu'un couple, et personne ne sait trop quoi.`)].join(""))}
  ${sec("🛡️","Ta sécurité au premier date",[li("1","Rendez-vous dans un lieu public, que tu connais si possible."),li("2","Un proche sait où tu es, avec qui, et à quelle heure tu rentres."),li("3","Tu gères ton trajet aller et retour toi-même."),li("4","Tu gardes un œil sur ton verre, et tu ne le laisses jamais seul."),li("5","Tu peux partir à tout moment, sans te justifier.")].join(""))}
  ${sec("🧠","Comment marche le score",`<p style="margin:0">Chaque réponse rapporte des points selon qu'elle est verte ou rouge, avec des réponses nuancées entre les deux. Le respect, ton aisance et ton feeling comptent double. Les qualités que tu as choisies dans ton profil comptent encore plus, un dealbreaker plafonne le score à 5 sur 10, et un manque d'aisance le plafonne à 6,5 (4,5 si tu avais envie de partir). Si tu as décrit ton type physique, une correspondance ajoute au maximum un demi-point. Un manque de respect le bloque à 2,5, quoi qu'il arrive.</p>`)}
- <div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Besoin d'aide ?</b><p style="margin:6px 0 0;font-size:14px">Si un rendez-vous t'a mis${ue()} en danger ou mal à l'aise, parles-en à quelqu'un de confiance. En France, le 3919 écoute et oriente, gratuitement et anonymement. En cas d'urgence, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p></div>
+ <div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Besoin d'aide ?</b><p style="margin:6px 0 0;font-size:15.5px">Si un rendez-vous t'a mis${ue()} en danger ou mal à l'aise, parles-en à quelqu'un de confiance. En France, le 3919 écoute et oriente, gratuitement et anonymement. En cas d'urgence, appelle le 17, ou envoie un SMS au 114 si tu ne peux pas parler.</p></div>
  </section>`}
 
 /* ---------- RÉGLAGES */
@@ -985,11 +1001,11 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
   <button class="switch" data-act="netloc" aria-pressed="${(S.net||{}).loc===true}"><span>Partage de ma position<span class="mt" style="font-weight:500">Une seule fois, quand tu le demandes</span></span><span class="k"></span></button></div>
  <div class="box glass"><h3>Données</h3><div class="row-btns">${ex?`<button class="btn ghost" data-act="clearex">Effacer les exemples</button>`:`<button class="btn ghost" data-act="addex">Remettre les exemples</button>`}<button class="btn ghost danger" data-act="wipe">Tout effacer</button><button class="btn ghost" data-act="reset">Recommencer comme au premier jour</button></div></div>
  <div class="box glass"><h3>Sur ton écran d'accueil</h3><p>${A2HS} Keep or Next s'ouvre alors comme une vraie appli.</p></div>
- <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · version ${VERSION}</p></section>`}
+ <p style="text-align:center;margin-top:18px;font-size:13.5px;color:var(--muted)">Keep or Next · version ${VERSION}</p></section>`}
 
 /* ---------- FICHE */
 function openSheet(id,hi){const g=S.guys.find(x=>x.id===id);if(!g)return;const HH=hist(g);const past=hi!==undefined&&hi<HH.length-1;const E=past?HH[hi]:HH[HH.length-1];const A=E.answers;const PV=(past?hi:HH.length-1)>0?(HH[(past?hi:HH.length-1)-1].vibe||""):"";const s=score(A,g.phys),v=verdict(s,A,g.dg);const gs=greens(A,g.dg),rs=reds(A,g.dg);
- $("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(g.name)}"><div class="in"><div class="grab"></div>${past?`<div class="box" style="background:var(--accent-soft);margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:14px"><b>📅 ${(HH.length>1?(hi+1)+(hi===0?"er":"e")+" date · ":"")}${new Date(E.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</b></span><button class="pillbtn" data-histcur="${g.id}">Fiche actuelle</button></div>`:""}
+ $("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(g.name)}"><div class="in"><div class="grab"></div>${past?`<div class="box" style="background:var(--accent-soft);margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:15.5px"><b>📅 ${(HH.length>1?(hi+1)+(hi===0?"er":"e")+" date · ":"")}${new Date(E.date+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</b></span><button class="pillbtn" data-histcur="${g.id}">Fiche actuelle</button></div>`:""}
   <div class="sh-top"><label class="photo" for="s-photo" style="margin:0" title="Changer la photo">${avatar(g,86,true)}<input type="file" id="s-photo" accept="image/*"></label>
   <div style="min-width:0"><h2>${esc(g.name)}</h2><span class="mt">${esc(g.source)} · ${dfmt(E.date,{day:"numeric",month:"long",year:"numeric"})}${E.time?" · "+E.time.replace(":","h"):""}</span>${E.place?`<span class="mt">📍 ${esc(E.place)}</span>`:""}${nightText(E.night,g.dg||dflt())?`<span class="mt">${esc(nightText(E.night,g.dg||dflt()))}</span>`:""}${physLine(g.phys)?`<span class="mt" style="color:var(--ink);opacity:.8">${esc(physLine(g.phys))}</span>`:""}${E.vibe?`<span class="vibe">${esc(E.vibe)}</span>`:""}${E.pre&&E.vibe&&vrank(E.pre)&&vrank(E.vibe)?`<span class="mt" style="margin-top:4px">🔮 ${esc(preText(E.pre,g.dg||dflt()))} → ${esc(E.vibe)}</span><span class="mt">${esc(vmsg(vrank(E.vibe)-vrank(E.pre),g.dg||dflt()))}</span>`:(!E.pre&&PV&&E.vibe&&vrank(PV)&&vrank(E.vibe)?`<span class="mt" style="margin-top:4px">🔁 ${esc(PV)} → ${esc(E.vibe)}</span><span class="mt">${esc(vmsg(vrank(E.vibe)-vrank(PV),g.dg||dflt(),true))}</span>`:"")}
   <div style="font-weight:800;margin-top:6px;color:${col(s)};font-family:var(--display);font-size:18px">${fmt(s)}/10 · ${v.ic} ${esc(v.t)}</div>${capOf(s,A,g.phys)?`<p class="mt" style="margin:4px 0 0">⚠️ Note limitée à ${fmt(capOf(s,A,g.phys))} : pas à l'aise.</p>`:""}</div></div>
@@ -1182,7 +1198,7 @@ const planGuy=p=>p.gid&&S.guys.find(g=>g.id===p.gid);
 const planName=p=>{const g=planGuy(p);return g?g.name:p.name||"?"};
 const planAv=(p,s)=>{const g=planGuy(p);return g?avatar(g,s,true):avatar({name:p.name},s)};const pdg=p=>{const g=planGuy(p);return g?(g.dg||dflt()):(p.dg||dflt())};
 function nightHTML(N,dg){const f=t=>G(t,dg),chip=(k,v,l)=>`<button class="chip" data-nt="${k}:${v}" aria-pressed="${N[k]===v}">${l}</button>`;
- let h=`<span class="t" style="font-weight:700;font-size:14px">Et après le date ? <span style="font-weight:400;color:var(--muted)">(facultatif)</span></span><div class="chips">${chip("home","in","Je suis rentré"+ue())}${chip("home","out","Je ne suis pas rentré"+ue())}</div>`;
+ let h=`<span class="t" style="font-weight:700;font-size:15.5px">Et après le date ? <span style="font-weight:400;color:var(--muted)">(facultatif)</span></span><div class="chips">${chip("home","in","Je suis rentré"+ue())}${chip("home","out","Je ne suis pas rentré"+ue())}</div>`;
  if(N.home==="in"){h+=`<div class="field" style="margin:10px 0 0"><label class="t" for="nt-ret">Rentré${ue()} à quelle heure ?</label><input class="input" type="time" id="nt-ret" value="${N.ret||""}"></div><div class="chips" style="margin-top:10px">${chip("how","alone","Seul"+ue())}${chip("how","drop",f("Il m'a raccompagné")+ue())}${chip("how","gave","Je l'ai raccompagné"+(dg==="f"?"e":""))}</div>`;
   if(N.how==="drop")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Juste raccompagné"+ue())}${chip("drop","stay",f("Il a dormi chez moi"))}</div>`;
   if(N.how==="gave")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Juste raccompagné"+(dg==="f"?"e":""))}${chip("drop","stay",f("Il a dormi chez moi"))}</div>`}
@@ -1198,7 +1214,7 @@ function mountNight(box,N,dg){box.innerHTML=nightHTML(N,dg);box.querySelectorAll
  const r=box.querySelector("#nt-ret");if(r)r.oninput=r.onchange=()=>{N.ret=r.value}}
 function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true,place:g.place||"",pre:g.pre||"",vibe:g.vibe||"",night:g.night||{}}]}
 function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h.length-1].answers,g.phys),c=score(g.answers,g.phys);
- return c>p?' <span style="color:var(--keep);font-size:14px">▲</span>':c<p?' <span style="color:var(--next);font-size:14px">▼</span>':""}
+ return c>p?' <span style="color:var(--keep);font-size:15.5px">▲</span>':c<p?' <span style="color:var(--next);font-size:15.5px">▼</span>':""}
 function bindLayer(){$("#layer").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b))}
 function sheetWrap(label,inner){$("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(label)}"><div class="in"><div class="grab"></div>${inner}</div></div>`;bindLayer()}
 
@@ -1221,7 +1237,7 @@ function histBox(g){const H=hist(g);const btn=`<button class="btn ghost" data-re
  return `<div class="fbox glass" style="margin-top:12px"><h3><span>📈 Son évolution</span><span style="color:var(--muted)">${H.length} dates</span></h3>
   <svg viewBox="0 0 ${W} ${Hh}" style="width:100%;display:block"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6" fill="${col(sc[i])}"/><text x="${p[0].toFixed(1)}" y="${(p[1]-11).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${fmt(sc[i])}</text>`).join("")}</svg>
-  <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-weight:600">${H.map(h=>`<span>${dfmt(h.date)}</span>`).join("")}</div>${btn}</div>`}
+  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:600">${H.map(h=>`<span>${dfmt(h.date)}</span>`).join("")}</div>${btn}</div>`}
 function sheetActions(g){return `<button class="btn ghost" data-edit="${g.id}" style="margin-top:10px">✏️ Modifier la fiche</button><div class="gtog" style="margin-top:10px"><button class="btn ghost" data-share="${g.id}">📸 Partager</button><button class="btn ghost" data-safe="${g.id}">🛡️ Date sûr</button></div>
  ${g.status==="keep"?(g.couple?`<div class="box" style="background:var(--accent-soft);margin-top:10px"><b style="font-family:var(--display);font-size:17px">💞 En couple depuis ${days(g.couple.since)} jour${days(g.couple.since)>1?"s":""}</b><button class="link" data-uncouple="${g.id}" style="margin:4px 0 0">Ce n'est plus d'actualité</button></div>`:`<button class="btn ghost" data-couple="${g.id}" style="margin-top:10px">💞 On est ensemble !</button>`):""}`}
 
@@ -1229,12 +1245,12 @@ function sheetActions(g){return `<button class="btn ghost" data-edit="${g.id}" s
 function homeCards(){let o="";const now=new Date();const P=(S.plans||[]).filter(p=>!p.done).sort((a,b)=>a.when.localeCompare(b.when));
  const due=P.filter(p=>new Date(p.when)<now),nx=P.find(p=>new Date(p.when)>=now),cp=S.guys.find(g=>g.couple);
  if(cp)o+=`<button class="box glass hl" data-open="${cp.id}" style="width:100%;text-align:left;margin-top:14px">${avatar(cp,52,true)}<span><span class="eyebrow">💞 En couple</span><b>${esc(cp.name)}</b><span>Depuis ${days(cp.couple.since)} jour${days(cp.couple.since)>1?"s":""}</span></span></button>`;
- if(due.length){const p=due[due.length-1];o+=`<div class="box" style="background:var(--accent-soft);margin-top:14px"><b style="font-family:var(--display);font-size:18px">Alors, ce date avec ${esc(planName(p))} ? 👀</b><p style="margin:4px 0 10px;font-size:14px">C'était ${rel(p.when)}. Raconte tout au carnet.</p><div class="gtog"><button class="btn primary" data-peval="${p.id}">Évaluer maintenant</button><button class="btn ghost" data-pcancel="${p.id}|rabbit">🐇 Lapin</button></div></div>`}
+ if(due.length){const p=due[due.length-1];o+=`<div class="box" style="background:var(--accent-soft);margin-top:14px"><b style="font-family:var(--display);font-size:18px">Alors, ce date avec ${esc(planName(p))} ? 👀</b><p style="margin:4px 0 10px;font-size:15.5px">C'était ${rel(p.when)}. Raconte tout au carnet.</p><div class="gtog"><button class="btn primary" data-peval="${p.id}">Évaluer maintenant</button><button class="btn ghost" data-pcancel="${p.id}|rabbit">🐇 Lapin</button></div></div>`}
  const wk=P.filter(p=>{const t=new Date(p.when);return t>=now&&t-now<7*864e5});
  if(wk.length)o+=`<div class="box glass" style="margin-top:14px"><div style="display:flex;justify-content:space-between;align-items:baseline"><span class="eyebrow">📅 Cette semaine</span><button class="mt" data-go2="agenda" style="margin:0;color:var(--accent);font-weight:700">Agenda ›</button></div>
   <div style="display:grid;gap:10px;margin-top:10px">${wk.slice(0,3).map(p=>{const d=new Date(p.when);return `<div class="plan" style="padding:0;grid-template-columns:auto minmax(0,1fr) auto"><button data-pview="${p.id}" style="display:contents;text-align:left"><span class="dblock t">${d.toLocaleDateString("fr-FR",{weekday:"short"}).replace(".","")}<b>${hm(p.when)}</b></span><span style="min-width:0;text-align:left"><span class="nm">${esc(planName(p))}</span><span class="mt">${rel(p.when)}${p.place?" · "+esc(p.place):""}</span></span></button><button class="iconbtn" data-psafe="${p.id}" aria-label="Prévenir un proche">🛡️</button></div>`}).join("")}</div></div>`;
  else if(nx)o+=`<div class="box glass" style="margin-top:14px"><span class="eyebrow">📅 Ton prochain date</span><div class="hl" style="margin-top:8px">${planAv(nx,52)}<span><b>${esc(planName(nx))}</b><span>${rel(nx.when)} à ${hm(nx.when)}${nx.place?" · "+esc(nx.place):""}</span></span></div><div class="gtog" style="margin-top:12px"><button class="btn ghost" data-psafe="${nx.id}">🛡️ Prévenir un proche</button><button class="btn ghost" data-go2="agenda">L'agenda</button></div></div>`;
- if(!standalone()&&!S.a2hs)o+=`<div class="box glass" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:10px"><b style="font-family:var(--display);font-size:17px">📲 Installe l'appli</b><button data-act="a2hsx" aria-label="Masquer" style="color:var(--muted);font-size:16px">✕</button></div><p style="margin:6px 0 0;font-size:14px">Ajoute Keep or Next à ton écran d'accueil : elle s'ouvre comme une vraie appli et tes dates sont mieux protégées. ${A2HS}</p></div>`;
+ if(!standalone()&&!S.a2hs)o+=`<div class="box glass" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:10px"><b style="font-family:var(--display);font-size:17px">📲 Installe l'appli</b><button data-act="a2hsx" aria-label="Masquer" style="color:var(--muted);font-size:16px">✕</button></div><p style="margin:6px 0 0;font-size:15.5px">Ajoute Keep or Next à ton écran d'accueil : elle s'ouvre comme une vraie appli et tes dates sont mieux protégées. ${A2HS}</p></div>`;
  return o}
 
 /* ---------- AGENDA */
@@ -1253,13 +1269,13 @@ function agenda(){const now=new Date();const P=(S.plans||[]).slice().sort((a,b)=
   ${due.length?`<div class="sect"><h3>À évaluer</h3></div><div class="list">${due.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}</span><span class="mt">${rel(p.when)}${p.place?" · "+esc(p.place):""}</span></span><span style="display:flex;gap:6px;align-items:center"><button class="iconbtn" data-preport="${p.id}" aria-label="Reporter ou annuler">🔁</button><button class="iconbtn" data-pcancel="${p.id}|rabbit" aria-label="🐇 Lapin">🐇</button><button class="pillbtn" data-peval="${p.id}">Évaluer</button></span></div>`).join("")}</div>`:""}
   <div class="sect"><h3>À venir</h3></div>
   <div class="list">${up.length?up.map(item).join(""):`<div class="empty glass"><span class="big">📅</span><strong>Aucun date prévu</strong>Planifie ton prochain rendez-vous pour le retrouver ici.</div>`}</div>
-  ${cx.length?`<div class="sect"><h3>Lapins & annulations</h3></div><div class="list">${cx.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}${p.example?'<span class="tag">exemple</span>':""}</span><span class="mt">${p.cancel==="rabbit"?"🐇 Lapin posé":"❌ Annulé"} · ${new Date(p.when).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"short"})}</span></span><button class="iconbtn" data-pdel="${p.id}" aria-label="Supprimer">✕</button></div>`).join("")}</div>${rb?`<p class="mt" style="margin:8px 0 0">🐇 ${rb} lapin${rb>1?"s":""} posé${rb>1?"s":""} jusqu'ici</p>`:""}`:""}<div class="box glass" style="margin-top:14px"><h3>🛡️ Date en sécurité</h3><p style="margin:0 0 10px;font-size:14px;color:var(--muted)">Prépare en 10 secondes un message pour prévenir un proche : avec qui, où, et à quelle heure tu rentres.</p><button class="btn primary" data-act="safe">Préparer mon message</button></div>
+  ${cx.length?`<div class="sect"><h3>Lapins & annulations</h3></div><div class="list">${cx.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}${p.example?'<span class="tag">exemple</span>':""}</span><span class="mt">${p.cancel==="rabbit"?"🐇 Lapin posé":"❌ Annulé"} · ${new Date(p.when).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"short"})}</span></span><button class="iconbtn" data-pdel="${p.id}" aria-label="Supprimer">✕</button></div>`).join("")}</div>${rb?`<p class="mt" style="margin:8px 0 0">🐇 ${rb} lapin${rb>1?"s":""} posé${rb>1?"s":""} jusqu'ici</p>`:""}`:""}<div class="box glass" style="margin-top:14px"><h3>🛡️ Date en sécurité</h3><p style="margin:0 0 10px;font-size:15.5px;color:var(--muted)">Prépare en 10 secondes un message pour prévenir un proche : avec qui, où, et à quelle heure tu rentres.</p><button class="btn primary" data-act="safe">Préparer mon message</button></div>
  </section>`}
 function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.likes||[]).slice();let sr=g.source,vb=g.vibe||"",NN=JSON.parse(JSON.stringify(g.night||{}));
  sheetWrap("Modifier la fiche",`<h2 style="font-size:26px">Modifier la fiche</h2>
   <div class="field"><label class="t" for="e-name">Prénom</label><input class="input" id="e-name" maxlength="30" value="${esc(g.name)}" autocapitalize="words"></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(g.dg||dflt())} (en un mot, facultatif)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(g.dg||dflt())} (en un mot, facultatif)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
   <div class="field"><label class="t" for="e-place">Où ? (facultatif)</label><input class="input" id="e-place" maxlength="120" value="${esc(g.place||"")}"></div>
   <div class="field" id="e-nightbox"></div>
   ${moreHTML(P,Lk,g.dg||dflt(),"x",true)}
@@ -1276,13 +1292,13 @@ function openNewChoice(){sheetWrap("Nouveau date",`<h2 style="font-size:26px">No
 function nowLocal(){const n=new Date(),p=x=>String(x).padStart(2,"0");return n.getFullYear()+"-"+p(n.getMonth()+1)+"-"+p(n.getDate())+"T"+p(n.getHours())+":"+p(n.getMinutes())}
 function defWhen(){const d=new Date();if(d.getHours()>=19)d.setDate(d.getDate()+1);const p=x=>String(x).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T20:00"}
 function openPlan(fresh){const pd={phys:{},likes:[]};const cands=S.guys.filter(g=>g.status!=="next");let sel=fresh?"":null,src="",pre="",pdgv=dflt();
- sheetWrap("Date à venir",`<h2 style="font-size:26px">Date à venir</h2><p style="margin:0 0 6px;color:var(--muted);font-size:14px">Pas de questionnaire maintenant : tu le noteras après le rendez-vous.</p>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Avec qui ?</span><div class="chips"><button class="chip" data-pg="" aria-pressed="${!!fresh}">＋ Quelqu'un de nouveau</button>${cands.map(g=>`<button class="chip" data-pg="${g.id}" aria-pressed="false">${esc(g.name)}</button>`).join("")}</div></div>
+ sheetWrap("Date à venir",`<h2 style="font-size:26px">Date à venir</h2><p style="margin:0 0 6px;color:var(--muted);font-size:15.5px">Pas de questionnaire maintenant : tu le noteras après le rendez-vous.</p>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Avec qui ?</span><div class="chips"><button class="chip" data-pg="" aria-pressed="${!!fresh}">＋ Quelqu'un de nouveau</button>${cands.map(g=>`<button class="chip" data-pg="${g.id}" aria-pressed="false">${esc(g.name)}</button>`).join("")}</div></div>
   <div id="p-newbox"${fresh?"":" hidden"}><div class="field"><label class="t" for="p-name">Son prénom</label><input class="input" id="p-name" maxlength="30" autocomplete="off" autocapitalize="words"></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-ps="${s}" aria-pressed="false">${s}</button>`).join("")}</div></div>${S.prefs.dates==="both"?`<div class="field"><span class="t" style="font-weight:700;font-size:14px">Il ou elle ?</span><div class="chips"><button class="chip" data-pdg="m" aria-pressed="true">👨 Un homme</button><button class="chip" data-pdg="f" aria-pressed="false">👩 Une femme</button></div></div>`:""}${moreHTML(pd.phys,pd.likes,dflt(),"x")}</div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Rencontré où ?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-ps="${s}" aria-pressed="false">${s}</button>`).join("")}</div></div>${S.prefs.dates==="both"?`<div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Il ou elle ?</span><div class="chips"><button class="chip" data-pdg="m" aria-pressed="true">👨 Un homme</button><button class="chip" data-pdg="f" aria-pressed="false">👩 Une femme</button></div></div>`:""}${moreHTML(pd.phys,pd.likes,dflt(),"x")}</div>
   <div class="field"><label class="t" for="p-when">Quand ?</label><input class="input" type="datetime-local" id="p-when" min="${nowLocal()}" value="${defWhen()}"></div>
   <div class="field"><label class="t" for="p-place">Où ?</label><input class="input" id="p-place" placeholder="Bar Le Comptoir, place du marché" maxlength="120"></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px" id="p-preq">${preQ(dflt())}</span><div class="chips">${PRE.map(o=>`<button class="chip" data-pre="${o}" aria-pressed="false">${o}</button>`).join("")}</div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px" id="p-preq">${preQ(dflt())}</span><div class="chips">${PRE.map(o=>`<button class="chip" data-pre="${o}" aria-pressed="false">${o}</button>`).join("")}</div></div>
   <div class="field"><label class="t" for="p-back">Retour prévu vers (facultatif)</label><input class="input" type="time" id="p-back" value="23:00"></div>
   <div class="row-btns"><button class="btn primary" id="p-save">Ajouter à l'agenda</button><button class="btn ghost" data-act="close">Annuler</button></div>`);
  const L=$("#layer");bindMore(L,pd.phys,pd.likes);L.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{sel=b.dataset.pg;L.querySelectorAll("[data-pg]").forEach(x=>x.setAttribute("aria-pressed",x===b));$("#p-newbox").hidden=sel!=="";if(sel==="")$("#p-name").focus()});
@@ -1361,7 +1377,7 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
   <div class="field"><label class="t" for="sf-n">Avec qui ?</label><input class="input" id="sf-n" value="${esc(st.name)}" placeholder="Son prénom" autocapitalize="words"></div>
   <div class="field"><label class="t" for="sf-p">Où ?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Nom et adresse du lieu"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Rendez-vous</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Retour vers</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="sf-msg"></div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Ton message</span><div class="msg" id="sf-msg"></div></div>
   <div id="sf-consent"></div>
   <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Fermer</button></div>
   <p class="mt" style="margin-top:12px">Quand tu partages ou copies ce message, l'accueil affiche un bandeau « en date » avec des boutons pour rassurer ton proche ou l'alerter.</p>
@@ -1379,7 +1395,7 @@ function TUTOS(){const NM=dflt()==="f"?"${NM}":"Thomas",PR=dflt()==="f"?"Elle":"
  {id:"eval",e:"📝",t:"Évaluer un date",d:"Le questionnaire et le verdict.",act:"eval",slides:[
   {v:`<div class="tmock" style="background:var(--accent-soft)"><b>Tu reviens d'un date ?</b><br><span class="mt">Quelques questions, deux minutes.</span><div class="irow" style="margin-top:8px"><span class="vp k">Évaluer mon date</span></div></div>`,h:`Évaluer un date`,p:`Après ton rendez-vous, touche « Évaluer mon date » sur l'accueil, ou « Évaluer maintenant » si le date était dans ton agenda.`},
   {v:`<div class="tmock"><span class="mt">Son prénom</span> <b>${NM}</b><br>📍 Il Gusto, Grenoble<br>💬 ${esc(postQ(dflt()))} : <b>détendu${dflt()==="f"?"e":""}</b><br>🏠 Rentré${ue()} seul${ue()}</div>`,h:`Quelques infos d'abord`,p:`Le prénom, le lieu, le mot qui décrit ton date, et ton retour (rentré${ue()} seul${ue()}, raccompagné${ue()}…). Seul le prénom est obligatoire.`},
-  {v:`<div class="iq" style="font-size:18px">Tu as passé un bon moment ?</div><div class="irow"><span class="vp k">👍 Oui</span><span class="vp n">👎 Non</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">C'est plus nuancé que ça…</small>`,h:`Les questions`,p:`Réponds Oui ou Non. Si c'est plus nuancé, touche « C'est plus nuancé que ça… ». La flèche ← te laisse revenir en arrière.`},
+  {v:`<div class="iq" style="font-size:18px">Tu as passé un bon moment ?</div><div class="irow"><span class="vp k">👍 Oui</span><span class="vp n">👎 Non</span></div><div class="ibar"><i style="width:62%"></i></div><span class="skip more" style="pointer-events:none;margin:6px 0 0;min-height:44px;padding:10px 14px;font-size:16px;width:auto">⚖️ C'est plus nuancé que ça <b>›</b></span>`,h:`Les questions`,p:`Glisse la carte à droite pour Oui, à gauche pour Non, ou touche les boutons. Si c'est plus nuancé, touche « C'est plus nuancé que ça ». La flèche ← te laisse revenir en arrière.`},
   {v:`<div class="iscore">8,4<small>/10</small></div><div class="irow"><span class="vp k">💚 Je garde</span></div><div class="irow"><span class="vp n">🚩 1 red flag</span><span class="vp k">✅ 5 green flags</span></div>`,h:`Le verdict`,p:`Une note sur 10 selon tes critères, avec les green flags et les red flags. Si tu ne t'es pas senti${ue()} à l'aise, la note est plafonnée et l'app te le dit.`},
   {v:`<div class="irow"><span class="vp n">🤮 Je next</span><span class="vp k">💚 Je garde</span></div><div class="tmock" style="text-align:center">Je réfléchis encore</div><div class="irow"><span class="vp m">📸 Partager mon verdict</span></div>`,h:`Ta décision`,p:`Tu choisis : Je garde, Je next, ou « Je réfléchis encore ». Tu peux aussi approfondir avec 6 questions de plus, et partager ton verdict en story.`}]},
  {id:"past",e:"✏️",t:"Date passé et modifier une fiche",d:"Ajoute un date déjà eu, puis change sa fiche.",act:"dates",slides:[
@@ -1418,7 +1434,7 @@ function TUTOS(){const NM=dflt()==="f"?"${NM}":"Thomas",PR=dflt()==="f"?"Elle":"
 function tutoGo(a){closeSheet();if(a==="plan")openPlan(true);else if(a==="eval")newEval();else if(a==="safe")openGo();else setView(a)}
 function openTuto(){const T=TUTOS();
  sheetWrap("Tutoriels",`<h2 style="font-size:26px">📖 Tutoriels</h2><p class="sub">Touche une fonction pour voir comment elle marche. Une coche s'affiche quand tu as tout vu.</p>
-  <div class="list">${T.map(x=>`<button class="guy glass" ${x.slides?`data-tuto="${x.id}"`:`disabled style="opacity:.55"`}><span style="font-size:30px;width:44px;text-align:center">${x.e}</span><span style="min-width:0"><span class="nm" style="white-space:normal">${x.t}</span><span class="mt">${x.d}</span></span><span class="sc" style="font-size:18px">${tutoDone(x.id)?`<span class="tick" role="img" aria-label="Tuto vu">✓</span>`:x.slides?`<span style="color:var(--accent)">›</span>`:`<small style="color:var(--muted);font-size:11px">Bientôt</small>`}</span></button>`).join("")}</div>
+  <div class="list">${T.map(x=>`<button class="guy glass" ${x.slides?`data-tuto="${x.id}"`:`disabled style="opacity:.55"`}><span style="font-size:30px;width:44px;text-align:center">${x.e}</span><span style="min-width:0"><span class="nm" style="white-space:normal">${x.t}</span><span class="mt">${x.d}</span></span><span class="sc" style="font-size:18px">${tutoDone(x.id)?`<span class="tick" role="img" aria-label="Tuto vu">✓</span>`:x.slides?`<span style="color:var(--accent)">›</span>`:`<small style="color:var(--muted);font-size:12.5px">Bientôt</small>`}</span></button>`).join("")}</div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Fermer</button></div>`)}
 function openTutoSlides(id){const x=TUTOS().find(t=>t.id===id);if(!x||!x.slides)return;const N=x.slides.length;
  sheetWrap(x.t,`<div class="tcar"><div class="itrack" id="ttrack">${x.slides.map(sl=>`<div class="islide"><div class="ivis glass">${sl.v}</div><h2 style="font-size:24px">${sl.h}</h2><p>${sl.p}</p></div>`).join("")}</div>
@@ -1445,14 +1461,14 @@ function openAlert(kind){const m=S.dateMode||{};const st={pos:""};
  const msg=()=>[LINE[kind],kind!=="home"&&m.place?`📍 Lieu : ${m.place}`:"",kind!=="home"&&m.place?`🗺️ Plan : ${mapLink(m.place)}`:"",kind!=="home"&&st.pos?`📌 Ma position : ${mapLink("",st.pos)}`:""].filter(Boolean).join("\n");
  sheetWrap(HEAD[kind],`<h2 style="font-size:26px">${HEAD[kind]}</h2><p class="sub">Ce message est prêt : c'est toi qui l'envoies à ton proche. L'appli ne prévient personne toute seule.</p>
   ${kind==="danger"?`<div class="box" style="margin-top:14px;border:2px solid var(--next)"><b>Si tu es en danger immédiat</b><div class="row-btns"><a class="btn primary" href="tel:17" style="text-decoration:none">📞 Appeler le 17</a><a class="btn ghost" href="sms:114" style="text-decoration:none">✉️ SMS au 114 (si tu ne peux pas parler)</a></div></div>`:""}
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Ton message</span><div class="msg" id="al-msg"></div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Ton message</span><div class="msg" id="al-msg"></div></div>
   <div id="al-consent"></div>
   <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Fermer</button></div>`);
  const up=()=>{$("#al-msg").textContent=msg()};up();
  sendUI("al",msg,"#al-msg",st,up,kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("Mode « en date » terminé 🏠")}:null,{pos:kind!=="home",pre:kind==="danger"})}
 function goBlock(){const m=S.dateMode;if(m&&Date.now()-m.since>864e5){S.dateMode=null;save()}
- if(!S.dateMode)return `<button class="box glass hl" data-act="go" style="width:100%;text-align:left;margin-top:14px;border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 0 14px var(--accent),inset 0 0 10px rgba(255,92,138,.25)"><span style="font-size:30px">🛡️</span><span style="min-width:0"><span style="display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Date en sécurité</span><b style="font-family:var(--display);font-size:17px;display:block">Je pars en date</b><span style="font-size:14px;color:var(--muted)">Préviens un proche en quelques touches</span></span></button>`;
- const d=S.dateMode;return `<div class="box" style="background:var(--accent-soft);margin-top:14px;border:2px solid var(--accent)"><b style="font-family:var(--display);font-size:18px">🛡️ Tu es en date</b><p style="margin:4px 0 0;font-size:14px">${[d.name?esc(d.name):"",d.place?"📍 "+esc(d.place):"",d.back?"🏠 retour vers "+esc(d.back).replace(":","h"):""].filter(Boolean).join(" · ")||"Ton proche est prévenu."}</p>
+ if(!S.dateMode)return `<button class="box glass hl" data-act="go" style="width:100%;text-align:left;margin-top:14px;border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 0 14px var(--accent),inset 0 0 10px rgba(255,92,138,.25)"><span style="font-size:30px">🛡️</span><span style="min-width:0"><span style="display:block;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Date en sécurité</span><b style="font-family:var(--display);font-size:17px;display:block">Je pars en date</b><span style="font-size:15.5px;color:var(--muted)">Préviens un proche en quelques touches</span></span></button>`;
+ const d=S.dateMode;return `<div class="box" style="background:var(--accent-soft);margin-top:14px;border:2px solid var(--accent)"><b style="font-family:var(--display);font-size:18px">🛡️ Tu es en date</b><p style="margin:4px 0 0;font-size:15.5px">${[d.name?esc(d.name):"",d.place?"📍 "+esc(d.place):"",d.back?"🏠 retour vers "+esc(d.back).replace(":","h"):""].filter(Boolean).join(" · ")||"Pense à envoyer ton message à ton proche."}</p>
   <div class="row-btns"><button class="btn primary" data-alrt="ok">✅ Tout va bien</button><button class="btn ghost" data-alrt="uneasy">😬 Je ne me sens pas serein${ue()}</button><button class="btn ghost danger" data-alrt="danger" style="font-weight:800">🚨 Je suis en danger</button><button class="btn ghost" data-alrt="home">🏠 Je suis bien rentré${ue()}</button></div>
   <p class="mt" style="margin-top:10px">Ces boutons préparent un message : c'est toi qui l'envoies. L'appli ne prévient personne toute seule et ce bandeau n'apparaît que quand tu rouvres l'appli.</p><button class="mt" data-act="modeend" style="color:var(--muted);text-decoration:underline">Terminer sans envoyer de message</button></div>`}
 
@@ -1484,7 +1500,7 @@ function openShare(g){const op={name:true,photo:false};
   <img class="share-img" id="sh-img" alt="Aperçu de l'image à partager">
   <button class="switch" id="sh-n" aria-pressed="true"><span>Afficher le prénom</span><span class="k"></span></button><div style="height:12px"></div>
   <button class="switch" id="sh-p" aria-pressed="false"><span>Afficher la photo<span class="mt" style="font-weight:500">Évite de publier la photo de quelqu'un sans son accord</span></span><span class="k"></span></button>
-  <div class="box glass" style="margin-top:14px"><b>Pour l'enregistrer</b><p style="margin:4px 0 0;font-size:14px;color:var(--muted)">Appuie longuement sur l'image, puis choisis « Enregistrer dans Photos » ou « Partager ».</p></div>
+  <div class="box glass" style="margin-top:14px"><b>Pour l'enregistrer</b><p style="margin:4px 0 0;font-size:15.5px;color:var(--muted)">Appuie longuement sur l'image, puis choisis « Enregistrer dans Photos » ou « Partager ».</p></div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Fermer</button></div>`);
  const draw=async()=>{const im=$("#sh-img");if(!im)return;im.style.opacity=.4;const u=await shareImage(g,op);if($("#sh-img")){im.src=u;im.style.opacity=1}};
  $("#sh-n").onclick=()=>{op.name=!op.name;$("#sh-n").setAttribute("aria-pressed",op.name);draw()};
@@ -1777,7 +1793,7 @@ const dfmt=(d,o)=>new Date(d+"T12:00").toLocaleDateString(LOC,o||{day:"numeric",
 /* ---------- WELCOME */
 function startIntro(){onb=null;setView("intro")}
 function introDone(){S.intro=true;save();if(S.onboarded)setView("home");else startOnb()}
-const INTRO=[{v:`<div class="ibrand">Keep <em>or</em> Next</div><div class="irow"><span class="vp k">💚 Keep</span><span class="vp m">🤔 Thinking</span><span class="vp n">👋 Next</span></div>`,h:`Welcome to Keep or Next`,p:`Your dating logbook. After every date, the app helps you decide: keep them, or move on to the next?`},{v:`<div class="iq">Did you have a good time?</div><div class="irow"><span class="vp k">👍 Yes</span><span class="vp n">👎 No</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">Question 8 of 13</small>`,h:`Rate your date in 2 minutes`,p:`Answer simple questions: respect, listening, humour, chemistry… The app works out a score out of 10 based on <b>your</b> standards.`},{v:`<div class="iscore">8.4<small>/10</small></div><div class="irow"><span class="vp k">💚 Keep</span></div><div class="irow"><span class="vp n">🚩 1 red flag spotted</span></div>`,h:`The verdict, no sugarcoating`,p:`Keep, Thinking or Next. Red flags and your dealbreakers are flagged right away, so you don't look the other way.`},{v:`<div class="tutoic" style="font-size:15px;padding:10px 16px;pointer-events:none">📖 How to use the app<i class="tdot"></i></div><div class="icard">📅 Add an upcoming date <span style="color:var(--accent);float:right">›</span></div><div class="icard">🛡️ Safe date <span class="tick" style="float:right;width:24px;height:24px;font-size:14px">✓</span></div>`,h:`A tutorial is waiting`,p:`On the home screen, tap “How to use the app” to see how each feature works. A green tick appears once you've seen it all.`},{v:`<div class="ilock">🔒</div><div class="irow"><span class="vp m">No account</span><span class="vp m">Nothing leaves your phone</span></div>`,h:`100% private`,p:`Your dates, notes and photos stay on your phone. Two optional features are the exception: you choose them on the next step. Jake and Marcus are examples, delete them whenever you like.`},{v:()=>`<div style="display:grid;gap:9px;width:100%;text-align:left;font-size:14px"><button class="switch" data-isw="sug" aria-pressed="${(S.net||{}).sug===true}"><span>📍 Place suggestions<span class="mt" style="font-weight:500">Suggests addresses as you type a place. What you type is sent to a map service.</span></span><span class="k"></span></button><button class="switch" data-isw="loc" aria-pressed="${(S.net||{}).loc===true}"><span>🧭 Share my location<span class="mt" style="font-weight:500">For Safe date: sent once, only when you ask.</span></span><span class="k"></span></button><button class="switch" data-isw="cb" aria-pressed="${!!S.cb}"><span>👁️ Colorblind mode<span class="mt" style="font-weight:500">Adapts the green and red colors so they are easier to tell apart.</span></span><span class="k"></span></button><button class="switch" data-isw="pin" aria-pressed="${!!S.pin}"><span>🔒 Passcode lock<span class="mt" style="font-weight:500">A code is asked when you open the app.</span></span><span class="k"></span></button><button class="switch" data-isw="dis" aria-pressed="${!!S.discreet}"><span>🫥 Discreet mode<span class="mt" style="font-weight:500">Blurs photos.</span></span><span class="k"></span></button></div>`,h:`Your app, your way`,p:`Optional: everything is off, and you can change your mind anytime in Settings.`}];
+const INTRO=[{v:`<div class="ibrand">Keep <em>or</em> Next</div><div class="irow"><span class="vp k">💚 Keep</span><span class="vp m">🤔 Thinking</span><span class="vp n">👋 Next</span></div>`,h:`Welcome to Keep or Next`,p:`Your dating logbook. After every date, the app helps you decide: keep them, or move on to the next?`},{v:`<div class="iq">Did you have a good time?</div><div class="irow"><span class="vp k">👍 Yes</span><span class="vp n">👎 No</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">Question 8 of 13</small>`,h:`Rate your date in 2 minutes`,p:`Answer simple questions: respect, listening, humour, chemistry… The app works out a score out of 10 based on <b>your</b> standards.`},{v:`<div class="iscore">8.4<small>/10</small></div><div class="irow"><span class="vp k">💚 Keep</span></div><div class="irow"><span class="vp n">🚩 1 red flag spotted</span></div>`,h:`The verdict, no sugarcoating`,p:`Keep, Thinking or Next. Red flags and your dealbreakers are flagged right away, so you don't look the other way.`},{v:`<div class="tutoic" style="font-size:15px;padding:10px 16px;pointer-events:none">📖 How to use the app<i class="tdot"></i></div><div class="icard">📅 Add an upcoming date <span style="color:var(--accent);float:right">›</span></div><div class="icard">🛡️ Safe date <span class="tick" style="float:right;width:24px;height:24px;font-size:15.5px">✓</span></div>`,h:`A tutorial is waiting`,p:`On the home screen, tap “How to use the app” to see how each feature works. A green tick appears once you've seen it all.`},{v:`<div class="ilock">🔒</div><div class="irow"><span class="vp m">No account</span><span class="vp m">Nothing leaves your phone</span></div>`,h:`100% private`,p:`Your dates, notes and photos stay on your phone. Two optional features are the exception: you choose them on the next step. Jake and Marcus are examples, delete them whenever you like.`},{v:()=>`<div style="display:grid;gap:9px;width:100%;text-align:left;font-size:15.5px"><button class="switch" data-isw="sug" aria-pressed="${(S.net||{}).sug===true}"><span>📍 Place suggestions<span class="mt" style="font-weight:500">Suggests addresses as you type a place. What you type is sent to a map service.</span></span><span class="k"></span></button><button class="switch" data-isw="loc" aria-pressed="${(S.net||{}).loc===true}"><span>🧭 Share my location<span class="mt" style="font-weight:500">For Safe date: sent once, only when you ask.</span></span><span class="k"></span></button><button class="switch" data-isw="cb" aria-pressed="${!!S.cb}"><span>👁️ Colorblind mode<span class="mt" style="font-weight:500">Adapts the green and red colors so they are easier to tell apart.</span></span><span class="k"></span></button><button class="switch" data-isw="pin" aria-pressed="${!!S.pin}"><span>🔒 Passcode lock<span class="mt" style="font-weight:500">A code is asked when you open the app.</span></span><span class="k"></span></button><button class="switch" data-isw="dis" aria-pressed="${!!S.discreet}"><span>🫥 Discreet mode<span class="mt" style="font-weight:500">Blurs photos.</span></span><span class="k"></span></button></div>`,h:`Your app, your way`,p:`Optional: everything is off, and you can change your mind anytime in Settings.`}];
 function introView(){return `<section class="intro"><button class="link iskip" data-intro="skip">Skip</button><div class="itrack" id="itrack">${INTRO.map(s=>`<div class="islide"><div class="ivis glass">${typeof s.v==="function"?s.v():s.v}</div><h2>${s.h}</h2><p>${s.p}</p></div>`).join("")}</div><div class="dots" id="idots">${INTRO.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")}</div><button class="btn primary" id="inext" data-intro="next">Continue</button></section>`}
 function startOnb(){onb={i:0,me:S.me,love:[...S.prefs.love],hate:[...S.prefs.hate],bill:S.prefs.bill,ideal:S.prefs.ideal,gme:S.prefs.me,gdates:S.prefs.dates||"m",type:JSON.parse(JSON.stringify(S.prefs.type||{})),likes:[...(S.prefs.likes||[])]};setView("onb")}
 function onbView(){const N=9,i=onb.i;const of=onb.gdates==="f"?"f":onb.gdates==="both"?"x":"m";const dots=`<div class="dots">${Array.from({length:N},(_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>`;
@@ -1791,8 +1807,8 @@ function onbView(){const N=9,i=onb.i;const of=onb.gdates==="f"?"f":onb.gdates===
  else if(i===5)c=`<span class="eyebrow">5 of 7</span><h2>Two quick last ones</h2><p><b>The check, for you?</b></p>${pick(BILL,"bill",0,"")}<p style="margin-top:6px"><b>Your ideal first date?</b></p>${pick(IDEAL,"ideal",0,"")}<button class="btn primary" data-onb="next">Next</button>`;
  else if(i===6)c=`<span class="eyebrow">6 of 7 · optional</span><h2>Your interests</h2><p>Pick what you love. If your date shares some, their profile will show “It's a match” 🤝</p><div class="chips" id="o-lkbox">${allLikes().map(o=>`<button class="chip" data-ol="${esc(o)}" aria-pressed="${onb.likes.includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="o-lkadd" maxlength="24" placeholder="Add your own…" autocomplete="off"><button class="btn ghost" id="o-lkbtn" type="button" aria-label="+">＋</button></div><button class="btn primary" data-onb="next">Next</button><button class="link" data-onb="next">Skip</button>`;
  else if(i===7){const T=onb.type;c=`<span class="eyebrow">7 of 7 · optional</span><h2>And physically, your type?</h2><p>Tap what you like, several choices allowed. It gives a small score bonus, never more than half a point: behavior matters most.</p>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Age</span><div class="gtog"><input class="input" id="o-amin" type="number" inputmode="numeric" placeholder="From… (e.g. 25)" value="${esc(T.amin||"")}"><input class="input" id="o-amax" type="number" inputmode="numeric" placeholder="To… (e.g. 35)" value="${esc(T.amax||"")}"></div></div>
-  ${Object.keys(PH).filter(k=>k!=="beard"||onb.gdates!=="f").map(k=>`<div class="field"><span class="t" style="font-weight:700;font-size:14px">${PHL[k]}</span><div class="chips">${PH[k].map(o=>`<button class="chip" data-tp="${k}" data-pv="${esc(o)}" aria-pressed="${(T[k]||[]).includes(o)}">${esc(o)}</button>`).join("")}</div></div>`).join("")}
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Age</span><div class="gtog"><input class="input" id="o-amin" type="number" inputmode="numeric" placeholder="From… (e.g. 25)" value="${esc(T.amin||"")}"><input class="input" id="o-amax" type="number" inputmode="numeric" placeholder="To… (e.g. 35)" value="${esc(T.amax||"")}"></div></div>
+  ${Object.keys(PH).filter(k=>k!=="beard"||onb.gdates!=="f").map(k=>`<div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${PHL[k]}</span><div class="chips">${PH[k].map(o=>`<button class="chip" data-tp="${k}" data-pv="${esc(o)}" aria-pressed="${(T[k]||[]).includes(o)}">${esc(o)}</button>`).join("")}</div></div>`).join("")}
   <button class="btn primary" data-onb="next">Done</button><button class="link" data-onb="next">Skip, I'm open</button>`}
  else{const L=onb.love.map(id=>LOVE.find(x=>x[0]===id)),H=onb.hate.map(id=>HATE.find(x=>x[0]===id));
   c=`<span class="eyebrow">Got it</span><h2>Perfect${onb.me?" "+esc(onb.me):""} 💘</h2><p>Here's your profile. You can change it anytime in Settings.</p>
@@ -1837,7 +1853,7 @@ function home(){const h=new Date().getHours();const hi=h<5?"Still up":h<12?"Good
   <div class="box glass tipcard" id="tipcard" role="button" aria-label="Next tip">${tipHTML()}</div>
   <div class="sect"><h3>Read</h3><span class="mini">Dating & confidence tips</span></div>
   <div class="arts"><button class="art wide" data-act="guide"><span class="cov" style="background:linear-gradient(135deg,#FF1F1F 0%,#FF3D8B 50%,#00C853 100%)"><span class="ae">🚩💚</span><span class="atag">Free</span></span><span class="at">The little guide to flags</span><span class="am">Green flags, red flags, slang, safety</span></button>${ARTS.map((a,k)=>`<button class="art${k===0?" wide":""}" data-art="${a.id}"><span class="cov" style="background:${a.c}"><span class="ae">${a.e}</span><span class="atag">${a.free?"Free":"💎 Guide"}</span></span><span class="at">${esc(a.t)}</span><span class="am">${a.free?`${a.min} min read`:"PDF guide · coming soon"}</span></button>`).join("")}</div>
-  ${S.onboarded?"":`<div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Your profile is empty</b><p style="margin:6px 0 10px;font-size:14px">Tell the app what makes you melt, and it'll score your dates by your standards.</p><button class="btn primary" data-act="onb">Fill in my profile</button></div>`}
+  ${S.onboarded?"":`<div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Your profile is empty</b><p style="margin:6px 0 10px;font-size:15.5px">Tell the app what makes you melt, and it'll score your dates by your standards.</p><button class="btn primary" data-act="onb">Fill in my profile</button></div>`}
  </section>`}
 function openArt(id){const a=ARTS.find(x=>x.id===id);if(!a)return;
  $("#layer").innerHTML=`<div class="scrim" data-x="1"></div><div class="sheet" role="dialog" aria-label="${esc(a.t)}"><div class="in"><div class="grab"></div>
@@ -1845,7 +1861,7 @@ function openArt(id){const a=ARTS.find(x=>x.id===id);if(!a)return;
   <h2 style="font-size:26px;line-height:1.1;margin-top:14px">${esc(a.t)}</h2>
   ${a.free?`<span class="mt">${a.min} min read</span><div class="read">${a.body.map(b=>`<h3>${esc(b[0])}</h3><p>${esc(b[1])}</p>`).join("")}</div>`
    :`<p class="sub">A practical guide of about twenty pages, with exercises to do at home. Coming very soon to the shop.</p>
-     <div class="box glass" style="margin-top:14px"><b>What's inside</b><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Understanding what's going on, concrete exercises, ready-to-use phrases and a plan over several days.</p></div>`}
+     <div class="box glass" style="margin-top:14px"><b>What's inside</b><p style="margin:6px 0 0;font-size:15.5px;color:var(--muted)">Understanding what's going on, concrete exercises, ready-to-use phrases and a plan over several days.</p></div>`}
   <div class="row-btns"><button class="btn ghost" data-x="1">Close</button></div></div></div>`;
  $("#layer").querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>closeSheet())}
 function tipHTML(){const t=TIPS[tipI%TIPS.length];const k=tipI%5;
@@ -1888,8 +1904,8 @@ function moreHTML(P,Lk,dg,k,open){const pa=k==="e"?"data-ph":"data-xph",la=k==="
  return `<details class="det more" id="${k==="e"?"det":"xdet"}"${open||(k==="e"&&ev.detOpen)?" open":""}><summary>✨ ${moreQ(dg)}</summary>
   <div class="field"><label class="t" for="${ai}">Age</label><input class="input" id="${ai}" type="number" inputmode="numeric" min="18" max="99" placeholder="28" value="${esc(P.age||"")}"></div>
   <div class="field"><label class="t" for="${k==='e'?'f-nat':'x-nat'}">Nationality</label><select class="input" id="${k==='e'?'f-nat':'x-nat'}">${natOpts(P.nat||"")}</select></div>
-  ${Object.keys(PH).filter(q=>q!=="beard"||dg==="m").map(q=>`<div class="field"><span class="t" style="font-weight:700;font-size:14px">${PHL[q]}</span><div class="chips">${PH[q].map(o=>`<button class="chip" ${pa}="${q}" data-pv="${o}" aria-pressed="${P[q]===o}">${o}</button>`).join("")}</div></div>`).join("")}
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Interests</span><div class="chips" id="${k}-lkbox">${allLikes().map(o=>`<button class="chip" ${la}="${esc(o)}" aria-pressed="${Lk.includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="${k}-lkadd" maxlength="24" placeholder="Add your own…" autocomplete="off"><button class="btn ghost" id="${k}-lkbtn" type="button" aria-label="+">＋</button></div></div></details>`}
+  ${Object.keys(PH).filter(q=>q!=="beard"||dg==="m").map(q=>`<div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${PHL[q]}</span><div class="chips">${PH[q].map(o=>`<button class="chip" ${pa}="${q}" data-pv="${o}" aria-pressed="${P[q]===o}">${o}</button>`).join("")}</div></div>`).join("")}
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Interests</span><div class="chips" id="${k}-lkbox">${allLikes().map(o=>`<button class="chip" ${la}="${esc(o)}" aria-pressed="${Lk.includes(o)}">${esc(o)}</button>`).join("")}</div><div class="addrow"><input class="input" id="${k}-lkadd" maxlength="24" placeholder="Add your own…" autocomplete="off"><button class="btn ghost" id="${k}-lkbtn" type="button" aria-label="+">＋</button></div></div></details>`}
 function bindMore(R,P,Lk){const nn=R.querySelector("#x-nat");if(nn)nn.onchange=()=>{P.nat=nn.value};const ag=R.querySelector("#x-age");if(ag)ag.oninput=()=>{P.age=ag.value.replace(/\D/g,"").slice(0,2)};
  R.querySelectorAll("[data-xph]").forEach(b=>b.onclick=()=>{const q=b.dataset.xph;P[q]=P[q]===b.dataset.pv?"":b.dataset.pv;R.querySelectorAll(`[data-xph="${q}"]`).forEach(x=>x.setAttribute("aria-pressed",x.dataset.pv===P[q]))});
  R.querySelectorAll("[data-xlk]").forEach(b=>b.onclick=()=>{const v=b.dataset.xlk,i=Lk.indexOf(v);if(i>-1)Lk.splice(i,1);else Lk.push(v);b.setAttribute("aria-pressed",i<0)});bindAddLike(R,"#x-lkadd","#x-lkbtn",R.querySelector("#x-lkbox"),Lk,"data-xlk")}
@@ -1900,28 +1916,28 @@ function evalView(){
   <div class="intro glass"><span class="eyebrow">New date</span><h2 class="h-big" style="font-size:29px">${ev.re?`${ord((S.guys.find(x=>x.id===ev.re).history||[]).length+2)} date with ${esc(ev.name)}`:"Who's the lucky one?"}</h2>${S.prefs.dates==="both"?`<div class="gtog" style="margin-top:12px">${[["m","👨 A man"],["f","👩 A woman"]].map(o=>`<button class="chip" data-dg="${o[0]}" aria-pressed="${ev.dg===o[0]}">${o[1]}</button>`).join("")}</div>`:""}
    <div class="field"><label class="photo" for="f-photo">${avatar({name:ev.name||"?",photo:ev.photo,ill:ev.photo?undefined:ev.ill},104)}<span class="l">${ev.photo?"Change photo":"＋ Add a photo"}</span><input type="file" id="f-photo" accept="image/*"></label></div>
    <div class="field"><label class="t" for="f-name">First name</label><input class="input" id="f-name" maxlength="30" value="${esc(ev.name)}" autocomplete="off" autocapitalize="words"></div>
-   <div class="field"><span class="t" style="font-weight:700;font-size:14px">Where did you meet?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
+   <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Where did you meet?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-src="${s}" aria-pressed="${ev.source===s}">${s}</button>`).join("")}</div></div>
    <div class="gtog"><div class="field"><label class="t" for="f-date">Date of the meeting</label><input class="input" type="date" id="f-date" max="${today()}" value="${ev.date}"></div><div class="field"><label class="t" for="f-time">Time</label><input class="input" type="time" id="f-time" value="${ev.time||""}"></div></div>
    <div class="field"><label class="t" for="f-place">Where? (optional)</label><input class="input" id="f-place" maxlength="120" placeholder="The Corner Bar, market square" value="${esc(ev.place||"")}"></div>
-   <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(one word, optional)</span></span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(ev.prev)}”</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div></div>
+   <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(ev.dg)} <span style="font-weight:400;color:var(--muted)">(one word, optional)</span></span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(ev.prev)}”</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-ep="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div></div>
    <div class="field" id="nightbox"></div>
    ${moreHTML(ev.phys,ev.likes,ev.dg,"e")}
    <div class="field"><button class="btn primary" data-act="start">Let's go</button></div></div></section>`;
- if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
+ if(ev.step==="q"){const q=ev.list[ev.i],nx=ev.list[ev.i+1],nx2=ev.list[ev.i+2];const me={name:ev.name,photo:ev.photo,ill:ev.photo?undefined:ev.ill};
   const pb=S.prefs.love.includes(q.id)?`<span class="prefbadge love">💘 What you love</span>`:S.prefs.hate.includes(q.id)?`<span class="prefbadge hate">🚫 Your dealbreaker</span>`:"";
   return `<section class="view qwrap">
   <div class="ev-head"><button class="back glass" data-act="prev" aria-label="Previous question">←</button><div class="prog"><i style="width:${ev.i/ev.list.length*100+4}%"></i></div><span class="count">${ev.i+1}/${ev.list.length}</span></div>
   ${liveBar()}
-  <div class="stage">${nx?`<div class="qcard glass under"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg))}</div><div></div></div>`:""}
+  <div class="stage">${ev.nuance?"":`<span class="swarr l" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M13 4 3 22 13 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swarr r" aria-hidden="true"><svg viewBox="0 0 16 44"><path d="M3 4 13 22 3 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}${nx2?`<div class="qcard under u2"></div>`:""}${nx?`<div class="qcard glass under"><span class="eyebrow">${esc(nx.cat)}</span><div class="qt">${esc(G(nx.q,ev.dg))}</div><div></div></div>`:""}
    <div class="qcard glass in" id="qcard"><span class="stamp yes">YES 💚</span><span class="stamp no">NO 🚩</span>
     <div class="qhead">${avatar(me,40)}<span class="eyebrow">${esc(q.cat)}${q.w>1?" · counts double":""}</span></div>
     ${q.prev?`<span class="rebound">🔁 Last time: “${esc(G(q.prev,ev.dg))}”</span>`:""}<div class="qt">${esc(G(q.q,ev.dg))}</div>
-    <div class="qfoot">${pb||'<span></span>'}<span class="hint" style="display:block;text-align:right">← no · yes →</span></div></div></div>
+    <div class="qfoot">${pb||'<span></span>'}</div></div></div>
   ${ev.nuance?`<div class="nuance"><div class="grp">${q.more.slice(2).reverse().map(m=>`<button class="nu r" data-val="${m[1]}">🚩 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
    <div class="grp">${q.more.slice(0,2).reverse().map(m=>`<button class="nu g" data-val="${m[1]}">💚 ${esc(G(m[0],ev.dg))}</button>`).join("")}</div>
    <button class="skip" data-act="skip" style="margin-top:2px">No idea, next question</button></div>`
   :`<div class="answers"><button class="ans no" data-a="0"><span>🚩</span>${esc(G(q.no,ev.dg))}</button><button class="ans yes" data-a="1"><span>💚</span>${esc(G(q.yes,ev.dg))}</button></div>
-   <button class="skip" data-act="nuance">It's more complicated than that…</button>`}
+   <button class="skip more" data-act="nuance">⚖️ It's more complicated than that <b>›</b></button>`}
  </section>`}
  const s=score(ev.answers,ev.phys),v=verdict(s,ev.answers,ev.dg);const gs=greens(ev.answers,ev.dg),rs=reds(ev.answers,ev.dg);const C=2*Math.PI*80;
  const adv=G({keep:"The app says: keep him",next:"The app says: next him",maybe:"The app is torn. Your call"}[v.rec],ev.dg);
@@ -1938,7 +1954,7 @@ function evalView(){
   ${s>=7.5&&!ev.deep?`<div class="box glass deep"><b>This is looking great ✨</b><p>${esc(G("Want to go deeper? 6 more questions to really see who he is.",ev.dg))}</p><button class="btn ghost" data-act="deepen">Go deeper (6 questions)</button></div>`:""}
   <div class="field" style="text-align:left"><label class="t" for="f-note">A note for later (optional)</label><textarea class="input" id="f-note" maxlength="400" placeholder="${G("He cooks, has a dog, sings off-key…",ev.dg)}">${esc(ev.note)}</textarea></div>
   ${radar(ev.answers)}<button class="btn ghost" data-act="sharecur" style="margin-top:12px">📸 Share my verdict as a story</button>
-  <div class="field" style="text-align:left;position:relative"><span class="t" style="font-weight:700;font-size:14px">${postQ(ev.dg)} (one word, optional)</span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(ev.prev)}”</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-vb="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div><div id="vibecmp" class="vibecmp${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?(vrank(ev.vibe)>vrank(vbase(ev))?" up":vrank(ev.vibe)<vrank(vbase(ev))?" down":" same"):""}" aria-live="polite">${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?esc(vmsg(vrank(ev.vibe)-vrank(vbase(ev)),ev.dg,vre(ev))):""}</div></div>
+  <div class="field" style="text-align:left;position:relative"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(ev.dg)} (one word, optional)</span>${ev.pre?`<span class="mt" style="margin:2px 0 6px">🔮 ${esc(preText(ev.pre,ev.dg))}</span>`:ev.prev?`<span class="mt" style="margin:2px 0 6px">🔁 Last date: “${esc(ev.prev)}”</span>`:""}<div class="chips">${VIBES.map(o=>`<button class="chip" data-vb="${o}" aria-pressed="${ev.vibe===o}">${o}</button>`).join("")}</div><div id="vibecmp" class="vibecmp${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?(vrank(ev.vibe)>vrank(vbase(ev))?" up":vrank(ev.vibe)<vrank(vbase(ev))?" down":" same"):""}" aria-live="polite">${vbase(ev)&&ev.vibe&&vrank(vbase(ev))&&vrank(ev.vibe)?esc(vmsg(vrank(ev.vibe)-vrank(vbase(ev)),ev.dg,vre(ev))):""}</div></div>
   <div class="choice"><button class="btn next${v.rec==="next"?" rec":""}" data-decide="next">🤮 Next</button><button class="btn keep${v.rec==="keep"?" rec":""}" data-decide="keep">💚 Keep</button></div>
   <button class="link" data-decide="maybe">I'm still thinking</button></section>`}
 
@@ -1968,13 +1984,13 @@ function stats(){const GG=S.guys,n=GG.length;
  </section>`}
 
 function typeBadge(ph){const m=typeMatch(ph);if(!m.tot)return "";const p=Math.round(m.ok/m.tot*100);
- return `<p style="margin:10px 0 0"><span class="prefbadge love" style="font-size:13px">😍 ${p}% your type</span></p>`}
+ return `<p style="margin:10px 0 0"><span class="prefbadge love" style="font-size:14.5px">😍 ${p}% your type</span></p>`}
 function typeCard(){const pool=S.guys.filter(g=>g.status==="keep"&&g.phys);const base=pool.length?pool:S.guys.filter(g=>g.phys);
  const ages=base.map(g=>+g.phys.age).filter(Boolean);const mode=k=>{const c={};base.forEach(g=>{const v=g.phys[k];if(v)c[v]=(c[v]||0)+1});const e=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return e?e[0]:""};
  const rows=[["Average age",ages.length?Math.round(ages.reduce((a,b)=>a+b,0)/ages.length)+" years":""],["Hair",mode("hair")],["Eyes",mode("eyes")],["Height",mode("height")],["Style",mode("style")]].filter(r=>r[1]);
  const T=S.prefs.type||{};const decl=[["Age",T.amin||T.amax?`${T.amin||"?"} – ${T.amax||"?"} years`:""],["Hair",(T.hair||[]).join(", ")],["Eyes",(T.eyes||[]).join(", ")],["Height",(T.height||[]).join(", ")],["Style",(T.style||[]).join(", ")]];
  const real=Object.fromEntries(rows);
- if(decl.some(d=>d[1]))return `<div class="box glass typecard"><h3>😍 Your type: dream or reality?</h3><div class="row" style="color:var(--muted);font-size:12px;font-weight:700"><span>TRAIT</span><span>YOU SAY · YOU KEEP</span></div>${decl.map(d=>`<div class="row"><span>${d[0]}</span><b style="text-align:right">${esc(d[1]||"—")} · <span style="color:var(--accent)">${esc(real[d[0]==="Age"?"Average age":d[0]]||"—")}</span></b></div>`).join("")}</div>`;
+ if(decl.some(d=>d[1]))return `<div class="box glass typecard"><h3>😍 Your type: dream or reality?</h3><div class="row" style="color:var(--muted);font-size:13.5px;font-weight:700"><span>TRAIT</span><span>YOU SAY · YOU KEEP</span></div>${decl.map(d=>`<div class="row"><span>${d[0]}</span><b style="text-align:right">${esc(d[1]||"—")} · <span style="color:var(--accent)">${esc(real[d[0]==="Age"?"Average age":d[0]]||"—")}</span></b></div>`).join("")}</div>`;
  return `<div class="box glass typecard"><h3>😍 Your type${pool.length?", based on the ones you keep":""}</h3>${rows.length?rows.map(r=>`<div class="row"><span>${r[0]}</span><b>${esc(r[1])}</b></div>`).join(""):'<span class="none">Add physical descriptions to your dates to discover your type.</span>'}</div>`}
 /* ---------- GUIDE */
 function tips(){const sec=(e,t,body,open)=>`<details class="g glass"${open?" open":""}><summary><span class="e">${e}</span>${t}</summary><div class="body">${body}</div></details>`;
@@ -1985,7 +2001,7 @@ function tips(){const sec=(e,t,body,open)=>`<details class="g glass"${open?" ope
  ${sec("📖","Dating slang",[li("👻",`<b>Ghosting</b>: he vanishes without a word.`),li("🍞",`<b>Breadcrumbing</b>: little texts to keep you on the hook, without ever moving forward.`),li("💣",`<b>Love bombing</b>: declarations and gifts too fast, too strong. Often to control you better later.`),li("🪑",`<b>Benching</b>: you're on the bench, kept as an option.`),li("🧟",`<b>Zombieing</b>: the ghost comes back from the dead.`),li("🛰️",`<b>Orbiting</b>: he stopped texting but watches all your stories.`),li("🌀",`<b>Situationship</b>: more than friends, less than a couple, and nobody really knows what.`)].join(""))}
  ${sec("🛡️","Staying safe on a first date",[li("1","Meet in a public place, ideally one you know."),li("2","A friend knows where you are, who with, and when you'll be home."),li("3","You handle your own ride there and back."),li("4","You keep an eye on your drink, and never leave it alone."),li("5","You can leave at any moment, no explanation needed.")].join(""))}
  ${sec("🧠","How the score works",`<p style="margin:0">Each answer earns points depending on whether it's green or red, with nuanced answers in between. Respect, how comfortable you felt and your gut feeling count double. The qualities you picked in your profile count even more, a dealbreaker caps the score at 5 out of 10, and not feeling comfortable caps it at 6.5 (4.5 if you wanted to leave). If you described your physical type, a match adds half a point at most. Disrespect locks it at 2.5, no matter what.</p>`)}
- <div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Need help?</b><p style="margin:6px 0 0;font-size:14px">If a date put you in danger or made you feel unsafe, talk to someone you trust. In an emergency, call your local emergency number: 911 in the US, 999 in the UK, 112 across Europe. In the US, the National Domestic Violence Hotline is 1-800-799-7233. In the UK, the National Domestic Abuse Helpline is 0808 2000 247.</p></div>
+ <div class="box" style="background:var(--accent-soft)"><b style="font-family:var(--display);font-size:17px">Need help?</b><p style="margin:6px 0 0;font-size:15.5px">If a date put you in danger or made you feel unsafe, talk to someone you trust. In an emergency, call your local emergency number: 911 in the US, 999 in the UK, 112 across Europe. In the US, the National Domestic Violence Hotline is 1-800-799-7233. In the UK, the National Domestic Abuse Helpline is 0808 2000 247.</p></div>
  </section>`}
 
 /* ---------- SETTINGS */
@@ -2018,11 +2034,11 @@ function settings(){const ex=S.guys.some(g=>g.example);const p=S.prefs;
   <button class="switch" data-act="netloc" aria-pressed="${(S.net||{}).loc===true}"><span>Share my location<span class="mt" style="font-weight:500">Once, only when you ask</span></span><span class="k"></span></button></div>
  <div class="box glass"><h3>Data</h3><div class="row-btns">${ex?`<button class="btn ghost" data-act="clearex">Delete the examples</button>`:`<button class="btn ghost" data-act="addex">Bring back the examples</button>`}<button class="btn ghost danger" data-act="wipe">Delete everything</button><button class="btn ghost" data-act="reset">Start over like day one</button></div></div>
  <div class="box glass"><h3>On your home screen</h3><p>${A2HS} Keep or Next then opens like a real app.</p></div>
- <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted)">Keep or Next · version ${VERSION}</p></section>`}
+ <p style="text-align:center;margin-top:18px;font-size:13.5px;color:var(--muted)">Keep or Next · version ${VERSION}</p></section>`}
 
 /* ---------- PROFILE SHEET */
 function openSheet(id,hi){const g=S.guys.find(x=>x.id===id);if(!g)return;const HH=hist(g);const past=hi!==undefined&&hi<HH.length-1;const E=past?HH[hi]:HH[HH.length-1];const A=E.answers;const PV=(past?hi:HH.length-1)>0?(HH[(past?hi:HH.length-1)-1].vibe||""):"";const s=score(A,g.phys),v=verdict(s,A,g.dg);const gs=greens(A,g.dg),rs=reds(A,g.dg);
- $("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(g.name)}"><div class="in"><div class="grab"></div>${past?`<div class="box" style="background:var(--accent-soft);margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:14px"><b>📅 ${(HH.length>1?ord(hi+1)+" date · ":"")}${new Date(E.date+"T12:00").toLocaleDateString(LOC,{weekday:"long",month:"long",day:"numeric"})}</b></span><button class="pillbtn" data-histcur="${g.id}">Current profile</button></div>`:""}
+ $("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(g.name)}"><div class="in"><div class="grab"></div>${past?`<div class="box" style="background:var(--accent-soft);margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:15.5px"><b>📅 ${(HH.length>1?ord(hi+1)+" date · ":"")}${new Date(E.date+"T12:00").toLocaleDateString(LOC,{weekday:"long",month:"long",day:"numeric"})}</b></span><button class="pillbtn" data-histcur="${g.id}">Current profile</button></div>`:""}
   <div class="sh-top"><label class="photo" for="s-photo" style="margin:0" title="Change photo">${avatar(g,86,true)}<input type="file" id="s-photo" accept="image/*"></label>
   <div style="min-width:0"><h2>${esc(g.name)}</h2><span class="mt">${esc(g.source)} · ${dfmt(E.date,{month:"long",day:"numeric",year:"numeric"})}${E.time?" · "+tf(E.time):""}</span>${E.place?`<span class="mt">📍 ${esc(E.place)}</span>`:""}${nightText(E.night,g.dg||dflt())?`<span class="mt">${esc(nightText(E.night,g.dg||dflt()))}</span>`:""}${physLine(g.phys)?`<span class="mt" style="color:var(--ink);opacity:.8">${esc(physLine(g.phys))}</span>`:""}${E.vibe?`<span class="vibe">${esc(E.vibe)}</span>`:""}${E.pre&&E.vibe&&vrank(E.pre)&&vrank(E.vibe)?`<span class="mt" style="margin-top:4px">🔮 ${esc(preText(E.pre,g.dg||dflt()))} → ${esc(E.vibe)}</span><span class="mt">${esc(vmsg(vrank(E.vibe)-vrank(E.pre),g.dg||dflt()))}</span>`:(!E.pre&&PV&&E.vibe&&vrank(PV)&&vrank(E.vibe)?`<span class="mt" style="margin-top:4px">🔁 ${esc(PV)} → ${esc(E.vibe)}</span><span class="mt">${esc(vmsg(vrank(E.vibe)-vrank(PV),g.dg||dflt(),true))}</span>`:"")}
   <div style="font-weight:800;margin-top:6px;color:${col(s)};font-family:var(--display);font-size:18px">${fmt(s)}/10 · ${v.ic} ${esc(v.t)}</div>${capOf(s,A,g.phys)?`<p class="mt" style="margin:4px 0 0">⚠️ Score capped at ${fmt(capOf(s,A,g.phys))}: not comfortable.</p>`:""}</div></div>
@@ -2216,7 +2232,7 @@ const planGuy=p=>p.gid&&S.guys.find(g=>g.id===p.gid);
 const planName=p=>{const g=planGuy(p);return g?g.name:p.name||"?"};
 const planAv=(p,s)=>{const g=planGuy(p);return g?avatar(g,s,true):avatar({name:p.name},s)};const pdg=p=>{const g=planGuy(p);return g?(g.dg||dflt()):(p.dg||dflt())};
 function nightHTML(N,dg){const x=dg==="f"?"She":"He",y=dg==="f"?"her":"his",chip=(k,v,l)=>`<button class="chip" data-nt="${k}:${v}" aria-pressed="${N[k]===v}">${l}</button>`;
- let h=`<span class="t" style="font-weight:700;font-size:14px">And after the date? <span style="font-weight:400;color:var(--muted)">(optional)</span></span><div class="chips">${chip("home","in","I went home")}${chip("home","out","I didn't go home")}</div>`;
+ let h=`<span class="t" style="font-weight:700;font-size:15.5px">And after the date? <span style="font-weight:400;color:var(--muted)">(optional)</span></span><div class="chips">${chip("home","in","I went home")}${chip("home","out","I didn't go home")}</div>`;
  if(N.home==="in"){h+=`<div class="field" style="margin:10px 0 0"><label class="t" for="nt-ret">What time did you get home?</label><input class="input" type="time" id="nt-ret" value="${N.ret||""}"></div><div class="chips" style="margin-top:10px">${chip("how","alone","Alone")}${chip("how","drop",x+" walked me home")}${chip("how","gave","I walked "+(dg==="f"?"her":"him")+" home")}</div>`;
   if(N.how==="drop")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Just dropped me off")}${chip("drop","stay",x+" stayed over at mine")}</div>`;
   if(N.how==="gave")h+=`<div class="chips" style="margin-top:10px">${chip("drop","only","Just dropped "+(dg==="f"?"her":"him")+" off")}${chip("drop","stay",x+" stayed over at mine")}</div>`}
@@ -2232,7 +2248,7 @@ function mountNight(box,N,dg){box.innerHTML=nightHTML(N,dg);box.querySelectorAll
  const r=box.querySelector("#nt-ret");if(r)r.oninput=r.onchange=()=>{N.ret=r.value}}
 function hist(g){return[...(g.history||[]),{date:g.date,time:g.time,answers:g.answers,status:g.status,cur:true,place:g.place||"",pre:g.pre||"",vibe:g.vibe||"",night:g.night||{}}]}
 function trend(g){const h=g.history||[];if(!h.length)return "";const p=score(h[h.length-1].answers,g.phys),c=score(g.answers,g.phys);
- return c>p?' <span style="color:var(--keep);font-size:14px">▲</span>':c<p?' <span style="color:var(--next);font-size:14px">▼</span>':""}
+ return c>p?' <span style="color:var(--keep);font-size:15.5px">▲</span>':c<p?' <span style="color:var(--next);font-size:15.5px">▼</span>':""}
 function bindLayer(){$("#layer").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b))}
 function sheetWrap(label,inner){$("#layer").innerHTML=`<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-label="${esc(label)}"><div class="in"><div class="grab"></div>${inner}</div></div>`;bindLayer()}
 
@@ -2255,7 +2271,7 @@ function histBox(g){const H=hist(g);const btn=`<button class="btn ghost" data-re
  return `<div class="fbox glass" style="margin-top:12px"><h3><span>📈 How it's going</span><span style="color:var(--muted)">${H.length} dates</span></h3>
   <svg viewBox="0 0 ${W} ${Hh}" style="width:100%;display:block"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6" fill="${col(sc[i])}"/><text x="${p[0].toFixed(1)}" y="${(p[1]-11).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${fmt(sc[i])}</text>`).join("")}</svg>
-  <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-weight:600">${H.map(h=>`<span>${dfmt(h.date)}</span>`).join("")}</div>${btn}</div>`}
+  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:600">${H.map(h=>`<span>${dfmt(h.date)}</span>`).join("")}</div>${btn}</div>`}
 function sheetActions(g){return `<button class="btn ghost" data-edit="${g.id}" style="margin-top:10px">✏️ Edit profile</button><div class="gtog" style="margin-top:10px"><button class="btn ghost" data-share="${g.id}">📸 Share</button><button class="btn ghost" data-safe="${g.id}">🛡️ Safe date</button></div>
  ${g.status==="keep"?(g.couple?`<div class="box" style="background:var(--accent-soft);margin-top:10px"><b style="font-family:var(--display);font-size:17px">💞 Together for ${days(g.couple.since)} day${days(g.couple.since)!==1?"s":""}</b><button class="link" data-uncouple="${g.id}" style="margin:4px 0 0">Not anymore</button></div>`:`<button class="btn ghost" data-couple="${g.id}" style="margin-top:10px">💞 We're together!</button>`):""}`}
 
@@ -2263,12 +2279,12 @@ function sheetActions(g){return `<button class="btn ghost" data-edit="${g.id}" s
 function homeCards(){let o="";const now=new Date();const P=(S.plans||[]).filter(p=>!p.done).sort((a,b)=>a.when.localeCompare(b.when));
  const due=P.filter(p=>new Date(p.when)<now),nx=P.find(p=>new Date(p.when)>=now),cp=S.guys.find(g=>g.couple);
  if(cp)o+=`<button class="box glass hl" data-open="${cp.id}" style="width:100%;text-align:left;margin-top:14px">${avatar(cp,52,true)}<span><span class="eyebrow">💞 Together</span><b>${esc(cp.name)}</b><span>For ${days(cp.couple.since)} day${days(cp.couple.since)!==1?"s":""}</span></span></button>`;
- if(due.length){const p=due[due.length-1];o+=`<div class="box" style="background:var(--accent-soft);margin-top:14px"><b style="font-family:var(--display);font-size:18px">So, that date with ${esc(planName(p))}? 👀</b><p style="margin:4px 0 10px;font-size:14px">It was ${rel(p.when)}. Spill the tea.</p><div class="gtog"><button class="btn primary" data-peval="${p.id}">Rate it now</button><button class="btn ghost" data-pcancel="${p.id}|rabbit">🐇 Stood up</button></div></div>`}
+ if(due.length){const p=due[due.length-1];o+=`<div class="box" style="background:var(--accent-soft);margin-top:14px"><b style="font-family:var(--display);font-size:18px">So, that date with ${esc(planName(p))}? 👀</b><p style="margin:4px 0 10px;font-size:15.5px">It was ${rel(p.when)}. Spill the tea.</p><div class="gtog"><button class="btn primary" data-peval="${p.id}">Rate it now</button><button class="btn ghost" data-pcancel="${p.id}|rabbit">🐇 Stood up</button></div></div>`}
  const wk=P.filter(p=>{const t=new Date(p.when);return t>=now&&t-now<7*864e5});
  if(wk.length)o+=`<div class="box glass" style="margin-top:14px"><div style="display:flex;justify-content:space-between;align-items:baseline"><span class="eyebrow">📅 This week</span><button class="mt" data-go2="agenda" style="margin:0;color:var(--accent);font-weight:700">Calendar ›</button></div>
-  <div style="display:grid;gap:10px;margin-top:10px">${wk.slice(0,3).map(p=>{const d=new Date(p.when);const[tt,ap]=hmSplit(p.when);return `<div class="plan" style="padding:0;grid-template-columns:auto minmax(0,1fr) auto"><button data-pview="${p.id}" style="display:contents;text-align:left"><span class="dblock t">${d.toLocaleDateString(LOC,{weekday:"short"}).replace(".","")}<b>${tt}</b>${ap?`<span style="display:block;font-size:10px;margin-top:1px">${ap}</span>`:""}</span><span style="min-width:0;text-align:left"><span class="nm">${esc(planName(p))}</span><span class="mt">${rel(p.when)}${p.place?" · "+esc(p.place):""}</span></span></button><button class="iconbtn" data-psafe="${p.id}" aria-label="Text a friend">🛡️</button></div>`}).join("")}</div></div>`;
+  <div style="display:grid;gap:10px;margin-top:10px">${wk.slice(0,3).map(p=>{const d=new Date(p.when);const[tt,ap]=hmSplit(p.when);return `<div class="plan" style="padding:0;grid-template-columns:auto minmax(0,1fr) auto"><button data-pview="${p.id}" style="display:contents;text-align:left"><span class="dblock t">${d.toLocaleDateString(LOC,{weekday:"short"}).replace(".","")}<b>${tt}</b>${ap?`<span style="display:block;font-size:12px;margin-top:1px">${ap}</span>`:""}</span><span style="min-width:0;text-align:left"><span class="nm">${esc(planName(p))}</span><span class="mt">${rel(p.when)}${p.place?" · "+esc(p.place):""}</span></span></button><button class="iconbtn" data-psafe="${p.id}" aria-label="Text a friend">🛡️</button></div>`}).join("")}</div></div>`;
  else if(nx)o+=`<div class="box glass" style="margin-top:14px"><span class="eyebrow">📅 Your next date</span><div class="hl" style="margin-top:8px">${planAv(nx,52)}<span><b>${esc(planName(nx))}</b><span>${rel(nx.when)} at ${hm(nx.when)}${nx.place?" · "+esc(nx.place):""}</span></span></div><div class="gtog" style="margin-top:12px"><button class="btn ghost" data-psafe="${nx.id}">🛡️ Text a friend</button><button class="btn ghost" data-go2="agenda">Calendar</button></div></div>`;
- if(!standalone()&&!S.a2hs)o+=`<div class="box glass" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:10px"><b style="font-family:var(--display);font-size:17px">📲 Install the app</b><button data-act="a2hsx" aria-label="Hide" style="color:var(--muted);font-size:16px">✕</button></div><p style="margin:6px 0 0;font-size:14px">Add Keep or Next to your home screen: it opens like a real app and your dates are better protected. ${A2HS}</p></div>`;
+ if(!standalone()&&!S.a2hs)o+=`<div class="box glass" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:10px"><b style="font-family:var(--display);font-size:17px">📲 Install the app</b><button data-act="a2hsx" aria-label="Hide" style="color:var(--muted);font-size:16px">✕</button></div><p style="margin:6px 0 0;font-size:15.5px">Add Keep or Next to your home screen: it opens like a real app and your dates are better protected. ${A2HS}</p></div>`;
  return o}
 
 /* ---------- CALENDAR */
@@ -2287,13 +2303,13 @@ function agenda(){const now=new Date();const P=(S.plans||[]).slice().sort((a,b)=
   ${due.length?`<div class="sect"><h3>To rate</h3></div><div class="list">${due.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}</span><span class="mt">${rel(p.when)}${p.place?" · "+esc(p.place):""}</span></span><span style="display:flex;gap:6px;align-items:center"><button class="iconbtn" data-preport="${p.id}" aria-label="Reschedule or cancel">🔁</button><button class="iconbtn" data-pcancel="${p.id}|rabbit" aria-label="🐇 Stood up">🐇</button><button class="pillbtn" data-peval="${p.id}">Rate</button></span></div>`).join("")}</div>`:""}
   <div class="sect"><h3>Coming up</h3></div>
   <div class="list">${up.length?up.map(item).join(""):`<div class="empty glass"><span class="big">📅</span><strong>No dates planned</strong>Plan your next date to find it here.</div>`}</div>
-  ${cx.length?`<div class="sect"><h3>Stood up & cancelled</h3></div><div class="list">${cx.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}${p.example?'<span class="tag">example</span>':""}</span><span class="mt">${p.cancel==="rabbit"?"🐇 Stood up":"❌ Cancelled"} · ${new Date(p.when).toLocaleDateString(LOC,{weekday:"long",day:"numeric",month:"short"})}</span></span><button class="iconbtn" data-pdel="${p.id}" aria-label="Delete">✕</button></div>`).join("")}</div>${rb?`<p class="mt" style="margin:8px 0 0">🐇 ${rb} stood-up date${rb>1?"s":""} so far</p>`:""}`:""}<div class="box glass" style="margin-top:14px"><h3>🛡️ Safe date</h3><p style="margin:0 0 10px;font-size:14px;color:var(--muted)">Get a ready-made text for a friend in 10 seconds: who you're with, where, and when you'll be home.</p><button class="btn primary" data-act="safe">Write my text</button></div>
+  ${cx.length?`<div class="sect"><h3>Stood up & cancelled</h3></div><div class="list">${cx.map(p=>`<div class="plan glass">${planAv(p,46)}<span style="min-width:0"><span class="nm">${esc(planName(p))}${p.example?'<span class="tag">example</span>':""}</span><span class="mt">${p.cancel==="rabbit"?"🐇 Stood up":"❌ Cancelled"} · ${new Date(p.when).toLocaleDateString(LOC,{weekday:"long",day:"numeric",month:"short"})}</span></span><button class="iconbtn" data-pdel="${p.id}" aria-label="Delete">✕</button></div>`).join("")}</div>${rb?`<p class="mt" style="margin:8px 0 0">🐇 ${rb} stood-up date${rb>1?"s":""} so far</p>`:""}`:""}<div class="box glass" style="margin-top:14px"><h3>🛡️ Safe date</h3><p style="margin:0 0 10px;font-size:15.5px;color:var(--muted)">Get a ready-made text for a friend in 10 seconds: who you're with, where, and when you'll be home.</p><button class="btn primary" data-act="safe">Write my text</button></div>
  </section>`}
 function openEditGuy(g){const P=JSON.parse(JSON.stringify(g.phys||{})),Lk=(g.likes||[]).slice();let sr=g.source,vb=g.vibe||"",NN=JSON.parse(JSON.stringify(g.night||{}));
  sheetWrap("Edit profile",`<h2 style="font-size:26px">Edit profile</h2>
   <div class="field"><label class="t" for="e-name">First name</label><input class="input" id="e-name" maxlength="30" value="${esc(g.name)}" autocapitalize="words"></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">${postQ(g.dg||dflt())} (one word, optional)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-es="${s}" aria-pressed="${sr===s}">${s}</button>`).join("")}</div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">${postQ(g.dg||dflt())} (one word, optional)</span><div class="chips">${VIBES.map(o=>`<button class="chip" data-xvb="${o}" aria-pressed="${vb===o}">${o}</button>`).join("")}</div></div>
   <div class="field"><label class="t" for="e-place">Where? (optional)</label><input class="input" id="e-place" maxlength="120" value="${esc(g.place||"")}"></div>
   <div class="field" id="e-nightbox"></div>
   ${moreHTML(P,Lk,g.dg||dflt(),"x",true)}
@@ -2310,13 +2326,13 @@ function openNewChoice(){sheetWrap("New date",`<h2 style="font-size:26px">New da
 function nowLocal(){const n=new Date(),p=x=>String(x).padStart(2,"0");return n.getFullYear()+"-"+p(n.getMonth()+1)+"-"+p(n.getDate())+"T"+p(n.getHours())+":"+p(n.getMinutes())}
 function defWhen(){const d=new Date();if(d.getHours()>=19)d.setDate(d.getDate()+1);const p=x=>String(x).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T20:00"}
 function openPlan(fresh){const pd={phys:{},likes:[]};const cands=S.guys.filter(g=>g.status!=="next");let sel=fresh?"":null,src="",pre="",pdgv=dflt();
- sheetWrap("Upcoming date",`<h2 style="font-size:26px">Upcoming date</h2><p style="margin:0 0 6px;color:var(--muted);font-size:14px">No questionnaire now: you'll rate it after the date.</p>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">With who?</span><div class="chips"><button class="chip" data-pg="" aria-pressed="${!!fresh}">＋ Someone new</button>${cands.map(g=>`<button class="chip" data-pg="${g.id}" aria-pressed="false">${esc(g.name)}</button>`).join("")}</div></div>
+ sheetWrap("Upcoming date",`<h2 style="font-size:26px">Upcoming date</h2><p style="margin:0 0 6px;color:var(--muted);font-size:15.5px">No questionnaire now: you'll rate it after the date.</p>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">With who?</span><div class="chips"><button class="chip" data-pg="" aria-pressed="${!!fresh}">＋ Someone new</button>${cands.map(g=>`<button class="chip" data-pg="${g.id}" aria-pressed="false">${esc(g.name)}</button>`).join("")}</div></div>
   <div id="p-newbox"${fresh?"":" hidden"}><div class="field"><label class="t" for="p-name">First name</label><input class="input" id="p-name" maxlength="30" autocomplete="off" autocapitalize="words"></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-ps="${s}" aria-pressed="false">${s}</button>`).join("")}</div></div>${S.prefs.dates==="both"?`<div class="field"><span class="t" style="font-weight:700;font-size:14px">He or she?</span><div class="chips"><button class="chip" data-pdg="m" aria-pressed="true">👨 A man</button><button class="chip" data-pdg="f" aria-pressed="false">👩 A woman</button></div></div>`:""}${moreHTML(pd.phys,pd.likes,dflt(),"x")}</div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Met where?</span><div class="chips">${SOURCES.map(s=>`<button class="chip" data-ps="${s}" aria-pressed="false">${s}</button>`).join("")}</div></div>${S.prefs.dates==="both"?`<div class="field"><span class="t" style="font-weight:700;font-size:15.5px">He or she?</span><div class="chips"><button class="chip" data-pdg="m" aria-pressed="true">👨 A man</button><button class="chip" data-pdg="f" aria-pressed="false">👩 A woman</button></div></div>`:""}${moreHTML(pd.phys,pd.likes,dflt(),"x")}</div>
   <div class="field"><label class="t" for="p-when">When?</label><input class="input" type="datetime-local" id="p-when" min="${nowLocal()}" value="${defWhen()}"></div>
   <div class="field"><label class="t" for="p-place">Where?</label><input class="input" id="p-place" placeholder="The Corner Bar, Main Street" maxlength="120"></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px" id="p-preq">${preQ(dflt())}</span><div class="chips">${PRE.map(o=>`<button class="chip" data-pre="${o}" aria-pressed="false">${o}</button>`).join("")}</div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px" id="p-preq">${preQ(dflt())}</span><div class="chips">${PRE.map(o=>`<button class="chip" data-pre="${o}" aria-pressed="false">${o}</button>`).join("")}</div></div>
   <div class="field"><label class="t" for="p-back">Home by around (optional)</label><input class="input" type="time" id="p-back" value="23:00"></div>
   <div class="row-btns"><button class="btn primary" id="p-save">Add to calendar</button><button class="btn ghost" data-act="close">Cancel</button></div>`);
  const L=$("#layer");bindMore(L,pd.phys,pd.likes);L.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{sel=b.dataset.pg;L.querySelectorAll("[data-pg]").forEach(x=>x.setAttribute("aria-pressed",x===b));$("#p-newbox").hidden=sel!=="";if(sel==="")$("#p-name").focus()});
@@ -2395,7 +2411,7 @@ function openSafety(o){const st={name:o.name||"",place:o.place||"",when:o.when||
   <div class="field"><label class="t" for="sf-n">With who?</label><input class="input" id="sf-n" value="${esc(st.name)}" placeholder="First name" autocapitalize="words"></div>
   <div class="field"><label class="t" for="sf-p">Where?</label><input class="input" id="sf-p" maxlength="120" value="${esc(st.place)}" placeholder="Name and address of the place"></div>
   <div class="gtog"><div class="field"><label class="t" for="sf-w">Meeting</label><input class="input" type="datetime-local" id="sf-w" value="${st.when}"></div><div class="field"><label class="t" for="sf-b">Home by</label><input class="input" type="time" id="sf-b" value="${st.back}"></div></div>
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="sf-msg"></div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Your text</span><div class="msg" id="sf-msg"></div></div>
   <div id="sf-consent"></div>
   <div class="row-btns">${sendBtns("sf",1)}<button class="btn ghost" data-act="close">Close</button></div>
   <p class="mt" style="margin-top:12px">When you share or copy this text, the home screen shows an “on a date” banner with buttons to reassure your friend or alert them.</p>
@@ -2413,7 +2429,7 @@ function TUTOS(){const NM=dflt()==="f"?"Sophie":"Marcus",PR=dflt()==="f"?"She":"
  {id:"eval",e:"📝",t:"Rate a date",d:"The questionnaire and the verdict.",act:"eval",slides:[
   {v:`<div class="tmock" style="background:var(--accent-soft)"><b>Back from a date?</b><br><span class="mt">A few questions, two minutes.</span><div class="irow" style="margin-top:8px"><span class="vp k">Rate my date</span></div></div>`,h:`Rate a date`,p:`After your date, tap “Rate my date” on the home screen, or “Rate now” if the date was in your calendar.`},
   {v:`<div class="tmock"><span class="mt">First name</span> <b>${NM}</b><br>📍 Il Gusto, Grenoble<br>💬 ${esc(postQ(dflt()))}: <b>relaxed</b><br>🏠 Went home alone</div>`,h:`A few details first`,p:`The first name, the place, the word that describes your date, and how you got home (alone, dropped off…). Only the first name is required.`},
-  {v:`<div class="iq" style="font-size:18px">Did you have a good time?</div><div class="irow"><span class="vp k">👍 Yes</span><span class="vp n">👎 No</span></div><div class="ibar"><i style="width:62%"></i></div><small class="imut">It's more nuanced than that…</small>`,h:`The questions`,p:`Answer Yes or No. If it's more nuanced, tap “It's more nuanced than that…”. The ← arrow lets you go back.`},
+  {v:`<div class="iq" style="font-size:18px">Did you have a good time?</div><div class="irow"><span class="vp k">👍 Yes</span><span class="vp n">👎 No</span></div><div class="ibar"><i style="width:62%"></i></div><span class="skip more" style="pointer-events:none;margin:6px 0 0;min-height:44px;padding:10px 14px;font-size:16px;width:auto">⚖️ It's more nuanced than that <b>›</b></span>`,h:`The questions`,p:`Swipe the card right for Yes, left for No, or tap the buttons. If it's more nuanced, tap “It's more nuanced than that”. The ← arrow lets you go back.`},
   {v:`<div class="iscore">8.4<small>/10</small></div><div class="irow"><span class="vp k">💚 Keep</span></div><div class="irow"><span class="vp n">🚩 1 red flag</span><span class="vp k">✅ 5 green flags</span></div>`,h:`The verdict`,p:`A score out of 10 based on your standards, with green and red flags. If you didn't feel at ease, the score is capped and the app tells you.`},
   {v:`<div class="irow"><span class="vp n">🤮 Next</span><span class="vp k">💚 Keep</span></div><div class="tmock" style="text-align:center">I'm still thinking</div><div class="irow"><span class="vp m">📸 Share my verdict</span></div>`,h:`Your decision`,p:`You choose: Keep, Next, or “I'm still thinking”. You can also go deeper with 6 more questions, and share your verdict as a story.`}]},
  {id:"past",e:"✏️",t:"Past date and editing a profile",d:"Add a date you've had, then edit their profile.",act:"dates",slides:[
@@ -2452,7 +2468,7 @@ function TUTOS(){const NM=dflt()==="f"?"Sophie":"Marcus",PR=dflt()==="f"?"She":"
 function tutoGo(a){closeSheet();if(a==="plan")openPlan(true);else if(a==="eval")newEval();else if(a==="safe")openGo();else setView(a)}
 function openTuto(){const T=TUTOS();
  sheetWrap("Tutorials",`<h2 style="font-size:26px">📖 Tutorials</h2><p class="sub">Tap a feature to see how it works. A tick shows once you've seen it all.</p>
-  <div class="list">${T.map(x=>`<button class="guy glass" ${x.slides?`data-tuto="${x.id}"`:`disabled style="opacity:.55"`}><span style="font-size:30px;width:44px;text-align:center">${x.e}</span><span style="min-width:0"><span class="nm" style="white-space:normal">${x.t}</span><span class="mt">${x.d}</span></span><span class="sc" style="font-size:18px">${tutoDone(x.id)?`<span class="tick" role="img" aria-label="Tutorial seen">✓</span>`:x.slides?`<span style="color:var(--accent)">›</span>`:`<small style="color:var(--muted);font-size:11px">Soon</small>`}</span></button>`).join("")}</div>
+  <div class="list">${T.map(x=>`<button class="guy glass" ${x.slides?`data-tuto="${x.id}"`:`disabled style="opacity:.55"`}><span style="font-size:30px;width:44px;text-align:center">${x.e}</span><span style="min-width:0"><span class="nm" style="white-space:normal">${x.t}</span><span class="mt">${x.d}</span></span><span class="sc" style="font-size:18px">${tutoDone(x.id)?`<span class="tick" role="img" aria-label="Tutorial seen">✓</span>`:x.slides?`<span style="color:var(--accent)">›</span>`:`<small style="color:var(--muted);font-size:12.5px">Soon</small>`}</span></button>`).join("")}</div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Close</button></div>`)}
 function openTutoSlides(id){const x=TUTOS().find(t=>t.id===id);if(!x||!x.slides)return;const N=x.slides.length;
  sheetWrap(x.t,`<div class="tcar"><div class="itrack" id="ttrack">${x.slides.map(sl=>`<div class="islide"><div class="ivis glass">${sl.v}</div><h2 style="font-size:24px">${sl.h}</h2><p>${sl.p}</p></div>`).join("")}</div>
@@ -2479,14 +2495,14 @@ function openAlert(kind){const m=S.dateMode||{};const st={pos:""};
  const msg=()=>[LINE[kind],kind!=="home"&&m.place?`📍 Where: ${m.place}`:"",kind!=="home"&&m.place?`🗺️ Map: ${mapLink(m.place)}`:"",kind!=="home"&&st.pos?`📌 My location: ${mapLink("",st.pos)}`:""].filter(Boolean).join("\n");
  sheetWrap(HEAD[kind],`<h2 style="font-size:26px">${HEAD[kind]}</h2><p class="sub">This text is ready: you send it to your friend yourself. The app doesn't alert anyone on its own.</p>
   ${kind==="danger"?`<div class="box" style="margin-top:14px;border:2px solid var(--next)"><b>If you are in immediate danger</b><div class="row-btns"><a class="btn primary" href="tel:112" style="text-decoration:none">📞 Call emergency (112)</a></div></div>`:""}
-  <div class="field"><span class="t" style="font-weight:700;font-size:14px">Your text</span><div class="msg" id="al-msg"></div></div>
+  <div class="field"><span class="t" style="font-weight:700;font-size:15.5px">Your text</span><div class="msg" id="al-msg"></div></div>
   <div id="al-consent"></div>
   <div class="row-btns">${sendBtns("al",kind!=="home")}<button class="btn ghost" data-act="close">Close</button></div>`);
  const up=()=>{$("#al-msg").textContent=msg()};up();
  sendUI("al",msg,"#al-msg",st,up,kind==="home"?()=>{S.dateMode=null;save();closeSheet();render();toast("“On a date” mode ended 🏠")}:null,{pos:kind!=="home",pre:kind==="danger"})}
 function goBlock(){const m=S.dateMode;if(m&&Date.now()-m.since>864e5){S.dateMode=null;save()}
- if(!S.dateMode)return `<button class="box glass hl" data-act="go" style="width:100%;text-align:left;margin-top:14px;border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 0 14px var(--accent),inset 0 0 10px rgba(255,92,138,.25)"><span style="font-size:30px">🛡️</span><span style="min-width:0"><span style="display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Safe date</span><b style="font-family:var(--display);font-size:17px;display:block">Heading out on a date</b><span style="font-size:14px;color:var(--muted)">Alert a friend in a few taps</span></span></button>`;
- const d=S.dateMode;return `<div class="box" style="background:var(--accent-soft);margin-top:14px;border:2px solid var(--accent)"><b style="font-family:var(--display);font-size:18px">🛡️ You're on a date</b><p style="margin:4px 0 0;font-size:14px">${[d.name?esc(d.name):"",d.place?"📍 "+esc(d.place):"",d.back?"🏠 home by "+tf(d.back):""].filter(Boolean).join(" · ")||"Your friend has been told."}</p>
+ if(!S.dateMode)return `<button class="box glass hl" data-act="go" style="width:100%;text-align:left;margin-top:14px;border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 0 14px var(--accent),inset 0 0 10px rgba(255,92,138,.25)"><span style="font-size:30px">🛡️</span><span style="min-width:0"><span style="display:block;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Safe date</span><b style="font-family:var(--display);font-size:17px;display:block">Heading out on a date</b><span style="font-size:15.5px;color:var(--muted)">Alert a friend in a few taps</span></span></button>`;
+ const d=S.dateMode;return `<div class="box" style="background:var(--accent-soft);margin-top:14px;border:2px solid var(--accent)"><b style="font-family:var(--display);font-size:18px">🛡️ You're on a date</b><p style="margin:4px 0 0;font-size:15.5px">${[d.name?esc(d.name):"",d.place?"📍 "+esc(d.place):"",d.back?"🏠 home by "+tf(d.back):""].filter(Boolean).join(" · ")||"Remember to send your message to your friend."}</p>
   <div class="row-btns"><button class="btn primary" data-alrt="ok">✅ All good</button><button class="btn ghost" data-alrt="uneasy">😬 I'm not feeling comfortable</button><button class="btn ghost danger" data-alrt="danger" style="font-weight:800">🚨 I'm in danger</button><button class="btn ghost" data-alrt="home">🏠 I'm home safe</button></div>
   <p class="mt" style="margin-top:10px">These buttons prepare a text: you send it yourself. The app doesn't alert anyone on its own and this banner only shows when you reopen the app.</p><button class="mt" data-act="modeend" style="color:var(--muted);text-decoration:underline">End without sending a text</button></div>`}
 
@@ -2518,7 +2534,7 @@ function openShare(g){const op={name:true,photo:false};
   <img class="share-img" id="sh-img" alt="Preview of the image to share">
   <button class="switch" id="sh-n" aria-pressed="true"><span>Show the first name</span><span class="k"></span></button><div style="height:12px"></div>
   <button class="switch" id="sh-p" aria-pressed="false"><span>Show the photo<span class="mt" style="font-weight:500">Don't post someone's photo without their consent</span></span><span class="k"></span></button>
-  <div class="box glass" style="margin-top:14px"><b>To save it</b><p style="margin:4px 0 0;font-size:14px;color:var(--muted)">Press and hold the image, then choose \u201cSave to Photos\u201d (or \u201cDownload image\u201d) or \u201cShare\u201d.</p></div>
+  <div class="box glass" style="margin-top:14px"><b>To save it</b><p style="margin:4px 0 0;font-size:15.5px;color:var(--muted)">Press and hold the image, then choose \u201cSave to Photos\u201d (or \u201cDownload image\u201d) or \u201cShare\u201d.</p></div>
   <div class="row-btns"><button class="btn ghost" data-act="close">Close</button></div>`);
  const draw=async()=>{const im=$("#sh-img");if(!im)return;im.style.opacity=.4;const u=await shareImage(g,op);if($("#sh-img")){im.src=u;im.style.opacity=1}};
  $("#sh-n").onclick=()=>{op.name=!op.name;$("#sh-n").setAttribute("aria-pressed",op.name);draw()};
@@ -2670,8 +2686,22 @@ if(S.pin)showLock("unlock");
 (function(){var L;try{L=localStorage.getItem("kon-lang")}catch(e){}if(L!=="fr"&&L!=="en")L=/^fr/i.test(navigator.language||"")?"fr":"en";(L==="en"?window.KON_EN:window.KON_FR)()})();
 </script>
 
-<script>const BUILD="v50";const VERSION="3.5.1";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
+<script>const BUILD="v51";const VERSION="3.5.2";try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){window.__reg=r;r.update()}).catch(function(){})});
 function konChk(){try{fetch("./index.html?"+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/const BUILD="(v\d+)"/);if(!m||m[1]===BUILD)return;var last=+sessionStorage.getItem("kon-rl")||0;if(Date.now()-last<60000)return;sessionStorage.setItem("kon-rl",Date.now());var go=function(){location.reload()};if(window.caches)caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).then(go,go);else go()}).catch(function(){})}catch(e){}}
 if(location.protocol.startsWith("http")){document.addEventListener("visibilitychange",function(){if(!document.hidden){konChk();if(window.__reg)window.__reg.update()}});konChk()}</script>
+<script>
+(function(){var L=document.getElementById("layer");if(!L)return;var sh,y0,x0,dy=0,drag=false,ok=false,top=false,t0=0;
+function reset(){if(!sh)return;sh.style.transition="transform .2s ease";sh.style.transform="";var sc=L.querySelector(".scrim");if(sc)sc.style.opacity=""}
+L.addEventListener("touchstart",function(e){ok=false;drag=false;sh=e.target.closest&&e.target.closest(".sheet");if(!sh||e.touches.length!==1)return;
+var g=sh.querySelector(".grab");if(!g||getComputedStyle(g).display==="none")return;if(e.target.closest("textarea,input,select,.itrack"))return;
+y0=e.touches[0].clientY;x0=e.touches[0].clientX;dy=0;t0=Date.now();top=sh.scrollTop<=0||!!e.target.closest(".grab");ok=true},{passive:true});
+L.addEventListener("touchmove",function(e){if(!ok)return;var y=e.touches[0].clientY-y0,x=e.touches[0].clientX-x0;
+if(!drag){if(Math.abs(x)>Math.abs(y)&&Math.abs(x)>8){ok=false;return}if(!(top&&y>8))return;drag=true;sh.style.animation="none"}
+if(e.cancelable)e.preventDefault();dy=Math.max(0,y);sh.style.transition="none";sh.style.transform="translateY("+dy+"px)";
+var sc=L.querySelector(".scrim");if(sc)sc.style.opacity=String(Math.max(0,1-dy/450))},{passive:false});
+function end(){if(!ok||!drag){ok=false;return}ok=false;drag=false;
+if(dy>110||(dy>45&&Date.now()-t0<250)){sh.style.transition="transform .2s ease";sh.style.transform="translateY(100%)";var sc=L.querySelector(".scrim");if(sc){sc.style.transition="opacity .2s";sc.style.opacity="0"}setTimeout(function(){L.innerHTML=""},200)}else reset()}
+L.addEventListener("touchend",end);L.addEventListener("touchcancel",end)})();
+</script>
 </body>
 </html>
